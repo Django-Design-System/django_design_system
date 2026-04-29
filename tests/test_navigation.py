@@ -16,6 +16,7 @@ from dj_design_system.services.navigation import (
 )
 from tests.conftest import make_info
 
+
 # ---------------------------------------------------------------------------
 # to_display_label
 # ---------------------------------------------------------------------------

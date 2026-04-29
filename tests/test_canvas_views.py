@@ -6,6 +6,7 @@ from django.urls import reverse
 
 from dj_design_system.settings import BUILTIN_CANVAS_BACKGROUNDS
 
+
 pytestmark = pytest.mark.django_db
 
 

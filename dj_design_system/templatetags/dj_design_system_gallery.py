@@ -14,6 +14,7 @@ from dj_design_system.settings import (
     get_default_background,
 )
 
+
 register = template.Library()
 
 BASE_INDENT_PX = 0
@@ -56,7 +57,9 @@ class CanvasNode(template.Node):
 
         # Build the full iframe HTML document
         global_css = self._global_css_tags()
-        canvas_css_tag = f'<link rel="stylesheet" href="{static("dj_design_system/canvas.css")}">'
+        canvas_css_tag = (
+            f'<link rel="stylesheet" href="{static("dj_design_system/canvas.css")}">'
+        )
 
         # Collect component media from context if available
         component_css = context.get("_canvas_component_css", "")

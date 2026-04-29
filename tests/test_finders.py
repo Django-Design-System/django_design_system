@@ -10,6 +10,7 @@ from dj_design_system.finders import (
     ComponentsStaticFinder,
 )
 
+
 # The demo_components' components directory — used to construct expected paths.
 DEMO_COMPONENTS_DIR = (
     Path(__file__).parent.parent / "example_project" / "demo_components" / "components"
@@ -103,9 +104,9 @@ class TestList:
         paths = [path for path, _storage in finder.list(ignore_patterns=[])]
         for path in paths:
             _, ext = os.path.splitext(path)
-            assert (
-                ext in ALLOWED_EXTENSIONS
-            ), f"Unexpected extension in listed path: {path}"
+            assert ext in ALLOWED_EXTENSIONS, (
+                f"Unexpected extension in listed path: {path}"
+            )
 
     def test_yields_button_css(self, finder):
         paths = [path for path, _storage in finder.list(ignore_patterns=[])]

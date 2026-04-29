@@ -12,6 +12,7 @@ from dj_design_system.services.component import derive_relative_path
 from dj_design_system.services.navigation import _build_navigation
 from dj_design_system.services.registry import ComponentRegistry
 
+
 User = get_user_model()
 
 # ---------------------------------------------------------------------------

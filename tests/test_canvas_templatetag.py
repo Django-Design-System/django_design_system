@@ -3,6 +3,7 @@
 import pytest
 from django.template import Context, Template
 
+
 pytestmark = pytest.mark.django_db
 
 
@@ -12,8 +13,7 @@ class TestCanvasTemplateTag:
     def test_renders_iframe_element(self):
         """The canvas tag should output an <iframe> element."""
         template = Template(
-            "{% load dj_design_system_gallery %}"
-            "{% canvas %}<p>Hello</p>{% endcanvas %}"
+            "{% load dj_design_system_gallery %}{% canvas %}<p>Hello</p>{% endcanvas %}"
         )
         result = template.render(Context())
         assert "<iframe" in result

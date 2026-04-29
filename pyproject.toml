@@ -1,71 +1,86 @@
-[tool.poetry]
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
 name = "dj-design-system"
-version = "0.0.1"
+dynamic = ["version"]
 description = "A Design System for Django"
-maintainers = [
-    "Marcel Kornblum <marcel.kornblum@businessandtrade.gov.uk>",
-    "Cameron Lamb <cameron.lamb@businessandtrade.gov.uk>",
-]
-license = "MIT"
 readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.13"
 keywords = ["django", "Design System", "component"]
+maintainers = [
+  { name = "marcelkornblum" },
+  { name = "CamLamb" },
+]
 classifiers = [
   "Development Status :: 3 - Alpha",
-
   "Intended Audience :: Developers",
   "Topic :: Documentation",
   "Topic :: Software Development :: User Interfaces",
-
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
-
   "Framework :: Django",
   "Framework :: Django :: 5.2",
-  "Framework :: Django :: 6",
   "Framework :: Django :: 6.0",
-
   "License :: OSI Approved :: MIT License",
 ]
-include = [
-  "docs",
-  "tests",
-  "example_project",
+# Runtime dependencies: pinned only where we actively test the range.
+# Other deps (markdown etc.) are intentionally unpinned so downstream
+# projects can apply security updates without waiting for us.
+dependencies = [
+  "django>=5.2,<8",
+  "markdown",
 ]
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[project.urls]
+Homepage = "https://django-design-system.github.io/django_design_system/"
+Repository = "https://github.com/Django-Design-System/django_design_system"
+Documentation = "https://django-design-system.github.io/django_design_system/"
+"Bug Tracker" = "https://github.com/Django-Design-System/django_design_system/issues"
+Changelog = "https://github.com/Django-Design-System/django_design_system/blob/main/CHANGELOG.md"
 
-[tool.poetry.dependencies]
-python = "^3.13"
-django = "~5.2"
-markdown = "^3.10.2"
+[project.optional-dependencies]
+testing = [
+  "coverage",
+  "factory-boy",
+  "playwright",
+  "pytest-cov",
+  "pytest-django",
+  "pytest-mock",
+  "pytest-playwright",
+]
+dev = [
+  "djlint",
+  "mypy",
+  "ruff",
+  "types-Markdown",
+  "types-Pygments",
+]
+docs = [
+  "mkdocs-material",
+  "mkdocstrings-python",
+]
 
-[tool.poetry.group.testing.dependencies]
-psycopg2 = "^2.9.11"
-tox="^4.36.0"
-coverage = "^7.11.0"
-pytest-cov = "^6.0.0"
-pytest-django = "^4.11.1"
-pytest-mock = "^3.15.1"
-factory-boy = "^3.3.3"
-playwright = "^1.57"
-pytest-playwright = "^0.7.2"
+[tool.hatch.version]
+source = "vcs"
 
-[tool.poetry.group.utils.dependencies]
-ruff = "^0.14.13"
-mypy = "^1.18.2"
-djlint = "^1.36.4"
-types-Markdown = "*"
-types-Pygments = "*"
+[tool.hatch.build.targets.wheel]
+packages = ["dj_design_system"]
 
-[tool.poetry.group.docs]
-optional=true
-
-[tool.poetry.group.docs.dependencies]
-mkdocs-material = "^9.7.1"
-mkdocstrings-python = "^2.0.2"
+[tool.hatch.build.targets.sdist]
+include = [
+  "dj_design_system/",
+  "tests/",
+  "example_project/",
+  "docs/",
+  "README.md",
+  "CHANGELOG.md",
+  "CONTRIBUTING.md",
+  "LICENSE",
+]
 
 [tool.ruff]
 exclude = [
@@ -85,12 +100,12 @@ target-version = "py313"
 
 [tool.ruff.lint]
 select = ["E4", "E7", "E9", "F", "I"]
+fixable = ["ALL"]
+ignore = ["B904", "E501", "N818", "S101", "S105"]
 
 [tool.ruff.lint.per-file-ignores]
 # Optional third-party import inside try/except confuses isort
 "dj_design_system/services/media.py" = ["I001"]
-fixable = ["ALL"]
-ignore = ["B904", "E501", "N818", "S101", "S105",]
 
 [tool.ruff.lint.isort]
 lines-after-imports = 2

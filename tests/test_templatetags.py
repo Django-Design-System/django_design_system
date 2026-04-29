@@ -11,15 +11,12 @@ from dj_design_system.templatetags.design_components import (
     global_stylesheets,
 )
 
+
 # The registry object used inside the template tag module.
-_REGISTRY = (
-    "dj_design_system.templatetags.design_components.component_registry"
-)
+_REGISTRY = "dj_design_system.templatetags.design_components.component_registry"
 
 # The dds_settings object used inside the template tag module.
-_DDS_SETTINGS = (
-    "dj_design_system.templatetags.design_components.dds_settings"
-)
+_DDS_SETTINGS = "dj_design_system.templatetags.design_components.dds_settings"
 
 # The webpack availability flag inside the services.media module.
 _WEBPACK_FLAG = "dj_design_system.services.media._WEBPACK_AVAILABLE"

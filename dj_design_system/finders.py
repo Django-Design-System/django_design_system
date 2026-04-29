@@ -4,6 +4,7 @@ from django.apps import apps
 from django.contrib.staticfiles.finders import BaseFinder
 from django.contrib.staticfiles.storage import FileSystemStorage
 
+
 ALLOWED_EXTENSIONS = {".css", ".js"}
 
 

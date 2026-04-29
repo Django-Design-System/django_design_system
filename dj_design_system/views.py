@@ -43,6 +43,7 @@ from dj_design_system.settings import (
 )
 from dj_design_system.types import CanvasMode
 
+
 GALLERY_PERMISSION = "dj_design_system.can_view_gallery"
 
 
@@ -140,9 +141,7 @@ def _render_folder(request, context, node, app_label, path_parts):
     context["folder_label"] = node.label
     context["children"] = node.children
     context["is_debug"] = settings.DEBUG
-    return render(
-        request, "dj_design_system/gallery/folder.html", context
-    )
+    return render(request, "dj_design_system/gallery/folder.html", context)
 
 
 def _render_component(request, context, node, app_label, path_parts):
@@ -279,9 +278,7 @@ def _render_component(request, context, node, app_label, path_parts):
             context,
         )
 
-    return render(
-        request, "dj_design_system/gallery/component.html", context
-    )
+    return render(request, "dj_design_system/gallery/component.html", context)
 
 
 def _render_document(request, context, node, app_label, path_parts):
@@ -291,9 +288,7 @@ def _render_document(request, context, node, app_label, path_parts):
     context["breadcrumbs"] = build_breadcrumbs(
         app_label, path_parts[:-1] if path_parts else [], node.label
     )
-    return render(
-        request, "dj_design_system/gallery/documentation.html", context
-    )
+    return render(request, "dj_design_system/gallery/documentation.html", context)
 
 
 # ---------------------------------------------------------------------------

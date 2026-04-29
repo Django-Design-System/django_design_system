@@ -3,6 +3,7 @@ from django.conf import settings
 from dj_design_system.services.media import coerce_path_list
 from dj_design_system.types import NodeType
 
+
 # Built-in canvas backgrounds keyed by slug.  Each entry is a dict with
 # ``label`` and ``color`` (a CSS <background> value).  Projects can replace
 # this entirely via ``GALLERY_CANVAS_BACKGROUNDS`` or merge extra entries
@@ -74,9 +75,7 @@ class DjangoDesignSystemSettings:
         else:
             # Check if present in defaults
             if attr not in DEFAULTS:
-                raise AttributeError(
-                    f"No value set for dj_design_system['{attr}']"
-                )
+                raise AttributeError(f"No value set for dj_design_system['{attr}']")
             value = DEFAULTS[attr]
 
         if attr in _PATH_LIST_SETTINGS:
