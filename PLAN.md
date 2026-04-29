@@ -144,15 +144,12 @@ match colour palette and font stack on the MkDocs site.
 
 ### Workflow overview
 
-| File               | Trigger                     | Purpose                                                |
-| ------------------ | --------------------------- | ------------------------------------------------------ |
-| `lint.yml`         | push + PR to main           | ruff check + djlint check                              |
-| `typecheck.yml`    | push + PR to main           | mypy on `dj_design_system/`                            |
-| `test.yml`         | push + PR to main           | pytest unit matrix; coverage PR comment                |
-| `e2e.yml`          | push + PR to main           | Playwright e2e tests                                   |
-| `publish-test.yml` | push to main (all CI green) | build → publish to **Test PyPI** (OIDC)                |
-| `publish.yml`      | release published           | build → publish to **production PyPI** (OIDC)          |
-| `docs.yml`         | release published           | MkDocs → gh-pages; gallery snapshot → gh-pages-gallery |
+| File               | Trigger                      | Purpose                                         |
+| ------------------ | ---------------------------- | ----------------------------------------------- |
+| `ci.yml`           | push + PR to main            | Jobs: lint, typecheck, test matrix (6), e2e     |
+| `publish-test.yml` | CI workflow completed (main) | build → publish to **Test PyPI** (OIDC)         |
+| `publish.yml`      | release published            | build → publish to **production PyPI** (OIDC)   |
+| `docs.yml`         | release published            | MkDocs → gh-pages; gallery snapshot → /gallery/ |
 
 ### `test.yml` matrix
 
