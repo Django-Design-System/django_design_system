@@ -10,7 +10,9 @@ DjDS is a Django-native approach to writing front end components that are expose
 
 Components are recognisably Django elements; they look and work like Models or Forms. The gallery auto-discovers them, renders live previews in sandboxed iframes, generates templatetag usage examples, and builds a searchable navigation tree — all from your existing code and docstrings.
 
-**[Browse the demo gallery →](https://django-design-system.github.io/django_design_system/gallery/)**
+**[Browse the demo →](https://django-design-system.github.io/django_design_system/demo/)**
+
+**[Read the docs →](https://django-design-system.github.io/django_design_system/)**.
 
 ## Quick start
 
@@ -47,7 +49,7 @@ just docs-serve
 | [Template tags](docs/templatetags.md) | Using components in templates             |
 | [API reference](docs/api/)            | Auto-generated class and parameter docs   |
 
-A static snapshot of the component gallery is browseable at **[django-design-system.github.io/django_design_system/gallery/](https://django-design-system.github.io/django_design_system/gallery/)** (HTMX interactions disabled; run `just demo` for the full live experience).
+A static snapshot of the component gallery is browseable at **[django-design-system.github.io/django_design_system/demo/](https://django-design-system.github.io/django_design_system/demo/)** (HTMX interactions disabled; run `just demo` for the full live experience).
 
 ## Contributing
 

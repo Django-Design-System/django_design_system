@@ -79,11 +79,11 @@ jobs:
 
       - name: Copy gallery snapshot into gh-pages
         run: |
-          rm -rf gh-pages-out/gallery
-          mkdir -p gh-pages-out/gallery
+          rm -rf gh-pages-out/demo
+          mkdir -p gh-pages-out/demo
           # wget mirrors to localhost:8000/ subdirectory
           if [ -d "gallery-snapshot/localhost:8000" ]; then
-            cp -r gallery-snapshot/localhost:8000/. gh-pages-out/gallery/
+            cp -r gallery-snapshot/localhost:8000/. gh-pages-out/demo/
           fi
 
       - name: Commit and push gallery
