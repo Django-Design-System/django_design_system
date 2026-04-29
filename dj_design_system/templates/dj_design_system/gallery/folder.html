@@ -1,0 +1,47 @@
+{% extends "dj_design_system/gallery/base.html" %}
+
+{% block title %}{{ folder_label }} — {{ design_system_name }}{% endblock %}
+
+{% block breadcrumb %}
+    {% include "dj_design_system/gallery/breadcrumb.html" %}
+{% endblock %}
+
+{% block content %}
+    <div class="gallery-page">
+        <div class="gallery-docs">
+            <h1>{{ folder_label }}</h1>
+
+            {% if children %}
+                <div class="gallery-folder-contents">
+                    <h2>Contents</h2>
+                    <ul class="gallery-folder-list">
+                        {% for child in children %}
+                            <li class="gallery-folder-list__item">
+                                <a href="{{ child.url }}" class="gallery-folder-list__link">
+                                    {% if child.has_children %}
+                                        <span class="gallery-folder-list__icon gallery-folder-list__icon--folder"></span>
+                                    {% elif child.is_component %}
+                                        <span class="gallery-folder-list__icon gallery-folder-list__icon--component"></span>
+                                    {% elif child.is_document %}
+                                        <span class="gallery-folder-list__icon gallery-folder-list__icon--doc"></span>
+                                    {% endif %}
+                                    {{ child.label }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% else %}
+                <p>This folder is empty.</p>
+            {% endif %}
+
+            {% if is_debug %}
+                <div class="gallery-debug-hint">
+                    <p>
+                        Add an <code>index.md</code> file to this folder to replace this default page with custom documentation.
+                    </p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

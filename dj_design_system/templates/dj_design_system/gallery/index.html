@@ -1,0 +1,16 @@
+{% extends "dj_design_system/gallery/base.html" %}
+
+{% block title %}{{ design_system_name }}{% endblock %}
+
+{% block content %}
+    <div class="gallery-page">
+        <div class="gallery-docs">
+            <h1>{{ design_system_name }}</h1>
+            <p>
+                Browse the component library using the sidebar.
+                Select a component to see its documentation, preview, and parameters.
+            </p>
+            <p>{{ total_components }} component{{ total_components|pluralize }} registered.</p>
+        </div>
+    </div>
+{% endblock %}

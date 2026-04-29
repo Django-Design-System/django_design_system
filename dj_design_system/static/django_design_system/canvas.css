@@ -1,0 +1,36 @@
+/* ------------------------------------------------------------------ */
+/* Canvas: component rendering area inside iframes                     */
+/* ------------------------------------------------------------------ */
+
+/* Reset: clean slate inside the iframe */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+/* Wrapper: centres the component */
+.canvas-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+}
+
+/* Mode variants */
+.canvas-wrapper--extended {
+  padding: 120px;
+}
+
+.canvas-wrapper--basic {
+  padding: 16px;
+}
+
+/* Background colours are generated dynamically from settings */

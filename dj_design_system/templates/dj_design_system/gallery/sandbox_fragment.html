@@ -1,0 +1,47 @@
+{# Partial fragment rendered when htmx requests only the sandbox pane body. #}
+{% load static %}
+
+{# ── Toolbar ──────────────────────────────────────────── #}
+{% include "dj_design_system/gallery/toolbar.html" %}
+
+{# ── Canvas ───────────────────────────────────────────── #}
+<div class="gallery-sandbox__canvas">
+    <iframe class="gallery-canvas gallery-sandbox__iframe"
+            src="{{ canvas_iframe_url }}"
+            title="Component preview"></iframe>
+</div>
+
+{# ── Parameter controls ────────────────────────────────── #}
+{% if param_rows %}
+    <div class="gallery-sandbox__controls">
+        <form method="get"
+              class="gallery-params-form"
+              hx-get=""
+              hx-target="closest [data-gallery-sandbox-body]"
+              hx-swap="innerHTML"
+              hx-trigger="change delay:400ms, keyup delay:400ms from:input, keyup delay:400ms from:textarea">
+            {% for row in param_rows %}
+                <div class="gallery-params-form__row">
+                    <label class="gallery-params-form__label" for="{{ row.field.id_for_label }}">
+                        <code>{{ row.name }}</code>
+                        {% if row.spec.description %}<span class="gallery-params-form__hint">{{ row.spec.description }}</span>{% endif %}
+                    </label>
+                    <div class="gallery-params-form__field">
+                        {{ row.field }}
+                        {% if row.field.errors %}
+                            <ul class="gallery-params__errors">
+                                {% for error in row.field.errors %}<li>{{ error }}</li>{% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </form>
+        {% if current_signature %}
+            <div class="gallery-sandbox__current-signature">
+                <h4 class="gallery-usage__heading">Current usage</h4>
+                <pre class="gallery-usage__pre"><code class="gallery-usage__code">{% if current_signature.minimal_html %}{{ current_signature.minimal_html|safe }}{% else %}{{ current_signature.minimal }}{% endif %}</code></pre>
+            </div>
+        {% endif %}
+    </div>
+{% endif %}

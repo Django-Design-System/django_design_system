@@ -1,0 +1,179 @@
+/* ------------------------------------------------------------------ */
+/* Gallery toolbar: background colour + zoom controls                  */
+/* ------------------------------------------------------------------ */
+
+/* Toolbar-specific tokens — inherit from the gallery theme */
+.gallery-sandbox-toolbar {
+  --toolbar-btn-hover-bg: var(--gallery-bg);
+  --toolbar-btn-hover-border: var(--gallery-text-muted);
+  --toolbar-btn-active-bg: var(--gallery-sidebar-bg);
+  --toolbar-btn-active-text: var(--gallery-sidebar-heading);
+  --toolbar-popout-hover: var(--gallery-bg);
+  --toolbar-popout-active: var(--gallery-code-bg);
+  --toolbar-popout-shadow: rgba(0, 0, 0, 0.12);
+}
+
+.gallery-sandbox-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 4px 8px;
+  margin-bottom: 0;
+  background: var(--gallery-bg);
+  border: 1px solid var(--gallery-pane-border);
+  border-bottom: none;
+  border-radius: var(--gallery-radius) var(--gallery-radius) 0 0;
+  font-family: var(--gallery-font);
+  font-size: 12px;
+}
+
+/* Toolbar groups */
+.gallery-sandbox-toolbar__group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+}
+
+/* Generic toolbar button */
+.gallery-sandbox-toolbar__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-family: var(--gallery-font);
+  border: 1px solid var(--gallery-border);
+  border-radius: var(--gallery-radius);
+  background: var(--gallery-content-bg);
+  color: var(--gallery-text);
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.gallery-sandbox-toolbar__btn:hover {
+  background: var(--toolbar-btn-hover-bg);
+  border-color: var(--toolbar-btn-hover-border);
+}
+
+.gallery-sandbox-toolbar__btn--active {
+  background: var(--toolbar-btn-active-bg);
+  color: var(--toolbar-btn-active-text);
+  border-color: var(--toolbar-btn-active-bg);
+  font-weight: 600;
+}
+
+/* Outline/RTL/Measure toggle: use accent border ring instead of colour inversion */
+.gallery-sandbox-toolbar__outline-toggle.gallery-sandbox-toolbar__btn--active,
+.gallery-sandbox-toolbar__rtl-toggle.gallery-sandbox-toolbar__btn--active,
+.gallery-sandbox-toolbar__measure-toggle.gallery-sandbox-toolbar__btn--active {
+  background: var(--gallery-content-bg);
+  color: var(--gallery-text);
+  border-color: var(--toolbar-btn-active-bg);
+  box-shadow: 0 0 0 2px var(--toolbar-btn-active-bg);
+  font-weight: normal;
+}
+
+/* ------------------------------------------------------------------ */
+/* Background colour popout                                            */
+/* ------------------------------------------------------------------ */
+
+.gallery-sandbox-toolbar__bg-toggle {
+  min-width: 0;
+}
+
+.gallery-sandbox-toolbar__bg-swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--gallery-border);
+  border-radius: 2px;
+  background: var(--gallery-content-bg);
+}
+
+.gallery-sandbox-toolbar__popout {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px;
+  background: var(--gallery-content-bg);
+  border: 1px solid var(--gallery-border);
+  border-radius: var(--gallery-radius);
+  box-shadow: 0 4px 12px var(--toolbar-popout-shadow);
+  min-width: 140px;
+}
+
+.gallery-sandbox-toolbar__popout[hidden] {
+  display: none;
+}
+
+/* Colour chips — background set via inline style from settings */
+.gallery-sandbox-toolbar__bg-chip {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--gallery-border);
+  border-radius: 3px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Shared popout option (background + zoom)                            */
+/* ------------------------------------------------------------------ */
+
+.gallery-sandbox-toolbar__popout-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 3px;
+  background: transparent;
+  font-family: var(--gallery-font);
+  font-size: 12px;
+  color: var(--gallery-text);
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+}
+
+.gallery-sandbox-toolbar__popout-option:hover {
+  background: var(--toolbar-popout-hover);
+}
+
+.gallery-sandbox-toolbar__popout-option--active {
+  background: var(--toolbar-popout-active);
+  font-weight: 600;
+}
+
+/* ------------------------------------------------------------------ */
+/* Zoom popout                                                         */
+/* ------------------------------------------------------------------ */
+
+.gallery-sandbox-toolbar__zoom-value {
+  font-variant-numeric: tabular-nums;
+  min-width: 3ch;
+}
+
+/* ------------------------------------------------------------------ */
+/* Viewport popout                                                     */
+/* ------------------------------------------------------------------ */
+
+.gallery-sandbox-toolbar__viewport-value {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Dashed border on the iframe when a fixed viewport is active */
+.gallery-sandbox__canvas--viewport {
+  overflow: hidden;
+}
+
+.gallery-sandbox__canvas--viewport .gallery-sandbox__iframe {
+  border: 1px dashed var(--gallery-border);
+}

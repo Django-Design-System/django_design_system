@@ -1,0 +1,232 @@
+{% extends "dj_design_system/gallery/base.html" %}
+{% load static %}
+
+{% block title %}{{ component_info.name }} — {{ design_system_name }}{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet"
+          href="{% static 'dj_design_system/gallery-toolbar.css' %}">
+{% endblock %}
+
+{% block breadcrumb %}
+    {% include "dj_design_system/gallery/breadcrumb.html" %}
+{% endblock %}
+
+{% block toolbar_actions %}
+    {# Tab switcher — visible only on narrow viewports #}
+    <div class="gallery-tabs">
+        <input type="radio"
+               name="gallery-tab"
+               id="gallery-tab-docs"
+               class="gallery-tabs__input"
+               checked
+               aria-hidden="true">
+        <label for="gallery-tab-docs" class="gallery-tabs__label">Documentation</label>
+        <input type="radio"
+               name="gallery-tab"
+               id="gallery-tab-sandbox"
+               class="gallery-tabs__input"
+               aria-hidden="true">
+        <label for="gallery-tab-sandbox" class="gallery-tabs__label">Sandbox</label>
+    </div>
+{% endblock %}
+
+{% block content %}
+    {# ── Documentation + Sandbox split ── #}
+    <div class="gallery-split">
+
+        {# ── Documentation pane ──────────────────────────────────── #}
+        <div class="gallery-documentation gallery-split__pane" id="pane-docs">
+            <div class="gallery-split__pane-header">Documentation</div>
+            <div class="gallery-docs gallery-split__pane-body">
+
+                {# 1. Component docstring (class-level description) #}
+                {% if component_description %}
+                    <h3 class="gallery-docs__section-heading">Description</h3>
+                    <div class="gallery-markdown">{{ component_description|safe }}</div>
+                {% endif %}
+
+                {# 2. Tag usage examples with live previews #}
+                {% if tag_signature %}
+                    <hr class="gallery-docs__divider">
+                    <h3 class="gallery-docs__section-heading">Usage</h3>
+                    <div class="gallery-usage">
+                        <div class="gallery-usage__block">
+                            <h4 class="gallery-usage__heading">Minimal example</h4>
+                            {% if minimal_preview_url %}
+                                <div class="gallery-doc-preview">
+                                    <iframe class="gallery-canvas gallery-doc-preview__iframe"
+                                            src="{{ minimal_preview_url }}"
+                                            title="Minimal example preview"></iframe>
+                                    <a class="gallery-doc-preview__sandbox-link"
+                                       href="#pane-sandbox"
+                                       title="Open in sandbox">
+                                        <svg width="14"
+                                             height="14"
+                                             viewBox="0 0 24 24"
+                                             fill="none"
+                                             stroke="currentColor"
+                                             stroke-width="2"
+                                             stroke-linecap="round"
+                                             stroke-linejoin="round">
+                                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                                            <polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" />
+                                        </svg>
+                                    </a>
+                                </div>
+                            {% endif %}
+                            <pre class="gallery-usage__pre"><code class="gallery-usage__code">{% if tag_signature.minimal_html %}{{ tag_signature.minimal_html|safe }}{% else %}{{ tag_signature.minimal }}{% endif %}</code></pre>
+                        </div>
+                        <div class="gallery-usage__block">
+                            <h4 class="gallery-usage__heading">Bigger example</h4>
+                            {% if maximal_preview_url %}
+                                <div class="gallery-doc-preview">
+                                    <iframe class="gallery-canvas gallery-doc-preview__iframe"
+                                            src="{{ maximal_preview_url }}"
+                                            title="Bigger example preview"></iframe>
+                                    <a class="gallery-doc-preview__sandbox-link"
+                                       href="#pane-sandbox"
+                                       title="Open in sandbox">
+                                        <svg width="14"
+                                             height="14"
+                                             viewBox="0 0 24 24"
+                                             fill="none"
+                                             stroke="currentColor"
+                                             stroke-width="2"
+                                             stroke-linecap="round"
+                                             stroke-linejoin="round">
+                                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                                            <polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" />
+                                        </svg>
+                                    </a>
+                                </div>
+                            {% endif %}
+                            <pre class="gallery-usage__pre"><code class="gallery-usage__code">{% if tag_signature.maximal_html %}{{ tag_signature.maximal_html|safe }}{% else %}{{ tag_signature.maximal }}{% endif %}</code></pre>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {# 3. Parameters table (read-only — interactive form is in the Sandbox) #}
+                {% if params %}
+                    <hr class="gallery-docs__divider">
+                    <h3 class="gallery-docs__section-heading">Parameters</h3>
+                    <table class="gallery-params">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Required</th>
+                                <th>Default</th>
+                                <th>Choices</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for name, spec in params.items %}
+                                <tr>
+                                    <td>
+                                        <code>{{ name }}</code>
+                                    </td>
+                                    <td>
+                                        <code>{{ spec.type_name }}</code>
+                                    </td>
+                                    <td>{{ spec.required|yesno:"Yes,No" }}</td>
+                                    <td>
+                                        {% if spec.default is not None %}
+                                            <code>{{ spec.default }}</code>
+                                        {% else %}
+                                            —
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if spec.choices %}
+                                            {% for choice in spec.choices %}
+                                                <code>{{ choice }}</code>
+                                                {% if not forloop.last %},{% endif %}
+                                            {% endfor %}
+                                        {% else %}
+                                            —
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ spec.description|default:"—" }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>This component has no parameters.</p>
+                {% endif %}
+
+                {# 4. Markdown content (index.md) rendered last #}
+                {% if doc_html %}
+                    <hr class="gallery-docs__divider">
+                    <h3 class="gallery-docs__section-heading">Further documentation</h3>
+                    <div class="gallery-markdown">{{ doc_html|safe }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        {# ── Sandbox pane ────────────────────────────────────────── #}
+        <div class="gallery-sandbox gallery-split__pane" id="pane-sandbox">
+            <div class="gallery-split__pane-header">Sandbox</div>
+            <div class="gallery-split__pane-body" data-gallery-sandbox-body>
+                {% include "dj_design_system/gallery/sandbox_fragment.html" %}
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        (function () {
+            var docs = document.getElementById("gallery-tab-docs");
+            var sandbox = document.getElementById("gallery-tab-sandbox");
+            var split = document.querySelector(".gallery-split");
+            if (!docs || !sandbox || !split) return;
+
+            function showPane(isSandbox, updateHash) {
+                if (isSandbox) {
+                    sandbox.checked = true;
+                } else {
+                    docs.checked = true;
+                }
+                split.classList.toggle("gallery-split--show-sandbox", isSandbox);
+                if (updateHash) {
+                    if (isSandbox) {
+                        history.replaceState(null, "", "#pane-sandbox");
+                    } else {
+                        history.replaceState(null, "", window.location.pathname + window.location.search);
+                    }
+                }
+            }
+
+            docs.addEventListener("change", function () { showPane(false, true); });
+            sandbox.addEventListener("change", function () { showPane(true, true); });
+
+            /* Sync from hash on load and hashchange */
+            function syncFromHash() {
+                showPane(window.location.hash === "#pane-sandbox", false);
+            }
+            syncFromHash();
+            window.addEventListener("hashchange", syncFromHash);
+        })();
+
+        /* Auto-height: listen for resize messages from basic-mode iframes */
+        (function () {
+            window.addEventListener("message", function (event) {
+                if (!event.data || event.data.type !== "canvas-resize") return;
+                var iframes = document.querySelectorAll(
+                    "iframe.gallery-doc-preview__iframe, iframe.gallery-md-canvas__iframe"
+                );
+                iframes.forEach(function (iframe) {
+                    if (iframe.contentWindow === event.source) {
+                        iframe.style.height = event.data.height + "px";
+                    }
+                });
+            });
+        })();
+    </script>
+    <script src="{% static 'dj_design_system/gallery-toolbar.js' %}"></script>
+    <script src="{% static 'dj_design_system/htmx.min.js' %}"></script>
+{% endblock %}

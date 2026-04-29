@@ -1,0 +1,170 @@
+{# Sandbox toolbar: background colour + zoom controls #}
+{% load static %}
+<div class="gallery-sandbox-toolbar"
+     data-measure-script="{% static 'dj_design_system/gallery-measure.js' %}">
+    {# ── Background colour ── #}
+    <div class="gallery-sandbox-toolbar__group gallery-sandbox-toolbar__bg">
+        <button class="gallery-sandbox-toolbar__btn gallery-sandbox-toolbar__bg-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="gallery-bg-panel"
+                title="Background colour">
+            <span class="gallery-sandbox-toolbar__bg-swatch"></span>
+        </button>
+        <div class="gallery-sandbox-toolbar__popout"
+             id="gallery-bg-panel"
+             data-gallery-panel="bg"
+             hidden>
+            {% for bg in canvas_backgrounds %}
+                <button class="gallery-sandbox-toolbar__popout-option gallery-sandbox-toolbar__bg-option"
+                        type="button"
+                        data-bg="{{ bg.value }}"
+                        title="{{ bg.label }}">
+                    <span class="gallery-sandbox-toolbar__bg-chip"
+                          style="background: {{ bg.color }}"></span>
+                    <span class="gallery-sandbox-toolbar__bg-option-label">{{ bg.label }}</span>
+                </button>
+            {% endfor %}
+        </div>
+    </div>
+
+    {# ── Viewport ── #}
+    <div class="gallery-sandbox-toolbar__group gallery-sandbox-toolbar__viewport">
+        <button class="gallery-sandbox-toolbar__btn gallery-sandbox-toolbar__viewport-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="gallery-viewport-panel"
+                title="Viewport width">
+            <svg width="14"
+                 height="14"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" />
+                <line x1="8" y1="21" x2="16" y2="21" />
+                <line x1="12" y1="17" x2="12" y2="21" />
+            </svg>
+            <span class="gallery-sandbox-toolbar__viewport-value">Responsive</span>
+        </button>
+        <div class="gallery-sandbox-toolbar__popout"
+             id="gallery-viewport-panel"
+             data-gallery-panel="viewport"
+             hidden>
+            <button class="gallery-sandbox-toolbar__popout-option gallery-sandbox-toolbar__viewport-btn gallery-sandbox-toolbar__popout-option--active"
+                    type="button"
+                    data-viewport="responsive"
+                    title="Responsive (fill available width)">Responsive</button>
+            <button class="gallery-sandbox-toolbar__popout-option gallery-sandbox-toolbar__viewport-btn"
+                    type="button"
+                    data-viewport="320"
+                    title="Small mobile (320px)">Small mobile — 320px</button>
+            <button class="gallery-sandbox-toolbar__popout-option gallery-sandbox-toolbar__viewport-btn"
+                    type="button"
+                    data-viewport="414"
+                    title="Large mobile (414px)">Large mobile — 414px</button>
+            <button class="gallery-sandbox-toolbar__popout-option gallery-sandbox-toolbar__viewport-btn"
+                    type="button"
+                    data-viewport="768"
+                    title="Tablet (768px)">Tablet — 768px</button>
+            <button class="gallery-sandbox-toolbar__popout-option gallery-sandbox-toolbar__viewport-btn"
+                    type="button"
+                    data-viewport="1024"
+                    title="Desktop (1024px)">Desktop — 1024px</button>
+            <button class="gallery-sandbox-toolbar__popout-option gallery-sandbox-toolbar__viewport-btn"
+                    type="button"
+                    data-viewport="1920"
+                    title="Full HD (1920px)">Full HD — 1920px</button>
+            <button class="gallery-sandbox-toolbar__popout-option gallery-sandbox-toolbar__viewport-btn"
+                    type="button"
+                    data-viewport="2560"
+                    title="Ultrawide (2560px)">Ultrawide — 2560px</button>
+        </div>
+    </div>
+
+    {# ── Zoom ── #}
+    <div class="gallery-sandbox-toolbar__group gallery-sandbox-toolbar__zoom">
+        <button class="gallery-sandbox-toolbar__btn gallery-sandbox-toolbar__zoom-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="gallery-zoom-panel"
+                title="Zoom level">
+            <span class="gallery-sandbox-toolbar__zoom-value">100%</span>
+        </button>
+        <div class="gallery-sandbox-toolbar__popout"
+             id="gallery-zoom-panel"
+             data-gallery-panel="zoom"
+             hidden>
+            {% with zoom_levels="50 75 100 125 150 200" %}
+                {% for level in zoom_levels.split %}
+                    <button class="gallery-sandbox-toolbar__popout-option gallery-sandbox-toolbar__zoom-btn{% if level == '100' %} gallery-sandbox-toolbar__popout-option--active{% endif %}"
+                            type="button"
+                            data-zoom="{{ level }}"
+                            title="Zoom {{ level }}%">{{ level }}%</button>
+                {% endfor %}
+            {% endwith %}
+        </div>
+    </div>
+
+    {# ── Box model outline ── #}
+    <div class="gallery-sandbox-toolbar__group">
+        <button class="gallery-sandbox-toolbar__btn gallery-sandbox-toolbar__outline-toggle"
+                type="button"
+                aria-pressed="false"
+                title="Toggle box model outline">
+            <svg width="14"
+                 height="14"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2">
+                <rect x="1" y="1" width="22" height="22" rx="2" stroke-dasharray="4 2" />
+                <rect x="5" y="5" width="14" height="14" rx="1" />
+                <rect x="9" y="9" width="6" height="6" rx="0.5" fill="currentColor" opacity="0.3" />
+            </svg>
+        </button>
+    </div>
+
+    {# ── Measure ── #}
+    <div class="gallery-sandbox-toolbar__group">
+        <button class="gallery-sandbox-toolbar__btn gallery-sandbox-toolbar__measure-toggle"
+                type="button"
+                aria-pressed="false"
+                title="Toggle measurement overlay on hover">
+            <svg width="14"
+                 height="14"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2">
+                <path d="M2 2v20h20" />
+                <path d="M6 18V8" />
+                <path d="M4 8h4" />
+                <path d="M4 18h4" />
+                <path d="M10 18h8" />
+                <path d="M10 16v4" />
+                <path d="M18 16v4" />
+            </svg>
+        </button>
+    </div>
+
+    {# ── RTL direction ── #}
+    <div class="gallery-sandbox-toolbar__group">
+        <button class="gallery-sandbox-toolbar__btn gallery-sandbox-toolbar__rtl-toggle"
+                type="button"
+                aria-pressed="false"
+                title="Toggle right-to-left direction">
+            <svg width="14"
+                 height="14"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2">
+                <path d="M10 5v14" />
+                <path d="M14 5v14" />
+                <path d="M14 5h2a4 4 0 0 1 0 8h-2" />
+                <path d="M7 15l-3-3 3-3" />
+            </svg>
+        </button>
+    </div>
+</div>

@@ -1,0 +1,300 @@
+/*
+ * Example Project — Demo Component Stylesheet
+ *
+ * Warm editorial palette, intentionally distinct from the gallery UI
+ * (which uses a cool dark sidebar + blue accent).
+ *
+ * Font stack: humanist serif for headings, system sans for body.
+ * Colour palette: warm slate primary, amber accent, earthy neutrals.
+ */
+
+/* ------------------------------------------------------------------ */
+/* Custom properties                                                    */
+/* ------------------------------------------------------------------ */
+:root {
+  --demo-font-body: "Segoe UI", system-ui, -apple-system, sans-serif;
+  --demo-font-heading: Georgia, "Times New Roman", serif;
+  --demo-font-mono: SFMono-Regular, Menlo, Consolas, monospace;
+  --demo-font-size: 15px;
+  --demo-line-height: 1.6;
+
+  /* Palette */
+  --demo-primary: #3d5a80;
+  --demo-primary-dk: #2c4560;
+  --demo-secondary: #6b7280;
+  --demo-secondary-dk: #4b5563;
+  --demo-danger: #9b2226;
+  --demo-danger-dk: #7d1a1e;
+  --demo-warning-bg: #fef3c7;
+  --demo-warning-bd: #d97706;
+  --demo-success-bg: #d1fae5;
+  --demo-success-bd: #059669;
+  --demo-info-bg: #dbeafe;
+  --demo-info-bd: #3b82f6;
+  --demo-error-bg: #fee2e2;
+  --demo-error-bd: #dc2626;
+
+  /* Neutrals */
+  --demo-text: #1f2937;
+  --demo-text-muted: #6b7280;
+  --demo-bg: #faf9f7;
+  --demo-surface: #ffffff;
+  --demo-border: #d1cec9;
+  --demo-radius: 5px;
+  --demo-radius-lg: 8px;
+  --demo-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+/* ------------------------------------------------------------------ */
+/* Base                                                                 */
+/* ------------------------------------------------------------------ */
+body {
+  font-family: var(--demo-font-body);
+  font-size: var(--demo-font-size);
+  line-height: var(--demo-line-height);
+  color: var(--demo-text);
+  background: var(--demo-bg);
+  margin: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Button                                                               */
+/* ------------------------------------------------------------------ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.5em 1.1em;
+  font-family: var(--demo-font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  border: 2px solid transparent;
+  border-radius: var(--demo-radius);
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    color 0.15s;
+  white-space: nowrap;
+  background: var(--demo-primary);
+  color: #fff;
+  border-color: var(--demo-primary);
+}
+
+.btn:hover {
+  background: var(--demo-primary-dk);
+  border-color: var(--demo-primary-dk);
+}
+
+/* Variant modifiers applied by StrCSSClassParam → class="btn primary|secondary|danger" */
+.btn.primary {
+  background: var(--demo-primary);
+  border-color: var(--demo-primary);
+  color: #fff;
+}
+.btn.primary:hover {
+  background: var(--demo-primary-dk);
+  border-color: var(--demo-primary-dk);
+}
+
+.btn.secondary {
+  background: transparent;
+  border-color: var(--demo-secondary);
+  color: var(--demo-secondary);
+}
+.btn.secondary:hover {
+  background: var(--demo-secondary);
+  color: #fff;
+}
+
+.btn.danger {
+  background: var(--demo-danger);
+  border-color: var(--demo-danger);
+  color: #fff;
+}
+.btn.danger:hover {
+  background: var(--demo-danger-dk);
+  border-color: var(--demo-danger-dk);
+}
+
+/* BoolCSSClassParam disabled → adds class "disabled" */
+.btn.disabled,
+.btn[disabled] {
+  opacity: 0.45;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* ------------------------------------------------------------------ */
+/* Badge                                                                */
+/* ------------------------------------------------------------------ */
+.badge {
+  display: inline-block;
+  padding: 0.2em 0.65em;
+  font-family: var(--demo-font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: 2em;
+  background: var(--demo-primary);
+  color: #fff;
+  line-height: 1.4;
+  vertical-align: middle;
+}
+
+/* ------------------------------------------------------------------ */
+/* Alert                                                                */
+/* ------------------------------------------------------------------ */
+.alert {
+  padding: 0.85em 1.1em;
+  border-left: 4px solid var(--demo-border);
+  border-radius: 0 var(--demo-radius) var(--demo-radius) 0;
+  font-size: 0.93rem;
+  line-height: 1.5;
+  margin: 0;
+  background: var(--demo-surface);
+  color: var(--demo-text);
+}
+
+/* StrCSSClassParam injects the level as a class */
+.alert.info {
+  background: var(--demo-info-bg);
+  border-color: var(--demo-info-bd);
+}
+.alert.success {
+  background: var(--demo-success-bg);
+  border-color: var(--demo-success-bd);
+}
+.alert.warning {
+  background: var(--demo-warning-bg);
+  border-color: var(--demo-warning-bd);
+}
+.alert.error {
+  background: var(--demo-error-bg);
+  border-color: var(--demo-error-bd);
+}
+
+/* ------------------------------------------------------------------ */
+/* User card                                                            */
+/* ------------------------------------------------------------------ */
+.user-card {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.3em;
+  padding: 1.1em 1.4em;
+  background: var(--demo-surface);
+  border: 1px solid var(--demo-border);
+  border-radius: var(--demo-radius-lg);
+  box-shadow: var(--demo-shadow);
+  max-width: 280px;
+}
+
+.user-card h3 {
+  margin: 0;
+  font-family: var(--demo-font-heading);
+  font-size: 1.1rem;
+  font-weight: normal;
+  color: var(--demo-text);
+}
+
+.user-card__email {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--demo-text-muted);
+}
+
+/* BoolCSSClassParam: user-active class applied when active */
+.user-card.user-active {
+  border-color: var(--demo-success-bd);
+}
+
+/* ------------------------------------------------------------------ */
+/* Rich button (demo_components/rich_button)                            */
+/* ------------------------------------------------------------------ */
+.rich-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.6em 1.3em;
+  font-family: var(--demo-font-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+  border: none;
+  border-radius: var(--demo-radius);
+  background: #b5451b;
+  color: #fff;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: background 0.15s;
+}
+.rich-btn:hover {
+  background: #8f3515;
+}
+
+/* ------------------------------------------------------------------ */
+/* Info card                                                            */
+/* ------------------------------------------------------------------ */
+.info-card {
+  display: inline-block;
+  padding: 1em 1.4em;
+  background: var(--demo-surface);
+  border: 1px solid var(--demo-border);
+  border-radius: var(--demo-radius-lg);
+  box-shadow: var(--demo-shadow);
+  font-size: 0.93rem;
+  max-width: 320px;
+}
+
+.info-card--highlighted {
+  border-color: var(--demo-primary);
+  box-shadow: 0 0 0 3px rgba(61, 90, 128, 0.15);
+}
+
+/* ------------------------------------------------------------------ */
+/* Pill / Chip (demo_single)                                            */
+/* ------------------------------------------------------------------ */
+.pill {
+  display: inline-block;
+  padding: 0.25em 0.8em;
+  border-radius: 2em;
+  background: #e0e7ef;
+  color: var(--demo-primary-dk);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0.2em 0.7em;
+  border-radius: var(--demo-radius);
+  background: var(--demo-primary);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+/* ------------------------------------------------------------------ */
+/* Generic nav demo components                                          */
+/* ------------------------------------------------------------------ */
+.divider {
+  border: none;
+  border-top: 1px solid var(--demo-border);
+  margin: 0.75em 0;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dashed var(--demo-secondary);
+  cursor: help;
+  color: var(--demo-secondary);
+  font-style: italic;
+  font-size: 0.9rem;
+}

@@ -1,0 +1,145 @@
+[tool.poetry]
+name = "dj-design-system"
+version = "0.0.1"
+description = "A Design System for Django"
+maintainers = [
+    "Marcel Kornblum <marcel.kornblum@businessandtrade.gov.uk>",
+    "Cameron Lamb <cameron.lamb@businessandtrade.gov.uk>",
+]
+license = "MIT"
+readme = "README.md"
+keywords = ["django", "Design System", "component"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+
+  "Intended Audience :: Developers",
+  "Topic :: Documentation",
+  "Topic :: Software Development :: User Interfaces",
+
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+
+  "Framework :: Django",
+  "Framework :: Django :: 5.2",
+  "Framework :: Django :: 6",
+  "Framework :: Django :: 6.0",
+
+  "License :: OSI Approved :: MIT License",
+]
+include = [
+  "docs",
+  "tests",
+  "example_project",
+]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+django = "~5.2"
+markdown = "^3.10.2"
+
+[tool.poetry.group.testing.dependencies]
+psycopg2 = "^2.9.11"
+tox="^4.36.0"
+coverage = "^7.11.0"
+pytest-cov = "^6.0.0"
+pytest-django = "^4.11.1"
+pytest-mock = "^3.15.1"
+factory-boy = "^3.3.3"
+playwright = "^1.57"
+pytest-playwright = "^0.7.2"
+
+[tool.poetry.group.utils.dependencies]
+ruff = "^0.14.13"
+mypy = "^1.18.2"
+djlint = "^1.36.4"
+types-Markdown = "*"
+types-Pygments = "*"
+
+[tool.poetry.group.docs]
+optional=true
+
+[tool.poetry.group.docs.dependencies]
+mkdocs-material = "^9.7.1"
+mkdocstrings-python = "^2.0.2"
+
+[tool.ruff]
+exclude = [
+    ".direnv",
+    ".git",
+    ".ruff_cache",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "build",
+    "dist",
+    "site-packages",
+]
+line-length = 88
+indent-width = 4
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]
+
+[tool.ruff.lint.per-file-ignores]
+# Optional third-party import inside try/except confuses isort
+"dj_design_system/services/media.py" = ["I001"]
+fixable = ["ALL"]
+ignore = ["B904", "E501", "N818", "S101", "S105",]
+
+[tool.ruff.lint.isort]
+lines-after-imports = 2
+
+[tool.mypy]
+exclude = [
+    # TOML literal strings (single-quotes, no escaping necessary)
+    '/migrations/',
+    'example_project/',
+    'tests/'
+]
+check_untyped_defs = true
+ignore_missing_imports = false
+
+[[tool.mypy.overrides]]
+module = ["django.*",]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = ["webpack_loader.*"]
+ignore_missing_imports = true
+
+[tool.coverage.run]
+branch = true
+source = ["dj_design_system"]
+omit = [
+    "dj_design_system/tests/*",
+    "dj_design_system/migrations/*",
+]
+
+[tool.coverage.report]
+show_missing = true
+omit = [
+    "dj_design_system/tests/*",
+    "dj_design_system/migrations/*",
+]
+
+[tool.pytest.ini_options]
+python_files = ["test_*.py", "*_test.py", "tests.py"]
+addopts = "--disable-warnings --ds=tests.settings --base-url http://localhost:8003 --liveserver=localhost:8003"
+DJANGO_SETTINGS_MODULE = "tests.settings"
+markers = [
+    "e2e: Mark the test as using Playwright.",
+]
+
+[tool.djlint]
+extension = "html"
+profile = "django"
+ignore = "T002,H006,H017,H023"
+preserve_blank_lines = true
+extend_exclude = "htmlcov,staticfiles,static,node_modules"
+custom_blocks = "dropdown,fragment"

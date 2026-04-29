@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="gallery-theme-light">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>
+            {% block title %}{{ design_system_name }}{% endblock %}
+        </title>
+        <link rel="stylesheet"
+              href="{% static 'dj_design_system/gallery.css' %}">
+        <link rel="stylesheet"
+              href="{% static 'dj_design_system/gallery-highlight.css' %}">
+        <link rel="stylesheet"
+              href="{% static 'dj_design_system/gallery-markdown.css' %}">
+        {% block extra_css %}{% endblock %}
+        {{ search_index|json_script:"gallery-search-index" }}
+    </head>
+    <body>
+        <div class="gallery">
+            {# ── Mobile menu toggle (CSS-only, no JS) ────────────────── #}
+            <input type="checkbox"
+                   id="gallery-sidebar-toggle"
+                   class="gallery-sidebar-toggle"
+                   aria-hidden="true">
+            <label for="gallery-sidebar-toggle"
+                   class="gallery-hamburger"
+                   aria-label="Toggle navigation">
+                <span class="gallery-hamburger__line"></span>
+                <span class="gallery-hamburger__line"></span>
+                <span class="gallery-hamburger__line"></span>
+            </label>
+            <label for="gallery-sidebar-toggle" class="gallery-overlay"></label>
+
+            {# ── Navigation pane (left sidebar) ──────────────────────── #}
+            <aside class="gallery-sidebar">
+                <div class="gallery-sidebar__header">
+                    <a class="gallery-sidebar__title" href="{% url 'gallery' %}">{{ design_system_name }}</a>
+                </div>
+                <div class="gallery-sidebar__search">
+                    <input type="search"
+                           id="gallery-search-input"
+                           class="gallery-search-input"
+                           placeholder="Search..."
+                           autocomplete="off"
+                           aria-label="Search components and documentation">
+                </div>
+                <div id="gallery-search-results"
+                     class="gallery-search-results"
+                     role="listbox"
+                     aria-label="Search results"
+                     hidden></div>
+                <nav class="gallery-nav" id="gallery-nav">
+                    {% for app_node in nav_tree %}
+                        {% include "dj_design_system/gallery/navtree.html" with node=app_node depth=0 %}
+                    {% endfor %}
+                </nav>
+            </aside>
+
+            {# ── Right pane ──────────────────────────────────────────── #}
+            <main class="gallery-main">
+                {% block toolbar %}
+                    <div class="gallery-toolbar">
+                        <div class="gallery-toolbar__breadcrumb">
+                            {% block breadcrumb %}
+                                <a href="{% url 'gallery' %}">Gallery</a>
+                            {% endblock %}
+                        </div>
+                        <div class="gallery-toolbar__actions">
+                            {% block toolbar_actions %}{% endblock %}
+                        </div>
+                    </div>
+                {% endblock %}
+
+                {# ── Content area: Documentation + Sandbox ───────────── #}
+                <div class="gallery-content-area">
+                    {% block content %}{% endblock %}
+                </div>
+            </main>
+        </div>
+        {% block extra_js %}{% endblock %}
+        <script src="{% static 'dj_design_system/gallery-search.js' %}" defer></script>
+    </body>
+</html>

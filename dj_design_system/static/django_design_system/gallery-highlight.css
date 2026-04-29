@@ -1,0 +1,229 @@
+/* ================================================================== */
+/* Syntax highlighting (Monokai)                                       */
+/*                                                                     */
+/* Palette variables are defined first so projects can override         */
+/* individual colours. Semantic token variables map palette colours to  */
+/* Pygments token types for finer control.                             */
+/*                                                                     */
+/* Scope: applies to .gallery-usage__code (tag signature widgets),     */
+/* .gallery-highlight code (codehilite markdown extension), and        */
+/* .gallery-md-canvas__code code (markdown canvas widgets).            */
+/* ================================================================== */
+
+:root {
+  /* ── Palette: raw Monokai colours ── */
+  --hl-palette-bg: #272822;
+  --hl-palette-bg-line: #49483e;
+  --hl-palette-text: #f8f8f2;
+  --hl-palette-comment: #75715e;
+  --hl-palette-keyword: #66d9ef;
+  --hl-palette-literal: #ae81ff;
+  --hl-palette-string: #e6db74;
+  --hl-palette-operator: #f92672;
+  --hl-palette-function: #a6e22e;
+  --hl-palette-preproc: #ff79c6;
+  --hl-palette-error: #960050;
+  --hl-palette-error-bg: #1e0010;
+
+  /* ── Semantic tokens: map palette to Pygments roles ── */
+  --hl-comment: var(--hl-palette-comment);
+  --hl-keyword: var(--hl-palette-keyword);
+  --hl-literal: var(--hl-palette-literal);
+  --hl-string: var(--hl-palette-string);
+  --hl-name: var(--hl-palette-text);
+  --hl-operator: var(--hl-palette-operator);
+  --hl-function: var(--hl-palette-function);
+  --hl-tag-delimiter: var(--hl-palette-preproc);
+  --hl-punctuation: var(--hl-palette-text);
+  --hl-error: var(--hl-palette-error);
+  --hl-error-bg: var(--hl-palette-error-bg);
+  --hl-line-bg: var(--hl-palette-bg-line);
+
+  /* ── Code block chrome ── */
+  --hl-block-bg: var(--gallery-dark-code-bg, #272822);
+  --hl-block-text: var(--gallery-dark-code-text, #f8f8f2);
+  --hl-block-border: var(--gallery-dark-code-border, #383838);
+}
+
+/* Shorthand scope: all highlighted code contexts */
+.gallery-usage__code,
+.gallery-highlight code,
+.gallery-md-canvas__code code {
+  color: var(--hl-block-text);
+}
+
+/* Transparent background on all spans (prevents Pygments inline bg) */
+:is(
+    .gallery-usage__code,
+    .gallery-highlight code,
+    .gallery-md-canvas__code code
+  )
+  span {
+  background: transparent !important;
+}
+
+/* ── Highlighted line ── */
+:is(
+    .gallery-usage__code,
+    .gallery-highlight code,
+    .gallery-md-canvas__code code
+  )
+  .hll {
+  background-color: var(--hl-line-bg);
+}
+
+/* ── Comments: c cm c1 cs ── */
+:is(
+    .gallery-usage__code,
+    .gallery-highlight code,
+    .gallery-md-canvas__code code
+  )
+  :is(.c, .cm, .c1, .cs) {
+  color: var(--hl-comment);
+}
+
+/* ── Errors: err ── */
+:is(
+    .gallery-usage__code,
+    .gallery-highlight code,
+    .gallery-md-canvas__code code
+  )
+  .err {
+  color: var(--hl-error);
+  background-color: var(--hl-error-bg);
+}
+
+/* ── Keywords: k kc kd kp kr kt ── */
+:is(
+    .gallery-usage__code,
+    .gallery-highlight code,
+    .gallery-md-canvas__code code
+  )
+  :is(.k, .kc, .kd, .kp, .kr, .kt) {
+  color: var(--hl-keyword);
+}
+
+/* ── Keyword.Namespace / Operator / Operator.Word / Name.Tag ── */
+:is(
+    .gallery-usage__code,
+    .gallery-highlight code,
+    .gallery-md-canvas__code code
+  )
+  :is(.kn, .o, .ow, .nt) {
+  color: var(--hl-operator);
+}
+
+/* ── Literals / Numbers: l m mf mh mi mo il se ── */
+:is(
+    .gallery-usage__code,
+    .gallery-highlight code,
+    .gallery-md-canvas__code code
+  )
+  :is(.l, .m, .mf, .mh, .mi, .mo, .il, .se) {
+  color: var(--hl-literal);
+}
+
+/* ── Strings: s ld sb sc sd s2 sh si sx sr s1 ss ── */
+:is(
+    .gallery-usage__code,
+    .gallery-highlight code,
+    .gallery-md-canvas__code code
+  )
+  :is(.s, .ld, .sb, .sc, .sd, .s2, .sh, .si, .sx, .sr, .s1, .ss) {
+  color: var(--hl-string);
+}
+
+/* ── Names (default text): n p nb ni nl nn nv py w bp vc vg vi ── */
+:is(
+    .gallery-usage__code,
+    .gallery-highlight code,
+    .gallery-md-canvas__code code
+  )
+  :is(.n, .p, .nb, .ni, .nl, .nn, .nv, .py, .w, .bp, .vc, .vg, .vi) {
+  color: var(--hl-name);
+}
+
+/* ── Name.Constant (shares keyword colour) ── */
+:is(
+    .gallery-usage__code,
+    .gallery-highlight code,
+    .gallery-md-canvas__code code
+  )
+  .no {
+  color: var(--hl-keyword);
+}
+
+/* ── Functions / Decorators / Classes: na nc nd ne nf nx ── */
+:is(
+    .gallery-usage__code,
+    .gallery-highlight code,
+    .gallery-md-canvas__code code
+  )
+  :is(.na, .nc, .nd, .ne, .nf, .nx) {
+  color: var(--hl-function);
+}
+
+/* ── Preprocessor (template tag delimiters {% %}) ── */
+:is(
+    .gallery-usage__code,
+    .gallery-highlight code,
+    .gallery-md-canvas__code code
+  )
+  .cp {
+  color: var(--hl-tag-delimiter) !important;
+}
+
+/* ── Generic emphasis / strong ── */
+:is(
+    .gallery-usage__code,
+    .gallery-highlight code,
+    .gallery-md-canvas__code code
+  )
+  .ge {
+  font-style: italic;
+}
+:is(
+    .gallery-usage__code,
+    .gallery-highlight code,
+    .gallery-md-canvas__code code
+  )
+  .gs {
+  font-weight: bold;
+}
+
+/* ================================================================== */
+/* Code block containers                                               */
+/* ================================================================== */
+
+/* All multiline code blocks in documentation get the dark theme */
+.gallery-docs pre {
+  background: var(--hl-block-bg);
+  border-radius: var(--gallery-radius);
+  border: 1px solid var(--hl-block-border);
+  overflow-x: auto;
+  margin: 12px 0;
+  padding: 16px;
+}
+
+.gallery-docs pre code {
+  font-family: var(--gallery-font-mono);
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--hl-block-text);
+  background: transparent;
+}
+
+/* codehilite wraps in a div — remove double border/margin */
+.gallery-docs .gallery-highlight {
+  background: var(--hl-block-bg);
+  border-radius: var(--gallery-radius);
+  border: 1px solid var(--hl-block-border);
+  overflow-x: auto;
+  margin: 12px 0;
+}
+
+.gallery-docs .gallery-highlight pre {
+  border: none;
+  margin: 0;
+  border-radius: 0;
+}

@@ -1,0 +1,5 @@
+/* Extra styles declared via the explicit Media class — merged with rich_button.css */
+.rich-btn {
+  font-family: inherit;
+  transition: all 0.15s ease;
+}

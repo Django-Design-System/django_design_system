@@ -1,0 +1,44 @@
+{% load static design_components %}
+<!DOCTYPE html>
+<html lang="en"{{ html_attrs }}>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Canvas</title>
+
+        {# 1. Global project CSS (webpack bundles + static paths) #}
+        {% global_stylesheets %}
+
+        {# 2. Canvas layout CSS (centering, padding, backgrounds) #}
+        <link rel="stylesheet"
+              href="{% static 'dj_design_system/canvas.css' %}">
+
+        {# 3. All component CSS #}
+        {% component_stylesheets %}
+
+        {# 4. Dynamic background colour rules #}
+        {{ canvas_bg_styles|safe }}
+    </head>
+    <body {{ body_attrs }}>
+        <div class="canvas-wrapper {{ canvas_mode_class }} {{ canvas_bg_class }}">{{ rendered_html }}</div>
+
+        {# Component-specific JS #}
+        {{ component_js }}
+
+        {# Notify parent frame of content height changes (basic mode only) #}
+        <script>
+            (function () {
+                var wrapper = document.querySelector(".canvas-wrapper");
+                if (!wrapper || !window.parent || window.parent === window) return;
+                if (!wrapper.classList.contains("canvas-wrapper--basic")) return;
+                var ro = new ResizeObserver(function () {
+                    window.parent.postMessage({
+                        type: "canvas-resize",
+                        height: document.documentElement.scrollHeight
+                    }, "*");
+                });
+                ro.observe(wrapper);
+            })();
+        </script>
+    </body>
+</html>

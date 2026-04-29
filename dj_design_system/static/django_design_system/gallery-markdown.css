@@ -1,0 +1,108 @@
+/* ------------------------------------------------------------------ */
+/* Markdown canvas widget (```canvas blocks in .md files)              */
+/* ------------------------------------------------------------------ */
+.gallery-md-canvas {
+  position: relative;
+  margin: 16px 0;
+  border: 1px solid var(--gallery-border);
+  border-radius: var(--gallery-radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Radio inputs — hidden */
+.gallery-md-canvas__input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Toggle pill — bottom right, icon-only */
+.gallery-md-canvas__toggles {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  z-index: 2;
+  display: inline-flex;
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid var(--gallery-border);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.gallery-md-canvas:hover .gallery-md-canvas__toggles {
+  opacity: 1;
+}
+
+.gallery-md-canvas__label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+  color: var(--gallery-text-muted);
+  border-radius: 13px;
+  transition:
+    background 0.1s ease,
+    color 0.1s ease;
+}
+
+.gallery-md-canvas__label:hover {
+  color: var(--gallery-text);
+}
+
+/* Preview and code sections — flex children that stretch to fill */
+.gallery-md-canvas__preview {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.gallery-md-canvas__iframe {
+  min-height: 60px;
+  flex: 1;
+}
+
+.gallery-md-canvas__code {
+  border-top: 1px solid var(--gallery-border);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.gallery-md-canvas__code .gallery-usage__pre {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  flex: 1;
+}
+
+/* Toggle states: both (default) — show both preview and code */
+/* When "preview" is selected — hide code, preview stretches full height */
+.gallery-md-canvas__input--preview:checked ~ .gallery-md-canvas__code {
+  display: none;
+}
+
+/* When "code" is selected — hide preview, code stretches full height */
+.gallery-md-canvas__input--code:checked ~ .gallery-md-canvas__preview {
+  display: none;
+}
+
+/* Active label state: use general sibling combinator from input to toggles */
+.gallery-md-canvas__input--both:checked
+  ~ .gallery-md-canvas__toggles
+  label[title="Preview and code"],
+.gallery-md-canvas__input--preview:checked
+  ~ .gallery-md-canvas__toggles
+  label[title="Preview only"],
+.gallery-md-canvas__input--code:checked
+  ~ .gallery-md-canvas__toggles
+  label[title="Code only"] {
+  background: var(--gallery-accent);
+  color: #fff;
+}

@@ -1,0 +1,7 @@
+__pycache__
+.mypy__cache
+.pytest__cache
+.ruff__cache
+.venv
+*.db
+db.sqlite3
