@@ -41,32 +41,32 @@ class ComponentsStaticFinder(BaseFinder):
                     storage,
                 )
 
-    def find(self, path: str, find_all: bool = False) -> str | list[str] | None:
+    def find(self, path: str, find_all: bool = False) -> str | list[str]:
         """
         Return the filesystem path for a static file at *path* if it exists
-        and has an allowed extension, or ``None`` otherwise.
+        and has an allowed extension, or an empty list otherwise.
 
         *path* must be in the form ``{app_label}/components/{sub_path}``.
         """
         # Only handle paths that follow our namespace convention.
         parts = path.split("/", 2)
         if len(parts) < 3 or parts[1] != "components":
-            return None
+            return []
 
         app_label, _, sub_path = parts[0], parts[1], parts[2]
 
         _, ext = os.path.splitext(sub_path)
         if ext.lower() not in ALLOWED_EXTENSIONS:
-            return None
+            return []
 
         if app_label not in self._storages:
-            return None
+            return []
 
         components_dir, _ = self._storages[app_label]
         abs_path = os.path.join(components_dir, sub_path)
 
         if not os.path.isfile(abs_path):
-            return None
+            return []
 
         return [abs_path] if find_all else abs_path
 

@@ -78,25 +78,25 @@ class TestFind:
 
     def test_rejects_python_file(self, finder):
         result = finder.find("demo_components/components/button/button.py")
-        assert result is None
+        assert result == []
 
     def test_rejects_non_components_namespace(self, finder):
         """Paths not matching {app_label}/components/{sub_path} are ignored."""
         result = finder.find("demo_components/static/button.css")
-        assert result is None
+        assert result == []
 
     def test_returns_none_for_unknown_app(self, finder):
         result = finder.find("unknown_app/components/button.css")
-        assert result is None
+        assert result == []
 
     def test_returns_none_for_nonexistent_file(self, finder):
         result = finder.find("demo_components/components/nonexistent.css")
-        assert result is None
+        assert result == []
 
     def test_finds_nested_css_file(self, finder):
         """Nested path that doesn't exist returns None."""
         result = finder.find("demo_components/components/card/nonexistent.css")
-        assert result is None
+        assert result == []
 
 
 class TestList:
