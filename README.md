@@ -1,8 +1,8 @@
 # dj-design-system
 
 [![CI](https://github.com/Django-Design-System/django_design_system/actions/workflows/ci.yml/badge.svg)](https://github.com/Django-Design-System/django_design_system/actions/workflows/ci.yml)
-[![PyPI version](https://img.shields.io/pypi/v/dj-design-system)](https://pypi.org/project/dj-design-system/)
-[![Python versions](https://img.shields.io/pypi/pyversions/dj-design-system)](https://pypi.org/project/dj-design-system/)
+[![PyPI version](https://img.shields.io/pypi/v/dj-design-system?label=PyPI)](https://pypi.org/project/dj-design-system/)
+[![Python versions](https://img.shields.io/badge/python-3.13%20%7C%203.14-blue)](https://pypi.org/project/dj-design-system/)
 [![Django](https://img.shields.io/badge/django-5.2%20%7C%206.0%20%7C%20latest-green)](https://www.djangoproject.com/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 
