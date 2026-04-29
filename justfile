@@ -74,6 +74,7 @@ build:
 # Start the example project gallery and open it in the browser
 demo:
     #!/usr/bin/env sh
+    uv run python example_project/manage.py migrate --run-syncdb
     uv run python example_project/manage.py runserver 8000 &
     SERVER_PID=$!
     echo "Starting example project (PID $SERVER_PID) at http://localhost:8000/ ..."

@@ -44,7 +44,7 @@ The gallery generates the templatetag syntax automatically and shows a live prev
 
 ![Gallery preview showing the button component with its live iframe preview and generated tag signature](https://github.com/Django-Design-System/django_design_system/raw/main/docs/assets/gallery-preview.png)
 
-**[Browse the demo gallery →](https://django-design-system.github.io/django_design_system/gallery/)**
+**[Browse the demo gallery →](https://django-design-system.github.io/django_design_system/demo/)**
 
 ---
 
