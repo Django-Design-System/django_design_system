@@ -76,5 +76,5 @@ The gallery generates the templatetag syntax automatically and shows a live prev
 | Configure the gallery UI                         | [Gallery](gallery.md)                                                                                  |
 | Use components in templates                      | [Templatetags](templatetags.md)                                                                        |
 | Understand how to structure my component library | [Organising components](organisation.md)                                                               |
-| Browse the full API reference                    | [API reference](api-reference.md)                                                                      |
+| Browse the full API reference                    | [Parameters](api/parameters.md) · [Components](api/components.md)                                      |
 | Contribute to the project                        | [Contributing](https://github.com/Django-Design-System/django_design_system/blob/main/CONTRIBUTING.md) |

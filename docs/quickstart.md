@@ -1,5 +1,7 @@
 # Quickstart
 
+Full documentation lives at [django-design-system.github.io/django_design_system/](https://django-design-system.github.io/django_design_system/).
+
 ## Installation
 
 Add `dj_design_system` to your `INSTALLED_APPS`:

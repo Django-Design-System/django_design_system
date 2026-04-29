@@ -3,6 +3,12 @@
 The gallery provides a browsable UI for all registered components, with a
 tree-view navigation sidebar built from the filesystem structure.
 
+> **See it live:** A static snapshot of the example component gallery is deployed at
+> [django-design-system.github.io/django_design_system/gallery/](https://django-design-system.github.io/django_design_system/gallery/).
+> Note that HTMX-powered interactions (live canvas previews) are not available in the
+> static snapshot — run the example project locally with `just demo` for the full
+> interactive experience.
+
 ## Setup
 
 Include the gallery URLs in your project:

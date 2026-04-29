@@ -1,0 +1,55 @@
+site_name: dj-design-system
+site_description: A Django-native approach to building, documenting, and shipping UI component libraries.
+site_url: https://django-design-system.github.io/django_design_system/
+repo_url: https://github.com/Django-Design-System/django_design_system
+repo_name: Django-Design-System/django_design_system
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.footer
+    - navigation.indexes
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+    - content.action.edit
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_source: true
+            show_root_heading: true
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+            docstring_style: google
+            merge_init_into_class: true
+
+nav:
+  - Home: index.md
+  - Quick Start: quickstart.md
+  - Components: components.md
+  - Gallery: gallery.md
+  - Registry: registry.md
+  - Template Tags: templatetags.md
+  - Organisation: organisation.md
+  - API Reference:
+      - Parameters: api/parameters.md
+      - Components: api/components.md

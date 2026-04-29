@@ -20,7 +20,8 @@ env/
 # Build outputs
 dist/
 build/
-site/           # mkdocs build output
+# mkdocs build output
+site/
 
 # Coverage
 .coverage
