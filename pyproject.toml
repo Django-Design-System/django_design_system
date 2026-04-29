@@ -66,6 +66,7 @@ docs = [
 
 [tool.hatch.version]
 source = "vcs"
+raw-options = { local_scheme = "no-local-version" }
 
 [tool.hatch.build.targets.wheel]
 packages = ["dj_design_system"]
