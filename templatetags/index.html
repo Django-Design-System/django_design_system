@@ -1,0 +1,1475 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A Django-native approach to building, documenting, and shipping UI component libraries.">
+      
+      
+      
+        <link rel="canonical" href="https://django-design-system.github.io/django_design_system/templatetags/">
+      
+      
+        <link rel="prev" href="../registry/">
+      
+      
+        <link rel="next" href="../organisation/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Template Tags - dj-design-system</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#template-tag-auto-registration" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="dj-design-system" class="md-header__button md-logo" aria-label="dj-design-system" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            dj-design-system
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Template Tags
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Django-Design-System/django_design_system" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Django-Design-System/django_design_system
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="dj-design-system" class="md-nav__button md-logo" aria-label="dj-design-system" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    dj-design-system
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Django-Design-System/django_design_system" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Django-Design-System/django_design_system
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../components/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Components
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gallery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gallery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../registry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Registry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Template Tags
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Template Tags
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tag-naming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tag Naming
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tag Naming">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#short-name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Short Name
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#qualified-name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qualified Name
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#template-tag-libraries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Template Tag Libraries
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Template Tag Libraries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#central-library-design_components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Central Library: design_components
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#per-app-libraries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Per-App Libraries
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#name-clashes-and-overriding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Name Clashes and Overriding
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Name Clashes and Overriding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#controlling-override-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Controlling Override Order
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#registration-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Registration Types
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#media-tags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Media Tags
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Media Tags">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#component_stylesheets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        {% component_stylesheets %}
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#component_scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        {% component_scripts %}
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-component-media-is-discovered" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How component media is discovered
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#global_stylesheets-and-global_scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        {% global_stylesheets %} and {% global_scripts %}
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recommended-base-template-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended base template layout
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gallery-library-dj_design_system_gallery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gallery Library: dj_design_system_gallery
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Gallery Library: dj_design_system_gallery">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#canvas-endcanvas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        {% canvas %}...{% endcanvas %}
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#depthadd_indent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        {{ depth|add_indent }}
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../organisation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Organisation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/parameters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Parameters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/components/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Components
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tag-naming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tag Naming
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tag Naming">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#short-name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Short Name
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#qualified-name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qualified Name
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#template-tag-libraries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Template Tag Libraries
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Template Tag Libraries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#central-library-design_components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Central Library: design_components
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#per-app-libraries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Per-App Libraries
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#name-clashes-and-overriding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Name Clashes and Overriding
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Name Clashes and Overriding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#controlling-override-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Controlling Override Order
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#registration-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Registration Types
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#media-tags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Media Tags
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Media Tags">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#component_stylesheets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        {% component_stylesheets %}
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#component_scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        {% component_scripts %}
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-component-media-is-discovered" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How component media is discovered
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#global_stylesheets-and-global_scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        {% global_stylesheets %} and {% global_scripts %}
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recommended-base-template-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended base template layout
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gallery-library-dj_design_system_gallery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gallery Library: dj_design_system_gallery
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Gallery Library: dj_design_system_gallery">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#canvas-endcanvas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        {% canvas %}...{% endcanvas %}
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#depthadd_indent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        {{ depth|add_indent }}
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/Django-Design-System/django_design_system/edit/main/docs/templatetags.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="template-tag-auto-registration">Template Tag Auto-Registration</h1>
+<h2 id="how-it-works">How It Works</h2>
+<p>When Django starts, <code>dj_design_system</code>'s <code>AppConfig.ready()</code> triggers <code>component_registry.autodiscover()</code>, which imports the <code>components</code> module from every installed app and registers all discovered <code>BaseComponent</code> subclasses (via <code>TagComponent</code> or <code>BlockComponent</code>).</p>
+<p>Template tag registration happens when a templatetag library file calls <code>component_registry.register_templatetags(register)</code>. This is a lazy step — the components are already discovered, but they are registered on a specific <code>template.Library</code> at load time.</p>
+<h2 id="tag-naming">Tag Naming</h2>
+<p>Each component gets two names:</p>
+<h3 id="short-name">Short Name</h3>
+<p>Derived automatically from the class name, or set explicitly via <code>Meta.name</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Class Name</th>
+<th>Derived Short Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>IconComponent</code></td>
+<td><code>icon</code></td>
+</tr>
+<tr>
+<td><code>MyFancyButton</code></td>
+<td><code>my_fancy_button</code></td>
+</tr>
+<tr>
+<td><code>HeroCardComponent</code></td>
+<td><code>hero_card</code></td>
+</tr>
+</tbody>
+</table>
+<p>Override with <code>Meta.name</code>:</p>
+<pre><code class="language-python">class HeroCardComponent(TagComponent):
+    class Meta:
+        name = &quot;hero&quot;
+</code></pre>
+<h3 id="qualified-name">Qualified Name</h3>
+<p>Always of the form <code>{app_label}__{relative_path}__{name}</code>, using <code>__</code> as separator. The relative path is the dotted directory path within the app's <code>components/</code> package.</p>
+<table>
+<thead>
+<tr>
+<th>Component Location</th>
+<th>Qualified Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>myapp/components/icon.py</code> → <code>IconComponent</code></td>
+<td><code>myapp__icon</code></td>
+</tr>
+<tr>
+<td><code>myapp/components/cards/info_card.py</code> → <code>InfoCardComponent</code></td>
+<td><code>myapp__cards__info_card</code></td>
+</tr>
+<tr>
+<td><code>myapp/components/cards/layouts/hero.py</code> → <code>HeroCardComponent</code> (Meta.name="hero")</td>
+<td><code>myapp__cards__layouts__hero</code></td>
+</tr>
+</tbody>
+</table>
+<p>Qualified names are always unique and always registered, regardless of ambiguity.</p>
+<h2 id="template-tag-libraries">Template Tag Libraries</h2>
+<h3 id="central-library-design_components">Central Library: <code>design_components</code></h3>
+<p>Contains ALL components from ALL installed apps.</p>
+<pre><code class="language-html">{% load design_components %} {% icon &quot;check&quot; %} {% callout type=&quot;info&quot; %}Hello{%
+endcallout %} {% myapp__cards__layouts__hero %} {# qualified name always works
+#}
+</code></pre>
+<h3 id="per-app-libraries">Per-App Libraries</h3>
+<p>Create a per-app library when you want scoped component access. Uniqueness is evaluated within the app's components only.</p>
+<pre><code class="language-python"># myapp/templatetags/components.py
+from django import template
+from dj_design_system import component_registry
+
+register = template.Library()
+component_registry.register_templatetags(register, app_label=&quot;myapp&quot;)
+</code></pre>
+<pre><code class="language-html">{% load design_components %} {% icon &quot;check&quot; %}
+</code></pre>
+<p><strong>Scoping example</strong>: If both <code>app_a</code> and <code>app_b</code> define a <code>ButtonComponent</code>, the global <code>design_components</code> library will register the one from whichever app appears last in <code>INSTALLED_APPS</code> as <code>{% button %}</code>. Both are always available via their qualified names: <code>{% app_a__button %}</code> and <code>{% app_b__button %}</code>.</p>
+<h2 id="name-clashes-and-overriding">Name Clashes and Overriding</h2>
+<p>When two or more components share the same short name within a library's scope:</p>
+<ol>
+<li>Each component is still registered with its <strong>qualified name</strong> (always works).</li>
+<li>The short name is assigned to the <strong>last-discovered component</strong> — i.e. the one from the app that appears latest in <code>INSTALLED_APPS</code>.</li>
+</ol>
+<p>This means you can intentionally override a component from an earlier app by defining a component with the same name in a later app. The qualified name is always available as an escape hatch.</p>
+<h3 id="controlling-override-order">Controlling Override Order</h3>
+<p>Discovery order follows <code>INSTALLED_APPS</code> order. To override a component, place your app <strong>after</strong> the app you want to override:</p>
+<pre><code class="language-python">INSTALLED_APPS = [
+    # ...
+    &quot;design_system_defaults&quot;,   # defines ButtonComponent
+    &quot;my_project_components&quot;,    # also defines ButtonComponent — this one wins
+]
+</code></pre>
+<p>With the above, <code>{% button %}</code> resolves to <code>my_project_components</code>'s version, while <code>{% design_system_defaults__button %}</code> still reaches the original.</p>
+<h2 id="registration-types">Registration Types</h2>
+<table>
+<thead>
+<tr>
+<th>Component Base Class</th>
+<th>Registration Method</th>
+<th>Template Syntax</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TagComponent</code></td>
+<td><code>simple_tag</code></td>
+<td><code>{% icon "check" %}</code></td>
+</tr>
+<tr>
+<td><code>BlockComponent</code></td>
+<td><code>simple_block_tag</code></td>
+<td><code>{% callout %}...{% endcallout %}</code></td>
+</tr>
+<tr>
+<td><code>BaseComponent</code> (directly)</td>
+<td>Not registered</td>
+<td>Python-only usage</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="media-tags">Media Tags</h2>
+<p>The <code>design_components</code> library provides four tags for injecting CSS and JS into your base templates. They are split into two groups: <strong>component media</strong> (driven by the component registry) and <strong>global media</strong> (driven by settings).</p>
+<h3 id="component_stylesheets"><code>{% component_stylesheets %}</code></h3>
+<p>Renders a <code>&lt;link rel="stylesheet"&gt;</code> tag for every CSS file declared by any registered component. The list of paths is collected from <code>ComponentInfo.media.css</code> across all discovered components and deduplicated (preserving first-appearance order).</p>
+<p>Place this tag in <code>&lt;head&gt;</code>, after any global stylesheets:</p>
+<pre><code class="language-django">{% load design_components %}
+&lt;head&gt;
+    {% render_bundle 'main' 'css' %}
+    {% component_stylesheets %}
+&lt;/head&gt;
+</code></pre>
+<p>Produces output such as:</p>
+<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/static/myapp/components/button/button.css&quot; /&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;/static/myapp/components/callout/callout.css&quot; /&gt;
+</code></pre>
+<p>Returns an empty string when no registered component declares any CSS.</p>
+<h3 id="component_scripts"><code>{% component_scripts %}</code></h3>
+<p>Renders a <code>&lt;script src="..."&gt;</code> tag for every JS file declared by any registered component. Works identically to <code>component_stylesheets</code> but for JS paths from <code>ComponentInfo.media.js</code>.</p>
+<p>Place this tag just before <code>&lt;/body&gt;</code>, after any global scripts:</p>
+<pre><code class="language-django">{% load design_components %}
+    {% render_bundle 'main' 'js' %}
+    {% component_scripts %}
+&lt;/body&gt;
+</code></pre>
+<p>Produces output such as:</p>
+<pre><code class="language-html">&lt;script src=&quot;/static/myapp/components/button/button.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>Returns an empty string when no registered component declares any JS.</p>
+<h3 id="how-component-media-is-discovered">How component media is discovered</h3>
+<p>Each registered component can have CSS and JS files co-located with its Python module. The registry automatically detects files named after the component (e.g. <code>button.css</code> and <code>button.js</code> next to <code>button.py</code>) and records them on <code>ComponentInfo.media</code>. Components can also override <code>get_media()</code> to return a custom <code>ComponentMedia</code> instance.</p>
+<p>See <a href="../components/#component-media">components.md</a> for full details on declaring component media.</p>
+<h3 id="global_stylesheets-and-global_scripts"><code>{% global_stylesheets %}</code> and <code>{% global_scripts %}</code></h3>
+<p>These tags inject CSS and JS that is <em>not</em> tied to specific components - for example, a shared webpack bundle or a single global stylesheet. They read from the <code>GLOBAL_CSS_BUNDLES</code>, <code>GLOBAL_CSS</code>, <code>GLOBAL_JS_BUNDLES</code>, and <code>GLOBAL_JS</code> keys of the <code>dj_design_system</code> settings dict.</p>
+<table>
+<thead>
+<tr>
+<th>Tag</th>
+<th>Settings keys read</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{% global_stylesheets %}</code></td>
+<td><code>GLOBAL_CSS_BUNDLES</code>, <code>GLOBAL_CSS</code></td>
+<td><code>&lt;link&gt;</code> tags</td>
+</tr>
+<tr>
+<td><code>{% global_scripts %}</code></td>
+<td><code>GLOBAL_JS_BUNDLES</code>, <code>GLOBAL_JS</code></td>
+<td><code>&lt;script&gt;</code> tags</td>
+</tr>
+</tbody>
+</table>
+<p>Webpack bundle entries are tuples of <code>(bundle_name,)</code> or <code>(bundle_name, config_name)</code> passed to <code>webpack_loader.utils.get_files</code>. These are silently skipped when <code>webpack_loader</code> is not installed.</p>
+<p>Example settings:</p>
+<pre><code class="language-python">dj_design_system = {
+    &quot;GLOBAL_CSS_BUNDLES&quot;: [(&quot;main&quot;,)],
+    &quot;GLOBAL_CSS&quot;: [&quot;myapp/extra.css&quot;],
+    &quot;GLOBAL_JS_BUNDLES&quot;: [(&quot;main&quot;,)],
+    &quot;GLOBAL_JS&quot;: [],
+}
+</code></pre>
+<h3 id="recommended-base-template-layout">Recommended base template layout</h3>
+<pre><code class="language-django">{% load design_components %}
+&lt;head&gt;
+    {% global_stylesheets %}
+    {% component_stylesheets %}
+&lt;/head&gt;
+&lt;body&gt;
+    ...
+    {% global_scripts %}
+    {% component_scripts %}
+&lt;/body&gt;
+</code></pre>
+<h2 id="gallery-library-dj_design_system_gallery">Gallery Library: <code>dj_design_system_gallery</code></h2>
+<p>Tags used internally by the gallery UI. Load with:</p>
+<pre><code class="language-django">{% load dj_design_system_gallery %}
+</code></pre>
+<h3 id="canvas-endcanvas"><code>{% canvas %}...{% endcanvas %}</code></h3>
+<p>Renders the enclosed content inside an isolated <code>&lt;iframe&gt;</code> using the
+<code>srcdoc</code> attribute. The iframe includes the full CSS cascade (global →
+canvas → component) so the rendered component appears exactly as it would
+on a real page, without interference from gallery chrome.</p>
+<pre><code class="language-django">{% load design_components dj_design_system_gallery %}
+{% canvas %}
+    {% icon &quot;check&quot; %}
+{% endcanvas %}
+</code></pre>
+<p>The tag automatically:</p>
+<ul>
+<li>Loads global CSS via the same logic as <code>{% global_stylesheets %}</code></li>
+<li>Includes <code>canvas.css</code> for centering and background styles</li>
+<li>Reads component CSS/JS from the <code>_canvas_component_css</code> and
+  <code>_canvas_component_js</code> context variables, if set</li>
+<li>Applies the <code>GALLERY_CANVAS_DEFAULT_BACKGROUND</code> setting</li>
+<li>Applies <code>GALLERY_CANVAS_HTML_ATTRS</code> to the <code>&lt;html&gt;</code> and <code>&lt;body&gt;</code> tags</li>
+<li>Sets <code>sandbox="allow-same-origin"</code> on the iframe</li>
+</ul>
+<h3 id="depthadd_indent"><code>{{ depth|add_indent }}</code></h3>
+<p>Filter that converts a navigation tree depth to a left-padding value in
+pixels. Used by the sidebar navigation template.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../registry/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Registry">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Registry
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../organisation/" class="md-footer__link md-footer__link--next" aria-label="Next: Organisation">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Organisation
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "navigation.indexes", "search.highlight", "search.suggest", "content.code.copy", "content.action.edit"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

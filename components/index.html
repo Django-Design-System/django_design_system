@@ -1,0 +1,1769 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A Django-native approach to building, documenting, and shipping UI component libraries.">
+      
+      
+      
+        <link rel="canonical" href="https://django-design-system.github.io/django_design_system/components/">
+      
+      
+        <link rel="prev" href="../quickstart/">
+      
+      
+        <link rel="next" href="../gallery/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Components - dj-design-system</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#components" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="dj-design-system" class="md-header__button md-logo" aria-label="dj-design-system" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            dj-design-system
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Components
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Django-Design-System/django_design_system" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Django-Design-System/django_design_system
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="dj-design-system" class="md-nav__button md-logo" aria-label="dj-design-system" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    dj-design-system
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Django-Design-System/django_design_system" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Django-Design-System/django_design_system
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Components
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Components
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#component-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Component Types
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Component Types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tagcomponent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TagComponent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blockcomponent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BlockComponent
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parameter-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameter Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modelparam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ModelParam
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ModelParam">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#meta-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Meta Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#template-context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Template Context
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#css-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CSS Classes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-metafields-and-__all__-security-fields-all" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security: Meta.fields and __all__ {#security-fields-all}
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#userparam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UserParam
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#meta-options_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Meta Options
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Meta Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#abstract-true" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        abstract = True
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#name-custom_name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        name = "custom_name"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#positional_args-param1-param2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        positional_args = ["param1", "param2"]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mutually_exclusive-param_a-param_b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mutually_exclusive = [("param_a", "param_b"), ...]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#requires-dependent-dependency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        requires = [("dependent", "dependency"), ...]
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#override-hooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Override Hooks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Override Hooks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#validate_params" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        validate_params()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_context()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_classes_string" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_classes_string()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#component-media" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Component Media
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Component Media">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#auto-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auto-discovery
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#explicit-media-class" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explicit Media class
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inheritance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inheritance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#accessing-media-in-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Accessing media in code
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#markdown-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Markdown files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#live-demos-in-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Live demos in documentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gallery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gallery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../registry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Registry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../templatetags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Template Tags
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../organisation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Organisation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/parameters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Parameters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/components/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Components
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#component-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Component Types
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Component Types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tagcomponent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TagComponent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blockcomponent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BlockComponent
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parameter-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameter Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modelparam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ModelParam
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ModelParam">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#meta-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Meta Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#template-context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Template Context
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#css-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CSS Classes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-metafields-and-__all__-security-fields-all" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security: Meta.fields and __all__ {#security-fields-all}
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#userparam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UserParam
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#meta-options_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Meta Options
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Meta Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#abstract-true" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        abstract = True
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#name-custom_name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        name = "custom_name"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#positional_args-param1-param2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        positional_args = ["param1", "param2"]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mutually_exclusive-param_a-param_b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mutually_exclusive = [("param_a", "param_b"), ...]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#requires-dependent-dependency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        requires = [("dependent", "dependency"), ...]
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#override-hooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Override Hooks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Override Hooks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#validate_params" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        validate_params()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_context()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_classes_string" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_classes_string()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#component-media" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Component Media
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Component Media">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#auto-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auto-discovery
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#explicit-media-class" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explicit Media class
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inheritance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inheritance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#accessing-media-in-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Accessing media in code
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#markdown-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Markdown files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#live-demos-in-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Live demos in documentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/Django-Design-System/django_design_system/edit/main/docs/components.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="components">Components</h1>
+<blockquote>
+<p><strong>See it live:</strong> Browse real component examples in the <a href="https://django-design-system.github.io/django_design_system/gallery/">demo gallery</a>.</p>
+</blockquote>
+<h2 id="component-types">Component Types</h2>
+<h3 id="tagcomponent">TagComponent</h3>
+<p>Subclass <code>TagComponent</code> for components that produce a single HTML fragment without wrapping nested template content. These are registered as Django <code>simple_tag</code>s.</p>
+<pre><code class="language-python">from dj_design_system.components import TagComponent
+from dj_design_system.parameters import StrParam
+
+class IconComponent(TagComponent):
+    &quot;&quot;&quot;Renders an SVG icon.&quot;&quot;&quot;
+    name = StrParam(&quot;The icon name.&quot;)
+
+    class Meta:
+        positional_args = [&quot;name&quot;]
+</code></pre>
+<p>Template usage: <code>{% icon "check" %}</code></p>
+<h3 id="blockcomponent">BlockComponent</h3>
+<p>Subclass <code>BlockComponent</code> for components that wrap nested template content. These are registered as Django <code>simple_block_tag</code>s.</p>
+<p>The block body is automatically available as <code>{content}</code> in the template format string — you do NOT need to declare it as a parameter. <code>content</code> should NOT appear in <code>Meta.positional_args</code>.</p>
+<pre><code class="language-python">from dj_design_system.components import BlockComponent
+from dj_design_system.parameters import StrParam
+
+class CalloutComponent(BlockComponent):
+    &quot;&quot;&quot;A callout box.&quot;&quot;&quot;
+    type = StrParam(&quot;Callout type.&quot;, default=&quot;info&quot;)
+</code></pre>
+<p>Template usage:</p>
+<pre><code class="language-html">{% callout type=&quot;warning&quot; %} Watch out! {% endcallout %}
+</code></pre>
+<h2 id="parameters">Parameters</h2>
+<p>Parameters are declared as class attributes using descriptor classes from <code>dj_design_system.parameters</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>StrParam</code></td>
+<td>A string parameter</td>
+</tr>
+<tr>
+<td><code>BoolParam</code></td>
+<td>A boolean parameter</td>
+</tr>
+<tr>
+<td><code>StrCSSClassParam</code></td>
+<td>A string parameter whose value is added as a CSS class</td>
+</tr>
+<tr>
+<td><code>BoolCSSClassParam</code></td>
+<td>A boolean parameter that adds the parameter name as a CSS class when True</td>
+</tr>
+<tr>
+<td><code>ModelParam</code></td>
+<td>A parameter that accepts a Django model instance and exposes its fields</td>
+</tr>
+<tr>
+<td><code>UserParam</code></td>
+<td>A pre-configured <code>ModelParam</code> for the project's <code>AUTH_USER_MODEL</code></td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-python">class MyComponent(TagComponent):
+    label = StrParam(&quot;Display text.&quot;)
+    size = StrCSSClassParam(&quot;Size.&quot;, default=&quot;medium&quot;, choices=[&quot;small&quot;, &quot;medium&quot;, &quot;large&quot;])
+    highlighted = BoolCSSClassParam(required=False, default=False)
+</code></pre>
+<h3 id="parameter-options">Parameter Options</h3>
+<ul>
+<li><code>description</code> (first positional arg): Human-readable description</li>
+<li><code>required</code> (default: <code>True</code>): Whether the parameter must be provided</li>
+<li><code>default</code> (default: <code>None</code>): Default value when not provided</li>
+<li><code>choices</code> (default: <code>None</code>): List of allowed values</li>
+</ul>
+<h3 id="modelparam">ModelParam</h3>
+<p><code>ModelParam</code> accepts a Django model instance and flattens its attributes into the template context. Subclass it with a <code>Meta</code> inner class:</p>
+<pre><code class="language-python">from dj_design_system.parameters import ModelParam
+
+class ProfileParam(ModelParam):
+    class Meta:
+        model = &quot;myapp.Profile&quot;  # or the model class directly
+        fields = [&quot;display_name&quot;, &quot;email&quot;, &quot;is_verified&quot;]
+        bool_css_classes = [(&quot;is_verified&quot;, &quot;verified&quot;)]
+        str_css_classes = [&quot;role&quot;]
+</code></pre>
+<h4 id="meta-options">Meta Options</h4>
+<ul>
+<li><strong><code>model</code></strong> (required): The Django model class, or a string in <code>"app_label.ModelName"</code> format (resolved lazily via the app registry).</li>
+<li><strong><code>fields</code></strong> (required): A list of attribute names to expose, or <code>"__all__"</code> for all concrete model fields. See the <a href="#security-fields-all">security note on <code>__all__</code></a> below.</li>
+<li><strong><code>bool_css_classes</code></strong> (optional): A list of attribute names (or <code>(attr, class_name)</code> tuples) that generate a CSS class when truthy.</li>
+<li><strong><code>str_css_classes</code></strong> (optional): A list of attribute names (or <code>(attr, class_name)</code> tuples) whose string values generate a CSS class.</li>
+<li><strong><code>abstract = True</code></strong>: Marks an intermediate base class that does not need <code>model</code>/<code>fields</code>.</li>
+</ul>
+<h4 id="template-context">Template Context</h4>
+<p>Model attributes are flattened into the context with the parameter name as a prefix, using underscore separation. For example, a parameter named <code>user</code> with <code>fields = ["first_name", "email"]</code> produces <code>{user_first_name}</code> and <code>{user_email}</code>:</p>
+<pre><code class="language-python">class UserCardComponent(TagComponent):
+    template_format_str = (
+        &quot;&lt;div class='user-card {classes}'&gt;&quot;
+        &quot;&lt;h3&gt;{user_first_name} {user_last_name}&lt;/h3&gt;&quot;
+        &quot;&lt;p&gt;{user_email}&lt;/p&gt;&quot;
+        &quot;&lt;/div&gt;&quot;
+    )
+    user = UserParam(&quot;The user to display.&quot;)
+</code></pre>
+<h4 id="css-classes">CSS Classes</h4>
+<p>CSS classes are namespaced with the parameter name to avoid collisions. Given:</p>
+<pre><code class="language-python">class Meta:
+    model = &quot;auth.User&quot;
+    fields = [&quot;first_name&quot;, &quot;is_active&quot;, &quot;is_superuser&quot;, &quot;role&quot;]
+    bool_css_classes = [(&quot;is_active&quot;, &quot;active&quot;), &quot;is_superuser&quot;]
+    str_css_classes = [(&quot;first_name&quot;, &quot;name&quot;), &quot;role&quot;]
+</code></pre>
+<p>A user with <code>first_name="Andrew"</code>, <code>is_active=True</code>, <code>is_superuser=True</code>, <code>role="Employee"</code> would produce these classes:</p>
+<pre><code>user-active user-is_superuser user-name-Andrew user-role-Employee
+</code></pre>
+<p>Each entry in <code>bool_css_classes</code> and <code>str_css_classes</code> can be:</p>
+<ul>
+<li>A <strong>string</strong> — the attribute name is also used as the CSS class name.</li>
+<li>A <strong>tuple</strong> <code>(attribute, class_name)</code> — the attribute is read from the model, and <code>class_name</code> is used in the generated CSS class.</li>
+</ul>
+<p>All CSS class config entries <strong>must reference attributes that are listed in <code>Meta.fields</code></strong>. This is validated at class definition time for explicit field lists, and at runtime for <code>"__all__"</code>.</p>
+<h4 id="security-metafields-and-__all__-security-fields-all">Security: <code>Meta.fields</code> and <code>__all__</code> {#security-fields-all}</h4>
+<blockquote>
+<p><strong>Prefer explicit field lists over <code>"__all__"</code>.</strong> Using <code>"__all__"</code> exposes every concrete field on the model — including fields that may contain sensitive data (e.g. password hashes, tokens, internal IDs). If any of these values appear in template context or CSS classes, they could be rendered into HTML visible to end users.</p>
+<p>When <code>"__all__"</code> is used:</p>
+<ul>
+<li>All concrete model fields are exposed in the template context as <code>{param_name}_{field_name}</code>.</li>
+<li>CSS class field validation is deferred to runtime rather than being caught at class definition time.</li>
+<li>New fields added to the model in future migrations will be automatically exposed without explicit review.</li>
+</ul>
+<p><strong>Always use an explicit field list</strong> unless you have reviewed all current and likely future fields on the model and are confident none are sensitive.</p>
+</blockquote>
+<h3 id="userparam">UserParam</h3>
+<p><code>UserParam</code> is a ready-made <code>ModelParam</code> for the project's <code>AUTH_USER_MODEL</code>. It exposes <code>first_name</code>, <code>last_name</code>, <code>email</code>, and <code>is_active</code>, with <code>is_active</code> configured as a boolean CSS class (<code>{param_name}-active</code> when truthy).</p>
+<pre><code class="language-python">from dj_design_system.parameters import UserParam
+
+class ProfileCardComponent(TagComponent):
+    template_format_str = &quot;&lt;div class='profile {classes}'&gt;{user_first_name}&lt;/div&gt;&quot;
+    user = UserParam(&quot;The user.&quot;)
+</code></pre>
+<h2 id="meta-options_1">Meta Options</h2>
+<p>Components support an inner <code>Meta</code> class for configuration:</p>
+<h3 id="abstract-true"><code>abstract = True</code></h3>
+<p>Marks a component as abstract — it will not be discovered or registered. Use this for base classes that other components inherit from.</p>
+<pre><code class="language-python">class AbstractCard(TagComponent):
+    class Meta:
+        abstract = True
+</code></pre>
+<h3 id="name-custom_name"><code>name = "custom_name"</code></h3>
+<p>Override the auto-derived component name. By default, names are derived from the class name by stripping a <code>Component</code> suffix and converting to snake_case (e.g. <code>HeroCardComponent</code> → <code>hero_card</code>).</p>
+<pre><code class="language-python">class HeroCardComponent(TagComponent):
+    class Meta:
+        name = &quot;hero&quot;
+</code></pre>
+<h3 id="positional_args-param1-param2"><code>positional_args = ["param1", "param2"]</code></h3>
+<p>Declare parameters that can be passed as positional arguments in the template tag. Arguments are mapped to parameters in order.</p>
+<pre><code class="language-python">class LinkComponent(TagComponent):
+    url = StrParam(&quot;The URL.&quot;)
+    label = StrParam(&quot;Link text.&quot;)
+
+    class Meta:
+        positional_args = [&quot;url&quot;, &quot;label&quot;]
+</code></pre>
+<p>Template usage: <code>{% link "/about" "About Us" %}</code> or <code>{% link url="/about" label="About Us" %}</code></p>
+<p>For <code>BlockComponent</code>, <code>content</code> is handled automatically and should NOT appear in <code>positional_args</code>.</p>
+<p><code>positional_args</code> are NOT inherited from parent classes. Each concrete component must declare its own if needed.</p>
+<h3 id="mutually_exclusive-param_a-param_b"><code>mutually_exclusive = [("param_a", "param_b"), ...]</code></h3>
+<p>Declare pairs of parameters that cannot both be set at the same time. A <code>ValueError</code> is raised during <code>__init__()</code> if both members of any pair are provided.</p>
+<pre><code class="language-python">class IconButtonComponent(TagComponent):
+    icon = StrParam(&quot;Icon name.&quot;, required=False)
+    label = StrParam(&quot;Button label.&quot;, required=False)
+    icon_only_label = StrParam(&quot;Accessible label when no visible text is shown.&quot;, required=False)
+
+    class Meta:
+        mutually_exclusive = [(&quot;label&quot;, &quot;icon_only_label&quot;)]
+</code></pre>
+<p>All param names referenced in <code>mutually_exclusive</code> must exist on the component — this is validated at class definition time and raises <code>ValueError</code> immediately if a name is wrong.</p>
+<h3 id="requires-dependent-dependency"><code>requires = [("dependent", "dependency"), ...]</code></h3>
+<p>Declare that setting one parameter requires another to also be set. A <code>ValueError</code> is raised during <code>__init__()</code> if <code>dependent</code> is set but <code>dependency</code> is not.</p>
+<pre><code class="language-python">class IconButtonComponent(TagComponent):
+    icon = StrParam(&quot;Icon name.&quot;, required=False)
+    icon_label = StrParam(&quot;Accessible label for the icon.&quot;, required=False)
+
+    class Meta:
+        requires = [(&quot;icon&quot;, &quot;icon_label&quot;)]
+</code></pre>
+<p>Setting <code>dependency</code> alone (without <code>dependent</code>) is always valid — the constraint only applies in one direction.</p>
+<p>Both <code>mutually_exclusive</code> and <code>requires</code> can be combined on the same component, and multiple pairs can be declared in each list. Meta constraints are enforced before the <a href="#validate_params"><code>validate_params()</code></a> override hook runs.</p>
+<h2 id="override-hooks">Override Hooks</h2>
+<h3 id="validate_params"><code>validate_params()</code></h3>
+<p>Override to enforce additional parameter constraints beyond what <code>Meta.mutually_exclusive</code> and <code>Meta.requires</code> can express. Called during <code>__init__()</code> after all parameters are set, and after Meta constraints have already been checked.</p>
+<pre><code class="language-python">def validate_params(self):
+    if self.type == &quot;warning&quot; and self.embedded:
+        raise ValueError(&quot;Embedded callouts cannot be warnings.&quot;)
+</code></pre>
+<h3 id="get_context"><code>get_context()</code></h3>
+<p>Override to add or modify template context variables beyond the auto-collected parameters and CSS classes.</p>
+<pre><code class="language-python">def get_context(self):
+    super().get_context()
+    self.context[&quot;icon&quot;] = IconComponent(name=self.icon_name)
+    return self.context
+</code></pre>
+<h3 id="get_classes_string"><code>get_classes_string()</code></h3>
+<p>Override to customise the CSS class string generation.</p>
+<pre><code class="language-python">def get_classes_string(self):
+    return f&quot;content-icon {super().get_classes_string()}&quot;.strip()
+</code></pre>
+<h2 id="component-media">Component Media</h2>
+<p>Components can declare the CSS and JS files they need to render correctly. This is exposed through <code>ComponentInfo.media</code> (from the registry) and <code>MyComponent.get_media()</code> (on the class itself), both of which return a <code>ComponentMedia</code> object with <code>css</code> and <code>js</code> attributes — each a list of Django static URL strings.</p>
+<h3 id="auto-discovery">Auto-discovery</h3>
+<p>By default, the registry looks for a CSS file and a JS file <strong>in the same directory as the component's Python file</strong>, named after the component. For example, if the component name is <code>icon</code>, it looks for <code>icon.css</code> and <code>icon.js</code> next to the Python file. Only files that actually exist on disk are included.</p>
+<pre><code>myapp/components/icon/
+    component.py       # defines IconComponent (name: &quot;icon&quot;)
+    icon.css           # automatically discovered
+    icon.js            # automatically discovered
+</code></pre>
+<p>The resulting static URL would be <code>myapp/components/icon/icon.css</code>.</p>
+<h3 id="explicit-media-class">Explicit Media class</h3>
+<p>Add a <code>Media</code> inner class to declare additional CSS or JS files beyond those found by auto-discovery. This uses the same convention as Django form widgets. Provide full Django static URL paths:</p>
+<pre><code class="language-python">class IconComponent(TagComponent):
+    &quot;&quot;&quot;Renders an SVG icon.&quot;&quot;&quot;
+    name = StrParam(&quot;The icon name.&quot;)
+
+    class Media:
+        css = [&quot;myapp/components/icon/icon-extra.css&quot;]
+        js = &quot;myapp/components/icon/icon.js&quot;  # single string is also accepted
+</code></pre>
+<p>Auto-discovery always runs regardless of whether a <code>Media</code> class is present. Explicit <code>Media</code> entries appear first in the merged result; co-located files found by auto-discovery are appended (duplicates are removed).</p>
+<h3 id="inheritance">Inheritance</h3>
+<p>Media definitions are merged across the MRO (method resolution order), with parent media appearing first and child additions appended. Duplicate paths are removed.</p>
+<pre><code class="language-python">class BaseCard(TagComponent):
+    class Media:
+        css = [&quot;myapp/components/card/base.css&quot;]
+
+class FancyCard(BaseCard):
+    class Media:
+        css = [&quot;myapp/components/card/fancy.css&quot;]
+
+# FancyCard.get_media().css ==
+# [&quot;myapp/components/card/base.css&quot;, &quot;myapp/components/card/fancy.css&quot;]
+</code></pre>
+<h3 id="accessing-media-in-code">Accessing media in code</h3>
+<pre><code class="language-python">from dj_design_system import component_registry
+
+# Via the registry
+info = component_registry.get_by_name(&quot;icon&quot;, app_label=&quot;myapp&quot;)
+print(info.media.css)   # ['myapp/components/icon/icon.css']
+print(info.media.js)    # []
+
+# Via the component class directly
+from myapp.components.icon import IconComponent
+media = IconComponent.get_media()
+print(media.css)
+</code></pre>
+<h2 id="documentation">Documentation</h2>
+<h3 id="markdown-files">Markdown files</h3>
+<p>Place an <code>index.md</code> file in a component's directory to add documentation
+that appears below the parameters table on the component's gallery page.
+Other <code>.md</code> files appear as standalone document nodes in the sidebar.</p>
+<h3 id="live-demos-in-documentation">Live demos in documentation</h3>
+<p>Use fenced <code>canvas</code> blocks to embed live component previews in any
+markdown file. The syntax mirrors the template tag usage:</p>
+<pre><code class="language-markdown">```canvas
+{% icon &quot;check&quot; size=&quot;large&quot; %}
+```
+</code></pre>
+<p>Each block renders as a widget with a live preview and a
+syntax-highlighted code block. See the
+<a href="../gallery/#live-demos-in-markdown">gallery documentation</a> for full
+details.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../quickstart/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Quick Start">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Quick Start
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../gallery/" class="md-footer__link md-footer__link--next" aria-label="Next: Gallery">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Gallery
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "navigation.indexes", "search.highlight", "search.suggest", "content.code.copy", "content.action.edit"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

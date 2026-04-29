@@ -1,0 +1,284 @@
+/*
+ * Django Design System — Documentation theme
+ *
+ * Mirrors the gallery's colour palette and typography so the docs site and
+ * the interactive gallery feel like a single product.
+ *
+ * Gallery design tokens (source: gallery.css):
+ *   --gallery-sidebar-bg:      #1e1e2e   dark sidebar background
+ *   --gallery-sidebar-text:    #cdd6f4   sidebar body text
+ *   --gallery-sidebar-heading: #ffffff   sidebar headings / title
+ *   --gallery-bg:              #f8f9fa   page/content area background
+ *   --gallery-content-bg:      #ffffff   card / main pane background
+ *   --gallery-text:            #212529   body text
+ *   --gallery-text-muted:      #495057   muted / secondary text
+ *   --gallery-accent:          #4263eb   links and interactive accent
+ *   --gallery-accent-hover:    #3b5bdb   link hover
+ *   --gallery-border:          #c9cdd4   dividers and borders
+ *   --gallery-code-bg:         #f1f3f5   inline code background (light)
+ *   --gallery-dark-code-bg:    #1e1e2e   code background (dark)
+ *   --gallery-dark-code-text:  #cdd6f4   code text (dark)
+ *   Font stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, …
+ *   Mono stack: SFMono-Regular, Menlo, Monaco, Consolas, …
+ */
+
+/* ── MkDocs Material colour tokens ──────────────────────────── */
+
+[data-md-color-scheme="default"] {
+  /* Primary = sidebar/header colour */
+  --md-primary-fg-color: #1e1e2e;
+  --md-primary-fg-color--light: #313244;
+  --md-primary-fg-color--dark: #11111b;
+  --md-primary-bg-color: #ffffff;
+
+  /* Accent = links, highlights */
+  --md-accent-fg-color: #4263eb;
+  --md-accent-fg-color--transparent: rgba(66, 99, 235, 0.12);
+
+  /* Page background */
+  --md-default-bg-color: #f8f9fa;
+  --md-default-fg-color: #212529;
+  --md-default-fg-color--light: #495057;
+  --md-default-fg-color--lighter: #6c757d;
+  --md-default-fg-color--lightest: #c9cdd4;
+
+  /* Link colour */
+  --md-typeset-a-color: #4263eb;
+
+  /* Code */
+  --md-code-bg-color: #f1f3f5;
+  --md-code-fg-color: #212529;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #1e1e2e;
+  --md-primary-fg-color--light: #313244;
+  --md-primary-fg-color--dark: #11111b;
+  --md-primary-bg-color: #cdd6f4;
+
+  --md-accent-fg-color: #89b4fa;
+  --md-accent-fg-color--transparent: rgba(137, 180, 250, 0.12);
+
+  --md-default-bg-color: #1e1e2e;
+  --md-default-fg-color: #cdd6f4;
+  --md-default-fg-color--light: #a6adc8;
+  --md-default-fg-color--lighter: #6c7086;
+  --md-default-fg-color--lightest: #45475a;
+
+  --md-typeset-a-color: #89b4fa;
+
+  --md-code-bg-color: #181825;
+  --md-code-fg-color: #cdd6f4;
+}
+
+/* ── Typography — match gallery font stack ───────────────────── */
+
+:root {
+  --md-text-font:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
+  --md-code-font:
+    SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+}
+
+/* ── Header — dark band identical to gallery sidebar header ─── */
+
+.md-header {
+  background-color: #1e1e2e;
+  color: #cdd6f4;
+}
+
+.md-header__title {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+}
+
+.md-header__button {
+  color: #cdd6f4;
+}
+
+/* Search bar in header */
+.md-search__input {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #cdd6f4;
+}
+
+.md-search__input::placeholder {
+  color: #a6adc8;
+}
+
+/* ── Left sidebar — match gallery sidebar exactly ────────────── */
+
+/* Sidebar container */
+.md-sidebar--primary {
+  background-color: #1e1e2e;
+}
+
+.md-sidebar--primary .md-sidebar__scrollwrap {
+  background-color: #1e1e2e;
+}
+
+/* Sidebar title / site name */
+.md-sidebar--primary .md-nav__title {
+  background-color: #1e1e2e;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* All nav links in left sidebar */
+.md-sidebar--primary .md-nav__link {
+  color: #cdd6f4;
+  font-size: 13px;
+}
+
+.md-sidebar--primary .md-nav__link:hover,
+.md-sidebar--primary .md-nav__link:focus {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Active / current page link */
+.md-sidebar--primary .md-nav__link--active,
+.md-sidebar--primary .md-nav__link[aria-current] {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.14);
+  font-weight: 500;
+}
+
+/* Section headings in nav (bold uppercase labels) */
+.md-sidebar--primary .md-nav__item--section > .md-nav__link {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #a6adc8;
+  padding-top: 12px;
+}
+
+/* Nested nav indentation */
+.md-sidebar--primary .md-nav--secondary .md-nav__link {
+  color: #a6adc8;
+  font-size: 12px;
+}
+
+.md-sidebar--primary .md-nav--secondary .md-nav__link:hover {
+  color: #cdd6f4;
+}
+
+/* Nav toggle arrows */
+.md-sidebar--primary .md-nav__icon {
+  color: #6c7086;
+}
+
+/* ── Main content area — white card like gallery content pane ── */
+
+.md-content {
+  background-color: #ffffff;
+}
+
+[data-md-color-scheme="default"] .md-main {
+  background-color: #f8f9fa;
+}
+
+[data-md-color-scheme="slate"] .md-main {
+  background-color: #11111b;
+}
+
+[data-md-color-scheme="slate"] .md-content {
+  background-color: #1e1e2e;
+}
+
+/* Content area typography */
+.md-typeset {
+  color: #212529;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+[data-md-color-scheme="slate"] .md-typeset {
+  color: #cdd6f4;
+}
+
+/* ── Links ───────────────────────────────────────────────────── */
+
+.md-typeset a {
+  color: #4263eb;
+}
+
+.md-typeset a:hover {
+  color: #3b5bdb;
+}
+
+[data-md-color-scheme="slate"] .md-typeset a {
+  color: #89b4fa;
+}
+
+[data-md-color-scheme="slate"] .md-typeset a:hover {
+  color: #74c7ec;
+}
+
+/* ── Code ────────────────────────────────────────────────────── */
+
+[data-md-color-scheme="default"] .highlight pre,
+[data-md-color-scheme="default"] .md-typeset code {
+  background-color: #f1f3f5;
+  color: #212529;
+  border-radius: 4px;
+}
+
+[data-md-color-scheme="slate"] .highlight pre,
+[data-md-color-scheme="slate"] .md-typeset code {
+  background-color: #181825;
+  color: #cdd6f4;
+}
+
+/* ── Tables — header matches sidebar ────────────────────────── */
+
+.md-typeset table:not([class]) th {
+  background-color: #1e1e2e;
+  color: #cdd6f4;
+}
+
+.md-typeset table:not([class]) tr:hover {
+  background-color: rgba(66, 99, 235, 0.06);
+}
+
+/* ── Footer ──────────────────────────────────────────────────── */
+
+.md-footer {
+  background-color: #1e1e2e;
+  color: #a6adc8;
+}
+
+.md-footer-meta {
+  background-color: #11111b;
+}
+
+/* ── Right (secondary) sidebar — TOC ─────────────────────────── */
+
+.md-sidebar--secondary .md-nav__link {
+  color: #495057;
+  font-size: 12px;
+}
+
+.md-sidebar--secondary .md-nav__link:hover {
+  color: #4263eb;
+}
+
+.md-sidebar--secondary .md-nav__link--active {
+  color: #4263eb;
+  font-weight: 500;
+}
+
+[data-md-color-scheme="slate"] .md-sidebar--secondary .md-nav__link {
+  color: #a6adc8;
+}
+
+[data-md-color-scheme="slate"] .md-sidebar--secondary .md-nav__link:hover,
+[data-md-color-scheme="slate"] .md-sidebar--secondary .md-nav__link--active {
+  color: #89b4fa;
+}
