@@ -16,6 +16,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: extractions/setup-just@v2
+
       - uses: astral-sh/setup-uv@v5
         with:
           python-version: "3.13"
@@ -31,6 +33,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - uses: extractions/setup-just@v2
 
       - uses: astral-sh/setup-uv@v5
         with:
@@ -108,6 +112,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - uses: extractions/setup-just@v2
 
       - uses: astral-sh/setup-uv@v5
         with:
