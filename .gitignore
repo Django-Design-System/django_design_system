@@ -1,7 +1,51 @@
-__pycache__
-.mypy__cache
-.pytest__cache
-.ruff__cache
-.venv
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Tools
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.tox/
+
+# Build outputs
+dist/
+build/
+site/           # mkdocs build output
+
+# Coverage
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Databases
 *.db
-db.sqlite3
+*.sqlite3
+
+# Secrets / local config
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Static files collected by Django
+staticfiles/

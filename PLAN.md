@@ -137,21 +137,22 @@ match colour palette and font stack on the MkDocs site.
 
 ---
 
-## Phase 4 — GitHub Actions CI/CD
+## Phase 4 — GitHub Actions CI/CD (7 workflows)
 
 > **Review checkpoint:** Push a test branch, open a PR, confirm all check workflows
 > appear and pass. Confirm PR coverage comment is created. Then approve before proceeding.
 
 ### Workflow overview
 
-| File            | Trigger           | Purpose                                                |
-| --------------- | ----------------- | ------------------------------------------------------ |
-| `lint.yml`      | push + PR to main | ruff check + djlint check                              |
-| `typecheck.yml` | push + PR to main | mypy on `dj_design_system/`                            |
-| `test.yml`      | push + PR to main | pytest unit matrix; coverage PR comment                |
-| `e2e.yml`       | push + PR to main | Playwright e2e tests                                   |
-| `publish.yml`   | release published | version bump from tag → build → PyPI (OIDC)            |
-| `docs.yml`      | release published | MkDocs → gh-pages; gallery snapshot → gh-pages-gallery |
+| File               | Trigger                     | Purpose                                                |
+| ------------------ | --------------------------- | ------------------------------------------------------ |
+| `lint.yml`         | push + PR to main           | ruff check + djlint check                              |
+| `typecheck.yml`    | push + PR to main           | mypy on `dj_design_system/`                            |
+| `test.yml`         | push + PR to main           | pytest unit matrix; coverage PR comment                |
+| `e2e.yml`          | push + PR to main           | Playwright e2e tests                                   |
+| `publish-test.yml` | push to main (all CI green) | build → publish to **Test PyPI** (OIDC)                |
+| `publish.yml`      | release published           | build → publish to **production PyPI** (OIDC)          |
+| `docs.yml`         | release published           | MkDocs → gh-pages; gallery snapshot → gh-pages-gallery |
 
 ### `test.yml` matrix
 
@@ -166,7 +167,19 @@ Coverage (xml) is generated only on Python 3.13 / `Django>=5.2,<6`.
 `MishaKav/pytest-coverage-comment@main` posts a comment on the PR; subsequent
 pushes to the same PR **update** rather than create a new comment.
 
-### `publish.yml` — version from hatch-vcs
+### `publish-test.yml` — continuous Test PyPI deployment
+
+Triggered on every push to `main`, but only runs **after** `lint.yml`, `typecheck.yml`,
+`test.yml`, and `e2e.yml` all succeed (via `needs:` dependency chain or workflow
+`workflow_run` trigger). Builds the package and publishes to Test PyPI using OIDC.
+
+Version will be a dev/pre-release string from hatch-vcs (e.g. `0.1.dev5+gabcdef`),
+which is valid on Test PyPI but won't conflict with production releases.
+
+> **Test PyPI setup note (one-time, manual):** Configure a separate Trusted Publisher
+> on test.pypi.org for this repo, workflow `publish-test.yml`, environment `test-pypi`.
+
+### `publish.yml` — production PyPI on GitHub Release
 
 Because we use `hatch-vcs`, the version is read directly from the git tag that was
 created when the GH Release was published. No sed, no manual step — `uv build` picks
