@@ -44,6 +44,8 @@ The gallery generates the templatetag syntax automatically and shows a live prev
 
 ![Gallery preview showing the button component with its live iframe preview and generated tag signature](https://github.com/Django-Design-System/django_design_system/raw/main/docs/assets/gallery-preview.png)
 
+**[Browse the demo gallery →](https://django-design-system.github.io/django_design_system/gallery/)**
+
 ---
 
 ## Key features
@@ -70,6 +72,7 @@ The gallery generates the templatetag syntax automatically and shows a live prev
 
 | I want to…                                       | Go to                                                                                                  |
 | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| See components in action                         | [Demo gallery](https://django-design-system.github.io/django_design_system/gallery/)                   |
 | Install and create my first component            | [Quickstart](quickstart.md)                                                                            |
 | Learn all parameter types                        | [Components & parameters](components.md)                                                               |
 | Understand how discovery works                   | [Registry](registry.md)                                                                                |

@@ -1,14 +1,16 @@
 # dj-design-system
 
-[![Unit tests](https://github.com/Django-Design-System/django_design_system/actions/workflows/test.yml/badge.svg)](https://github.com/Django-Design-System/django_design_system/actions/workflows/test.yml)
-[![Lint](https://github.com/Django-Design-System/django_design_system/actions/workflows/lint.yml/badge.svg)](https://github.com/Django-Design-System/django_design_system/actions/workflows/lint.yml)
-[![Python 3.13+](https://img.shields.io/badge/python-3.13%2B-blue)](https://www.python.org/)
-[![Django 5.2+](https://img.shields.io/badge/django-5.2%2B-green)](https://www.djangoproject.com/)
+[![CI](https://github.com/Django-Design-System/django_design_system/actions/workflows/ci.yml/badge.svg)](https://github.com/Django-Design-System/django_design_system/actions/workflows/ci.yml)
+[![PyPI version](https://img.shields.io/pypi/v/dj-design-system)](https://pypi.org/project/dj-design-system/)
+[![Python versions](https://img.shields.io/pypi/pyversions/dj-design-system)](https://pypi.org/project/dj-design-system/)
+[![Django](https://img.shields.io/badge/django-5.2%20%7C%206.0%20%7C%20latest-green)](https://www.djangoproject.com/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 
 DjDS is a Django-native approach to writing front end components that are exposed as templatetags. It comes with an auto-generated, customisable, live interactive gallery of your UI components that lives alongside your Django project.
 
 Components are recognisably Django elements; they look and work like Models or Forms. The gallery auto-discovers them, renders live previews in sandboxed iframes, generates templatetag usage examples, and builds a searchable navigation tree — all from your existing code and docstrings.
+
+**[Browse the demo gallery →](https://django-design-system.github.io/django_design_system/gallery/)**
 
 ## Quick start
 
@@ -16,27 +18,44 @@ Components are recognisably Django elements; they look and work like Models or F
 pip install dj-design-system
 ```
 
-Then follow the [quickstart guide](docs/quickstart.md) to register your first component.
+Then follow the [quickstart guide](https://django-design-system.github.io/django_design_system/quickstart/) to register your first component.
+
+## Supported versions
+
+| Python | Django    |
+| ------ | --------- |
+| 3.13   | 5.2 (LTS) |
+| 3.14   | 6.0       |
+|        | latest    |
 
 ## Documentation
 
-Full documentation lives in the [`docs/`](docs/) directory and can be browsed locally with:
+Full documentation is available at **[django-design-system.github.io/django_design_system/](https://django-design-system.github.io/django_design_system/)**.
+
+To browse locally:
 
 ```bash
-make docs-serve
+just docs-serve
 ```
 
-| Document                                     | Contents                                  |
-| -------------------------------------------- | ----------------------------------------- |
-| [docs/quickstart.md](docs/quickstart.md)     | Installation and first component          |
-| [docs/components.md](docs/components.md)     | Defining components and parameters        |
-| [docs/registry.md](docs/registry.md)         | Auto-discovery and the component registry |
-| [docs/gallery.md](docs/gallery.md)           | Configuring and customising the gallery   |
-| [docs/templatetags.md](docs/templatetags.md) | Using components in templates             |
+| Document                              | Contents                                  |
+| ------------------------------------- | ----------------------------------------- |
+| [Quick start](docs/quickstart.md)     | Installation and first component          |
+| [Components](docs/components.md)      | Defining components and parameters        |
+| [Registry](docs/registry.md)          | Auto-discovery and the component registry |
+| [Gallery](docs/gallery.md)            | Configuring and customising the gallery   |
+| [Template tags](docs/templatetags.md) | Using components in templates             |
+| [API reference](docs/api/)            | Auto-generated class and parameter docs   |
+
+A static snapshot of the component gallery is browseable at **[django-design-system.github.io/django_design_system/gallery/](https://django-design-system.github.io/django_design_system/gallery/)** (HTMX interactions disabled; run `just demo` for the full live experience).
 
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for how to set up a dev environment, run tests, and submit a pull request.
+
+## Code of conduct
+
+This project follows the [Contributor Covenant](https://www.contributor-covenant.org/). Please read [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) before contributing.
 
 ## Issues and feature requests
 

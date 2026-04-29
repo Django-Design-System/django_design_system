@@ -1,5 +1,7 @@
 # Components
 
+> **See it live:** Browse real component examples in the [demo gallery](https://django-design-system.github.io/django_design_system/gallery/).
+
 ## Component Types
 
 ### TagComponent
