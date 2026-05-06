@@ -4,3 +4,5 @@ repos:
     - "https://doltremoteapi.dolthub.com/cam/cam-test"
 
 export.auto: false
+
+sync.remote: "cam/cam-test"
