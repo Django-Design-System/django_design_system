@@ -68,11 +68,9 @@ class CardComponent(BlockComponent):
 Template usage:
 
 ```html
-{% card "My Title" %}
-  {% slot "header" %}Optional header{% endslot %}
-  {% slot "body" %}Required body content{% endslot %}
-  {% slot "footer" %}Optional footer{% endslot %}
-{% endcard %}
+{% card "My Title" %} {% slot "header" %}Optional header{% endslot %} {% slot
+"body" %}Required body content{% endslot %} {% slot "footer" %}Optional footer{%
+endslot %} {% endcard %}
 ```
 
 The binary model is strict:
@@ -107,8 +105,6 @@ class CardComponent(BlockComponent):
 #### Gap Enforcement
 
 Only whitespace and comments are allowed between adjacent `{% slot %}` tags. Any non-whitespace text outside a slot tag raises a `TemplateSyntaxError` at parse time.
-
-
 
 Parameters are declared as class attributes using descriptor classes from `dj_design_system.parameters`.
 

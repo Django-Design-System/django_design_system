@@ -96,12 +96,12 @@ With the above, `{% button %}` resolves to `my_project_components`'s version, wh
 
 ## Registration Types
 
-| Component Base Class       | Registration Method | Template Syntax                    |
-| -------------------------- | ------------------- | ---------------------------------- |
-| `TagComponent`             | `simple_tag`        | `{% icon "check" %}`               |
-| `BlockComponent`           | `simple_block_tag`  | `{% callout %}...{% endcallout %}` |
+| Component Base Class       | Registration Method | Template Syntax                                            |
+| -------------------------- | ------------------- | ---------------------------------------------------------- |
+| `TagComponent`             | `simple_tag`        | `{% icon "check" %}`                                       |
+| `BlockComponent`           | `simple_block_tag`  | `{% callout %}...{% endcallout %}`                         |
 | `BlockComponent` (slotted) | `library.tag`       | `{% card %}{% slot "body" %}...{% endslot %}{% endcard %}` |
-| `BaseComponent` (directly) | Not registered      | Python-only usage                  |
+| `BaseComponent` (directly) | Not registered      | Python-only usage                                          |
 
 Slotted components (those with `Meta.slots` defined) are registered using `library.tag()` with a custom compilation function that parses `{% slot "name" %}...{% endslot %}` blocks inside the component's opening and closing tags.
 
@@ -110,12 +110,8 @@ Slotted components (those with `Meta.slots` defined) are registered using `libra
 The `{% slot "name" %}...{% endslot %}` tag is only meaningful inside a slotted block component. It is registered globally in the `design_components` library and captures its inner content for the named slot.
 
 ```html
-{% load design_components %}
-
-{% card "My Card" %}
-  {% slot "body" %}Card body content{% endslot %}
-  {% slot "footer" %}Card footer{% endslot %}
-{% endcard %}
+{% load design_components %} {% card "My Card" %} {% slot "body" %}Card body
+content{% endslot %} {% slot "footer" %}Card footer{% endslot %} {% endcard %}
 ```
 
 Rules enforced at parse time:
@@ -124,8 +120,6 @@ Rules enforced at parse time:
 - Duplicate slot names in the same block raise a `TemplateSyntaxError`.
 - Unknown slot names (not declared in `Meta.slots`) raise a `TemplateSyntaxError`.
 - Missing required slots raise a `TemplateSyntaxError`.
-
-
 
 ## Media Tags
 
