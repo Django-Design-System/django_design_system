@@ -59,7 +59,9 @@ _KWARG_RE = re.compile(r"""(\w+)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s%}]+))""")
 
 # Matches: "value" or 'value' (positional argument)
 _POS_ARG_RE = re.compile(r"""(?:"([^"]*)"|'([^']*)')""")
-_SLOT_PARAM_PREFIX = SLOT_PARAM_PREFIX  # keep module-level alias for use in regex helpers
+_SLOT_PARAM_PREFIX = (
+    SLOT_PARAM_PREFIX  # keep module-level alias for use in regex helpers
+)
 # Matches: {% slot "name" %}content{% endslot %}
 _SLOT_RE = re.compile(
     r"""\{%[-\s]*slot\s+(?:"([^"]+)"|'([^']+)')\s*%\}"""

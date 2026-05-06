@@ -273,7 +273,9 @@ def highlight_code(code: str) -> str:
         return ""
 
 
-def _build_slot_lines(component_class: type[BlockComponent], required_only: bool) -> str:
+def _build_slot_lines(
+    component_class: type[BlockComponent], required_only: bool
+) -> str:
     """Build {% slot "name" %}...{% endslot %} lines for a slotted component.
 
     Args:
@@ -322,7 +324,7 @@ def generate_current_tag_signature(
 
     # Separate slot values from regular kwargs
     slot_kwargs = {
-        k[len(SLOT_PARAM_PREFIX):]: v
+        k[len(SLOT_PARAM_PREFIX) :]: v
         for k, v in kwargs.items()
         if k.startswith(SLOT_PARAM_PREFIX)
     }

@@ -383,7 +383,7 @@ class TestSlottedTagSignature:
         """Minimal signature includes only required slots."""
         sig = generate_tag_signature(SlottedBlockComponent)
         assert '{% slot "body" %}' in sig.minimal
-        assert '{% endslot %}' in sig.minimal
+        assert "{% endslot %}" in sig.minimal
         assert '{% slot "footer" %}' not in sig.minimal
 
     def test_maximal_shows_all_slots(self):

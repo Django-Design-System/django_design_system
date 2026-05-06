@@ -47,8 +47,12 @@ class SlottedCardComponent(BlockComponent):
     class Meta:
         slots = {
             "body": Slot(required=True, description="Main card content."),
-            "header": Slot(required=False, description="Optional header area above the title."),
-            "footer": Slot(required=False, description="Optional footer area below the body."),
+            "header": Slot(
+                required=False, description="Optional header area above the title."
+            ),
+            "footer": Slot(
+                required=False, description="Optional footer area below the body."
+            ),
         }
         positional_args = ["title"]
 
@@ -61,9 +65,7 @@ class SlottedCardComponent(BlockComponent):
             else ""
         )
         title = (
-            f"<h3 class='slotted-card__title'>{self.title}</h3>"
-            if self.title
-            else ""
+            f"<h3 class='slotted-card__title'>{self.title}</h3>" if self.title else ""
         )
         footer = (
             f"<div class='slotted-card__footer'>{self.slots['footer']}</div>"

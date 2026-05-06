@@ -111,7 +111,7 @@ def render_component(
                 slots = {}
                 slot_keys = [k for k in kwargs if k.startswith(SLOT_PARAM_PREFIX)]
                 for key in slot_keys:
-                    slot_name = key[len(SLOT_PARAM_PREFIX):]
+                    slot_name = key[len(SLOT_PARAM_PREFIX) :]
                     slots[slot_name] = kwargs.pop(key)
                 # Fill missing slots with placeholder content
                 for name, slot in component_class.get_slots().items():

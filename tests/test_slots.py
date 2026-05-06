@@ -24,7 +24,11 @@ class SimpleSlottedComponent(BlockComponent):
         }
 
     def render(self) -> str:
-        sidebar = f"<aside>{self.slots['sidebar']}</aside>" if self.slots.get("sidebar") else ""
+        sidebar = (
+            f"<aside>{self.slots['sidebar']}</aside>"
+            if self.slots.get("sidebar")
+            else ""
+        )
         return f"<div class='slotted {self.get_classes_string()}'><main>{self.slots['body']}</main>{sidebar}</div>"
 
 
@@ -264,11 +268,7 @@ class TestSlottedTemplateRendering:
         assert "<nav>Nav</nav>" in result
 
     def test_optional_slot_omitted_uses_default(self):
-        t = Template(
-            "{% load test_slots %}"
-            "{% all_optional %}"
-            "{% endall_optional %}"
-        )
+        t = Template("{% load test_slots %}{% all_optional %}{% endall_optional %}")
         result = t.render(Context())
         assert "Default Header" in result
         assert "Default" in result
@@ -402,12 +402,14 @@ class TestGapEnforcement:
             t.render(Context())
 
     def test_other_template_tag_between_slots_raises(self):
-        with pytest.raises(TemplateSyntaxError, match="unexpected content between slots"):
+        with pytest.raises(
+            TemplateSyntaxError, match="unexpected content between slots"
+        ):
             t = Template(
                 "{% load test_slots %}"
                 "{% simple_slotted %}"
                 '{% slot "body" %}<p>Body</p>{% endslot %}'
-                "{% now \"Y\" %}"
+                '{% now "Y" %}'
                 '{% slot "sidebar" %}<nav/>{% endslot %}'
                 "{% endsimple_slotted %}"
             )
@@ -417,7 +419,7 @@ class TestGapEnforcement:
         t = Template(
             "{% load test_slots %}"
             "{% simple_slotted %}"
-            '{# This is a comment #}'
+            "{# This is a comment #}"
             '{% slot "body" %}<p>Body</p>{% endslot %}'
             "{% endsimple_slotted %}"
         )
