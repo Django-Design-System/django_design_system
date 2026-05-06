@@ -220,7 +220,7 @@ def _find_component_with_params(nav_tree):
 
 
 def _find_block_component_with_params(nav_tree):
-    """Return the first block component node that has at least one parameter."""
+    """Return the first non-slotted block component node that has at least one parameter."""
     from dj_design_system.components import BlockComponent
 
     for node in _collect_all_nodes(nav_tree):
@@ -228,7 +228,11 @@ def _find_block_component_with_params(nav_tree):
             continue
 
         component_class = node.component.component_class
-        if issubclass(component_class, BlockComponent) and component_class.get_params():
+        if (
+            issubclass(component_class, BlockComponent)
+            and component_class.get_params()
+            and not component_class.has_slots()
+        ):
             return node
 
     return None

@@ -211,34 +211,56 @@ def _render_component(request, context, node, app_label, path_parts):
 
     # BlockComponent subclasses expose a content field — prepend it to the rows
     # with a synthetic spec so the template can render it uniformly.
+    # Slotted components get one row per slot instead.
     from types import SimpleNamespace
 
     from dj_design_system.components import BlockComponent
 
     if issubclass(component_class, BlockComponent):
-        content_spec = SimpleNamespace(
-            description="Inner block content.",
-            type_name="str",
-            required=False,
-            default=None,
-            choices=[],
-        )
-        param_rows.insert(
-            0, {"name": "content", "spec": content_spec, "field": form["content"]}
-        )
+        if component_class.has_slots():
+            declared_slots = component_class.get_slots()
+            for slot_name, slot in declared_slots.items():
+                slot_spec = SimpleNamespace(
+                    description=slot.description or f"Slot: {slot_name}",
+                    type_name="slot",
+                    required=slot.required,
+                    default=slot.default,
+                    choices=[],
+                )
+                field_name = f"slot__{slot_name}"
+                param_rows.insert(
+                    len(param_rows),
+                    {"name": field_name, "spec": slot_spec, "field": form[field_name]},
+                )
+        else:
+            content_spec = SimpleNamespace(
+                description="Inner block content.",
+                type_name="str",
+                required=False,
+                default=None,
+                choices=[],
+            )
+            param_rows.insert(
+                0, {"name": "content", "spec": content_spec, "field": form["content"]}
+            )
 
     # Generate current-parameters usage example.
-    # Keep non-default parameter values, and also pass block content so
-    # the current-usage snippet reflects textarea edits.
+    # Keep non-default parameter values, and also pass block content or slot
+    # values so the current-usage snippet reflects textarea edits.
     non_default_kwargs = {
         name: value
         for name, value in form_kwargs.items()
         if name != "content"
+        and not name.startswith("slot__")
         and (params.get(name) is None or params[name].default != value)
     }
     signature_kwargs = dict(non_default_kwargs)
     if "content" in form_kwargs:
         signature_kwargs["content"] = form_kwargs["content"]
+    # Include slot values in signature kwargs
+    for key, value in form_kwargs.items():
+        if key.startswith("slot__"):
+            signature_kwargs[key] = value
 
     current_signature = (
         generate_current_tag_signature(

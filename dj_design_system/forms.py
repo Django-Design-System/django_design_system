@@ -32,13 +32,25 @@ def build_component_form(component_class: type[BaseComponent]) -> type[forms.For
 
     # BlockComponent subclasses take content as their first argument.
     if issubclass(component_class, BlockComponent):
-        fields["content"] = forms.CharField(
-            label="content",
-            help_text="Inner block content.",
-            required=False,
-            initial=BLOCK_CONTENT_PLACEHOLDER,
-            widget=forms.Textarea(attrs={"rows": 1}),
-        )
+        if component_class.has_slots():
+            # Slotted components get one textarea per declared slot.
+            for slot_name, slot in component_class.get_slots().items():
+                initial = slot.default or f"Sample {slot_name} content"
+                fields[f"slot__{slot_name}"] = forms.CharField(
+                    label=slot_name,
+                    help_text=slot.description or f"Slot: {slot_name}",
+                    required=False,
+                    initial=initial,
+                    widget=forms.Textarea(attrs={"rows": 1}),
+                )
+        else:
+            fields["content"] = forms.CharField(
+                label="content",
+                help_text="Inner block content.",
+                required=False,
+                initial=BLOCK_CONTENT_PLACEHOLDER,
+                widget=forms.Textarea(attrs={"rows": 1}),
+            )
 
     fields.update({name: _build_field(name, spec) for name, spec in params.items()})
     return type("ComponentParametersForm", (forms.Form,), fields)

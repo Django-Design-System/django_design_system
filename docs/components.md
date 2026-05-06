@@ -43,7 +43,72 @@ Template usage:
 {% callout type="warning" %} Watch out! {% endcallout %}
 ```
 
-## Parameters
+### BlockComponent with Named Slots
+
+For components that need **multiple distinct content areas**, declare `Meta.slots` instead of relying on a single `{content}` placeholder. This is called a _slotted_ component.
+
+```python
+from dj_design_system.components import BlockComponent
+from dj_design_system.parameters import StrParam
+from dj_design_system.slots import Slot
+
+class CardComponent(BlockComponent):
+    """A card with optional header and footer slots."""
+    title = StrParam("The card title.")
+
+    class Meta:
+        positional_args = ["title"]
+        slots = {
+            "body":   Slot(required=True,  description="Main card content."),
+            "header": Slot(required=False, description="Optional card header."),
+            "footer": Slot(required=False, description="Optional card footer.", default=""),
+        }
+```
+
+Template usage:
+
+```html
+{% card "My Title" %}
+  {% slot "header" %}Optional header{% endslot %}
+  {% slot "body" %}Required body content{% endslot %}
+  {% slot "footer" %}Optional footer{% endslot %}
+{% endcard %}
+```
+
+The binary model is strict:
+
+- If `Meta.slots` is defined, **every content area must be a named slot** — there is no implicit default `{content}`.
+- If `Meta.slots` is not defined, the component behaves as a plain `BlockComponent` with a single `{content}`.
+
+#### Slot Options
+
+Each `Slot` accepts:
+
+- `required` (default: `True`): Whether the slot must be provided by the caller.
+- `default` (default: `None`): Fallback content when the slot is omitted.
+- `description` (default: `None`): Human-readable description shown in the gallery.
+
+#### Template Context
+
+Each slot value is available in the component's template as `{<slot_name>}`. For example, slots named `body`, `header`, `footer` are available as `{body}`, `{header}`, `{footer}`.
+
+```python
+class CardComponent(BlockComponent):
+    ...
+    template_format_str = """
+        <div class="card">
+            {header}
+            <div class="card__body">{body}</div>
+            {footer}
+        </div>
+    """
+```
+
+#### Gap Enforcement
+
+Only whitespace and comments are allowed between adjacent `{% slot %}` tags. Any non-whitespace text outside a slot tag raises a `TemplateSyntaxError` at parse time.
+
+
 
 Parameters are declared as class attributes using descriptor classes from `dj_design_system.parameters`.
 

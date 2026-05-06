@@ -59,6 +59,14 @@ _KWARG_RE = re.compile(r"""(\w+)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s%}]+))""")
 # Matches: "value" or 'value' (positional argument)
 _POS_ARG_RE = re.compile(r"""(?:"([^"]*)"|'([^']*)')""")
 
+# Matches: {% slot "name" %}content{% endslot %}
+_SLOT_RE = re.compile(
+    r"""\{%[-\s]*slot\s+(?:"([^"]+)"|'([^']+)')\s*%\}"""
+    r"""(.*?)"""
+    r"""\{%[-\s]*endslot\s*%\}""",
+    re.DOTALL,
+)
+
 
 def parse_tag_syntax(source: str) -> CanvasSpec:
     """Parse Django template tag syntax into a ``CanvasSpec``.
@@ -100,9 +108,16 @@ def parse_tag_syntax(source: str) -> CanvasSpec:
     )
     closing_match = closing_pattern.search(after_opening)
     if closing_match:
-        content = after_opening[: closing_match.start()].strip()
-        if content:
-            kwargs["content"] = content
+        block_content = after_opening[: closing_match.start()].strip()
+        # Check for {% slot "name" %}...{% endslot %} patterns
+        slot_matches = list(_SLOT_RE.finditer(block_content))
+        if slot_matches:
+            for sm in slot_matches:
+                slot_name = sm.group(1) or sm.group(2)
+                slot_content = sm.group(3).strip()
+                kwargs[f"slot__{slot_name}"] = slot_content
+        elif block_content:
+            kwargs["content"] = block_content
 
     return CanvasSpec(
         component_name=tag_name,

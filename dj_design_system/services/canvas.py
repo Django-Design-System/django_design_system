@@ -65,8 +65,15 @@ def resolve_from_get_params(
     # BlockComponent subclasses require a ``content`` argument that is not a
     # declared param — pass it through directly if provided.
 
-    if issubclass(info.component_class, BlockComponent) and "content" in raw_params:
-        params["content"] = raw_params["content"]
+    if issubclass(info.component_class, BlockComponent):
+        if info.component_class.has_slots():
+            # Slotted: collect slot__<name> params
+            slot_prefix = "slot__"
+            for key, value in raw_params.items():
+                if key.startswith(slot_prefix):
+                    params[key] = value
+        elif "content" in raw_params:
+            params["content"] = raw_params["content"]
 
     return CanvasSpec(
         component_name=component_name,
@@ -99,8 +106,22 @@ def render_component(
         from dj_design_system.components import BlockComponent
 
         if issubclass(component_class, BlockComponent):
-            content = kwargs.pop("content", BLOCK_CONTENT_PLACEHOLDER)
-            return str(component_class(content=content, **kwargs))
+            if component_class.has_slots():
+                # Extract slot__<name> keys into a slots dict
+                slot_prefix = "slot__"
+                slots = {}
+                slot_keys = [k for k in kwargs if k.startswith(slot_prefix)]
+                for key in slot_keys:
+                    slot_name = key[len(slot_prefix):]
+                    slots[slot_name] = kwargs.pop(key)
+                # Fill missing slots with placeholder content
+                for name, slot in component_class.get_slots().items():
+                    if name not in slots:
+                        slots[name] = slot.default or f"Sample {name} content"
+                return str(component_class(slots=slots, **kwargs))
+            else:
+                content = kwargs.pop("content", BLOCK_CONTENT_PLACEHOLDER)
+                return str(component_class(content=content, **kwargs))
 
         return str(component_class(**kwargs))
     except (ValueError, TypeError, KeyError) as exc:

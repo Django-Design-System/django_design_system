@@ -93,6 +93,35 @@ class TestParseTagSyntax:
         assert spec.positional_args == ()
         assert spec.params == {}
 
+    def test_block_with_slots(self):
+        """Block tag with slot syntax produces slot__ prefixed params."""
+        source = (
+            '{% card title="Hello" %}\n'
+            '  {% slot "header" %}My Header{% endslot %}\n'
+            '  {% slot "body" %}My Body{% endslot %}\n'
+            "{% endcard %}"
+        )
+        spec = parse_tag_syntax(source)
+        assert spec.component_name == "card"
+        assert spec.params == {
+            "title": "Hello",
+            "slot__header": "My Header",
+            "slot__body": "My Body",
+        }
+
+    def test_block_with_single_slot(self):
+        """Single slot in a block tag."""
+        source = '{% panel %}{% slot "content" %}Hello{% endslot %}{% endpanel %}'
+        spec = parse_tag_syntax(source)
+        assert spec.params == {"slot__content": "Hello"}
+        assert "content" not in spec.params or spec.params.get("content") is None
+
+    def test_slots_with_single_quotes(self):
+        """Slot names can use single quotes."""
+        source = "{% card %}{% slot 'body' %}Text{% endslot %}{% endcard %}"
+        spec = parse_tag_syntax(source)
+        assert spec.params == {"slot__body": "Text"}
+
 
 # ---------------------------------------------------------------------------
 # CanvasPreprocessor

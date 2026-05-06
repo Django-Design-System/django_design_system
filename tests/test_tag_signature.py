@@ -13,6 +13,7 @@ from dj_design_system.services.tag_signature import (
     generate_current_tag_signature,
     generate_tag_signature,
 )
+from dj_design_system.slots import Slot
 
 
 class SimpleTagComponent(TagComponent):
@@ -353,3 +354,79 @@ class TestTagSignatureEdgeCases:
         """Positional arg not in params is gracefully skipped."""
         sig = generate_tag_signature(GhostPositionalComponent)
         assert "nonexistent" not in sig.minimal
+
+
+# ---------------------------------------------------------------------------
+# Slotted component signature tests
+# ---------------------------------------------------------------------------
+
+
+class SlottedBlockComponent(BlockComponent):
+    """A slotted block component for testing tag signature generation."""
+
+    title = StrParam("The title")
+
+    class Meta:
+        positional_args = ["title"]
+        slots = {
+            "body": Slot(required=True, description="Main body content"),
+            "footer": Slot(required=False, default="Default footer"),
+        }
+
+    template_format_str = "<div>{body}{footer}</div>"
+
+
+class TestSlottedTagSignature:
+    """Tests for slotted component tag signature generation."""
+
+    def test_minimal_shows_only_required_slots(self):
+        """Minimal signature includes only required slots."""
+        sig = generate_tag_signature(SlottedBlockComponent)
+        assert '{% slot "body" %}' in sig.minimal
+        assert '{% endslot %}' in sig.minimal
+        assert '{% slot "footer" %}' not in sig.minimal
+
+    def test_maximal_shows_all_slots(self):
+        """Maximal signature includes all slots (required + optional)."""
+        sig = generate_tag_signature(SlottedBlockComponent)
+        assert '{% slot "body" %}' in sig.maximal
+        assert '{% slot "footer" %}' in sig.maximal
+
+    def test_slot_default_used_as_placeholder(self):
+        """Slots with defaults use the default text as placeholder content."""
+        sig = generate_tag_signature(SlottedBlockComponent)
+        assert "Default footer" in sig.maximal
+
+    def test_required_slot_sample_placeholder(self):
+        """Required slots without defaults get 'Sample <name> content'."""
+        sig = generate_tag_signature(SlottedBlockComponent)
+        assert "Sample body content" in sig.minimal
+
+    def test_slotted_has_end_tag(self):
+        """Slotted signature includes endtag."""
+        sig = generate_tag_signature(SlottedBlockComponent)
+        assert "{% endslotted_block %}" in sig.minimal
+        assert "{% endslotted_block %}" in sig.maximal
+
+    def test_slotted_includes_positional_args(self):
+        """Slotted signature includes positional args in the opening tag."""
+        sig = generate_tag_signature(SlottedBlockComponent)
+        # title is required positional
+        assert '{% slotted_block "' in sig.minimal
+
+    def test_current_signature_with_slot_kwargs(self):
+        """generate_current_tag_signature handles slot__ prefixed kwargs."""
+        sig = generate_current_tag_signature(
+            SlottedBlockComponent,
+            {"title": "Hello", "slot__body": "Custom body", "slot__footer": "My foot"},
+        )
+        assert '{% slot "body" %}Custom body{% endslot %}' in sig.minimal
+        assert '{% slot "footer" %}My foot{% endslot %}' in sig.minimal
+
+    def test_current_signature_without_slots_falls_back_to_required(self):
+        """With no slot__ kwargs, required slots get default placeholders."""
+        sig = generate_current_tag_signature(
+            SlottedBlockComponent,
+            {"title": "Hello"},
+        )
+        assert '{% slot "body" %}' in sig.minimal
