@@ -1,0 +1,7 @@
+{
+  "database": "dolt",
+  "backend": "dolt",
+  "dolt_mode": "embedded",
+  "dolt_database": "dj_design_system",
+  "project_id": "f7ec865e-857f-4714-9cb8-f25c02187911"
+}
