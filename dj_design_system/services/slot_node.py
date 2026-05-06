@@ -15,7 +15,7 @@ from typing import TYPE_CHECKING, Any
 
 from django import template
 from django.template import TemplateSyntaxError
-from django.template.base import TextNode
+from django.template.base import TextNode, token_kwargs
 from django.utils.safestring import mark_safe
 
 from dj_design_system.slots import validate_slots
@@ -104,43 +104,24 @@ class SlottedComponentNode(template.Node):
         return str(self.component_class(slots=safe_slots, **kwargs))
 
 
-def _parse_tag_kwargs(
+def _parse_tag_args(
     parser: template.base.Parser,
     bits: list[str],
-) -> dict[str, Any]:
-    """Parse keyword arguments from template tag token bits.
+) -> tuple[list[template.base.FilterExpression], dict[str, template.base.FilterExpression]]:
+    """Parse positional and keyword arguments from template tag token bits.
 
-    Supports: ``key="value"``, ``key='value'``, ``key=variable``.
-    Also supports positional string args (bare quoted strings).
+    Leading bits without ``=`` are treated as positional args; the remainder
+    are passed to Django's ``token_kwargs`` which handles ``key=value``,
+    ``key="string"``, and ``key=variable`` uniformly via ``compile_filter``.
     """
-    kwargs: dict[str, Any] = {}
-    positional: list[Any] = []
+    remaining = list(bits)
+    positional: list[template.base.FilterExpression] = []
 
-    for bit in bits:
-        if "=" in bit:
-            key, value = bit.split("=", 1)
-            # Strip quotes from string literals
-            if (value.startswith('"') and value.endswith('"')) or (
-                value.startswith("'") and value.endswith("'")
-            ):
-                kwargs[key] = value[1:-1]
-            elif value in ("True", "true"):
-                kwargs[key] = True
-            elif value in ("False", "false"):
-                kwargs[key] = False
-            else:
-                # Treat as a template variable
-                kwargs[key] = parser.compile_filter(value)
-        else:
-            # Positional argument — strip quotes
-            if (bit.startswith('"') and bit.endswith('"')) or (
-                bit.startswith("'") and bit.endswith("'")
-            ):
-                positional.append(bit[1:-1])
-            else:
-                positional.append(parser.compile_filter(bit))
+    while remaining and "=" not in remaining[0]:
+        positional.append(parser.compile_filter(remaining.pop(0)))
 
-    return {"_positional": positional, **kwargs}
+    kwargs = token_kwargs(remaining, parser)
+    return positional, kwargs
 
 
 def make_slotted_block_tag(
@@ -155,8 +136,7 @@ def make_slotted_block_tag(
     def _compile(parser: template.base.Parser, token: template.base.Token):
         bits = token.split_contents()
         # bits[0] is the tag name
-        raw_kwargs = _parse_tag_kwargs(parser, bits[1:])
-        positional = raw_kwargs.pop("_positional", [])
+        positional, raw_kwargs = _parse_tag_args(parser, bits[1:])
 
         # Map positional args using component's Meta.positional_args
         positional_args = component_class.get_positional_args()
