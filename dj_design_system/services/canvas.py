@@ -214,6 +214,8 @@ def _coerce_params(
 
 def coerce_single(key: str, raw_value: str, spec) -> object:
     """Coerce a single string value to the type declared by a parameter spec."""
+    from dj_design_system.parameters.model import ModelParam
+
     expected_type = getattr(spec, "type", str)
 
     if expected_type is bool:
@@ -223,6 +225,14 @@ def coerce_single(key: str, raw_value: str, spec) -> object:
             return int(raw_value)
         except (ValueError, TypeError):
             raise ValueError(f"Parameter '{key}': expected int, got '{raw_value}'.")
+    if isinstance(spec, ModelParam):
+        model = spec._resolve_model()
+        try:
+            return model.objects.get(pk=raw_value)
+        except model.DoesNotExist:
+            raise ValueError(
+                f"Parameter '{key}': no {model.__name__} with pk={raw_value!r}."
+            )
 
     return raw_value
 
@@ -231,4 +241,10 @@ def _serialise_value(value: object) -> str:
     """Convert a parameter value to a string suitable for URL encoding."""
     if isinstance(value, bool):
         return "true" if value else "false"
+    # Serialise Django model instances as their PK so coerce_single can
+    # reverse the lookup when the canvas URL is re-resolved.
+    from django.db.models import Model
+
+    if isinstance(value, Model):
+        return str(value.pk)
     return str(value)
