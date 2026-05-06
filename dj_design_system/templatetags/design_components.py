@@ -8,12 +8,16 @@ from dj_design_system.services.media import (
     build_script_tags,
     get_bundle_urls,
 )
+from dj_design_system.services.slot_node import do_slot
 from dj_design_system.settings import dds_settings
 
 
 register = template.Library()
 
 component_registry.register_templatetags(register)
+
+# Register the {% slot "name" %}...{% endslot %} tag globally
+register.tag("slot", do_slot)
 
 
 @register.simple_tag

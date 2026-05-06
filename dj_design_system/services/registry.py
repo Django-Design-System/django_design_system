@@ -247,6 +247,14 @@ class ComponentRegistry:
         info: "ComponentInfo",
     ) -> None:
         """Register a single component on a library with the given name."""
+        if info.tag_type is TagType.BLOCK and info.component_class.has_slots():
+            # Slotted block components use a custom compilation function
+            from dj_design_system.services.slot_node import make_slotted_block_tag
+
+            compilation_func = make_slotted_block_tag(info.component_class, tag_name)
+            library.tag(tag_name, compilation_func)
+            return
+
         tag_func = info.component_class.as_tag()
         if info.tag_type is TagType.BLOCK:
             library.simple_block_tag(name=tag_name)(tag_func)

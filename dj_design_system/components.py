@@ -8,6 +8,7 @@ from dj_design_system.parameters import BaseParam
 
 if TYPE_CHECKING:
     from dj_design_system.data import ComponentMedia
+    from dj_design_system.slots import Slot
 
 
 class BaseComponent:
@@ -259,6 +260,18 @@ class BlockComponent(BaseComponent):
                 positional_args = ["title"]
 
     This allows ``{% section "My Title" %}...{% endsection %}``.
+
+    To declare named slots, add a ``Meta.slots`` dict::
+
+        class CardComponent(BlockComponent):
+            class Meta:
+                slots = {
+                    "body": Slot(required=True),
+                    "footer": Slot(required=False),
+                }
+
+    Slotted components use ``{% slot "name" %}...{% endslot %}`` tags
+    inside the block. Content outside slots raises ``TemplateSyntaxError``.
     """
 
     class Meta:
@@ -266,24 +279,70 @@ class BlockComponent(BaseComponent):
 
     template_format_str: str = "<span class='{classes}'>{content}</span>"
 
-    def __init__(self, content: SafeString, **kwargs):
-        self.content = content
+    def __init__(self, content: SafeString | None = None, *, slots: dict[str, SafeString] | None = None, **kwargs):
+        if self.has_slots():
+            if slots is None:
+                slots = {}
+            # Validate and fill defaults for missing optional slots
+            from dj_design_system.services.component import derive_name, get_meta_name
+            from dj_design_system.slots import validate_slots
+
+            tag_name = get_meta_name(type(self)) or derive_name(type(self))
+            self.slots = validate_slots(self.get_slots(), slots, tag_name)
+            self.content = None
+        else:
+            self.content = content
+            self.slots = {}
         super().__init__(**kwargs)
 
     def get_context(self) -> dict[str, Any]:
-        """Add ``content`` to the context automatically.
+        """Add ``content`` or slot values to the context automatically.
 
-        ``content`` is the block body passed by the template engine — it is
-        NOT a declared BaseParam and should not appear in ``Meta.positional_args``
-        or ``docstring()`` output.
+        For non-slotted components, ``content`` is the block body passed by
+        the template engine.
+
+        For slotted components, each slot value is injected as a context
+        variable with the slot's name.
         """
         context = super().get_context()
-        context["content"] = self.content
+        if self.has_slots():
+            for name, value in self.slots.items():
+                context[name] = value
+        else:
+            context["content"] = self.content
         return context
 
     @classmethod
+    def has_slots(cls) -> bool:
+        """Return True if this component declares named slots via Meta.slots."""
+        from dj_design_system.services.component import get_own_meta
+
+        meta = get_own_meta(cls)
+        return bool(getattr(meta, "slots", None))
+
+    @classmethod
+    def get_slots(cls) -> dict[str, "Slot"]:
+        """Return the declared slots dict from Meta, or empty dict."""
+        from dj_design_system.services.component import get_own_meta
+
+        meta = get_own_meta(cls)
+        return dict(getattr(meta, "slots", {}))
+
+    @classmethod
     def as_tag(cls):
-        """Return a template tag function with content as first arg, plus any Meta.positional_args."""
+        """Return a template tag function or compilation function.
+
+        If the component declares slots, returns a compilation function
+        for use with ``library.tag()``. Otherwise returns a simple
+        callable for ``library.simple_block_tag()``.
+        """
+        if cls.has_slots():
+            from dj_design_system.services.component import derive_name, get_meta_name
+            from dj_design_system.services.slot_node import make_slotted_block_tag
+
+            tag_name = get_meta_name(cls) or derive_name(cls)
+            return make_slotted_block_tag(cls, tag_name)
+
         positional_args = cls.get_positional_args()
 
         def _tag(content, *args, **kwargs):
