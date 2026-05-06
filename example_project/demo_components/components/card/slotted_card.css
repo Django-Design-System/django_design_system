@@ -1,0 +1,39 @@
+.slotted-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: system-ui, sans-serif;
+}
+
+.slotted-card.outlined {
+    border: 2px solid #333;
+    box-shadow: none;
+}
+
+.slotted-card.elevated {
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.slotted-card__header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #e0e0e0;
+    background: #fafafa;
+}
+
+.slotted-card__title {
+    margin: 0;
+    padding: 1rem 1.5rem 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.slotted-card__body {
+    padding: 1rem 1.5rem;
+}
+
+.slotted-card__footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid #e0e0e0;
+    background: #fafafa;
+}

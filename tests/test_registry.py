@@ -137,6 +137,7 @@ class TestDiscovery:
             "user_card",
             "info_card",
             "hero",
+            "slotted_card",
         }
 
     def test_single_file_components_module(self, registry_with_demo_single):
@@ -259,7 +260,7 @@ class TestListByApp:
     def test_returns_correct_app(self, registry_with_two_apps):
         reg = registry_with_two_apps
         components = reg.list_by_app("demo_components")
-        assert len(components) == 7
+        assert len(components) == 8
         assert all(c.app_label == "demo_components" for c in components)
 
     def test_returns_other_app(self, registry_with_two_apps):
