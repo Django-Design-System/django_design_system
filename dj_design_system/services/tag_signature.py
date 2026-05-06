@@ -12,7 +12,7 @@ Features:
 - Syntax highlighting using Pygments (graceful fallback to plain text if unavailable)
 """
 
-from typing import Any, NamedTuple
+from typing import Any, NamedTuple, cast
 
 from dj_design_system.components import BaseComponent, BlockComponent
 from dj_design_system.data import BLOCK_CONTENT_PLACEHOLDER, CanvasSpec
@@ -320,9 +320,8 @@ def generate_current_tag_signature(
     component_name = derive_name(component_class)
     positional_args = component_class.get_positional_args()
     is_block = issubclass(component_class, BlockComponent)
-    is_slotted = is_block and component_class.has_slots()
-
-    # Separate slot values from regular kwargs
+    is_slotted = is_block and cast(type[BlockComponent], component_class).has_slots()
+    block_class = cast(type[BlockComponent], component_class) if is_block else None
     slot_kwargs = {
         k[len(SLOT_PARAM_PREFIX) :]: v
         for k, v in kwargs.items()
@@ -359,7 +358,8 @@ def generate_current_tag_signature(
             slot_lines_parts.append(f'  {{% slot "{name}" %}}{value}{{% endslot %}}')
         # If no slot kwargs provided, show required slots with placeholders
         if not slot_lines_parts:
-            for name, slot in component_class.get_slots().items():
+            assert block_class is not None
+            for name, slot in block_class.get_slots().items():
                 if slot.required:
                     placeholder = slot.default or f"Sample {name} content"
                     slot_lines_parts.append(
@@ -431,7 +431,8 @@ def generate_tag_signature(
     positional_args = component_class.get_positional_args()
 
     is_block = issubclass(component_class, BlockComponent)
-    is_slotted = is_block and component_class.has_slots()
+    is_slotted = is_block and cast(type[BlockComponent], component_class).has_slots()
+    block_class = cast(type[BlockComponent], component_class) if is_block else None
 
     # ─────────────────────────────────────────────────────────────────────────
     # Build minimal usage (required params only, using positional args)
@@ -453,9 +454,10 @@ def generate_tag_signature(
 
     if is_slotted:
         # Slotted: show {% slot %}...{% endslot %} for required slots
+        assert block_class is not None
         opening = f"{{% {component_name} {' '.join(minimal_positional)}".strip()
         opening += " %}"
-        slot_lines = _build_slot_lines(component_class, required_only=True)
+        slot_lines = _build_slot_lines(block_class, required_only=True)
         minimal_raw = f"{opening}\n{slot_lines}{{% end{component_name} %}}"
         minimal = minimal_raw
     elif is_block:
@@ -510,11 +512,12 @@ def generate_tag_signature(
     args_str = " ".join(all_args)
 
     if is_slotted:
+        assert block_class is not None
         opening = f"{{% {component_name}"
         if args_str:
             opening += f" {args_str}"
         opening += " %}"
-        slot_lines = _build_slot_lines(component_class, required_only=False)
+        slot_lines = _build_slot_lines(block_class, required_only=False)
         maximal_raw = f"{opening}\n{slot_lines}{{% end{component_name} %}}"
         maximal = maximal_raw
     elif is_block:
@@ -550,7 +553,8 @@ def generate_tag_signature(
     minimal_slot_params: dict[str, str] = {}
     maximal_slot_params: dict[str, str] = {}
     if is_slotted:
-        for slot_name, slot in component_class.get_slots().items():
+        assert block_class is not None
+        for slot_name, slot in block_class.get_slots().items():
             placeholder = slot.default or f"Sample {slot_name} content"
             if slot.required:
                 minimal_slot_params[f"{SLOT_PARAM_PREFIX}{slot_name}"] = placeholder
