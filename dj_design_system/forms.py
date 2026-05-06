@@ -6,6 +6,7 @@ from dj_design_system.components import BaseComponent, BlockComponent
 from dj_design_system.data import BLOCK_CONTENT_PLACEHOLDER
 from dj_design_system.parameters.base import BoolParam
 from dj_design_system.parameters.model import ModelParam
+from dj_design_system.slots import SLOT_PARAM_PREFIX
 
 
 def build_component_form(component_class: type[BaseComponent]) -> type[forms.Form]:
@@ -30,18 +31,17 @@ def build_component_form(component_class: type[BaseComponent]) -> type[forms.For
     params = component_class.get_params()
     fields: dict[str, forms.Field] = {}
 
-    # BlockComponent subclasses take content as their first argument.
+    # BlockComponent subclasses: slotted → one textarea per slot; plain → content textarea.
     if issubclass(component_class, BlockComponent):
         if component_class.has_slots():
-            # Slotted components get one textarea per declared slot.
             for slot_name, slot in component_class.get_slots().items():
                 initial = slot.default or f"Sample {slot_name} content"
-                fields[f"slot__{slot_name}"] = forms.CharField(
+                fields[f"{SLOT_PARAM_PREFIX}{slot_name}"] = forms.CharField(
                     label=slot_name,
                     help_text=slot.description or f"Slot: {slot_name}",
                     required=False,
                     initial=initial,
-                    widget=forms.Textarea(attrs={"rows": 1}),
+                    widget=forms.Textarea(attrs={"rows": 2}),
                 )
         else:
             fields["content"] = forms.CharField(

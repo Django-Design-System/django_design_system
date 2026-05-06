@@ -23,6 +23,7 @@ from dj_design_system.parameters import (
     StrParam,
 )
 from dj_design_system.services.component import derive_name
+from dj_design_system.slots import SLOT_PARAM_PREFIX
 
 
 # Try to import Pygments for syntax highlighting
@@ -272,7 +273,7 @@ def highlight_code(code: str) -> str:
         return ""
 
 
-def _build_slot_lines(component_class: type[BaseComponent], required_only: bool) -> str:
+def _build_slot_lines(component_class: type[BlockComponent], required_only: bool) -> str:
     """Build {% slot "name" %}...{% endslot %} lines for a slotted component.
 
     Args:
@@ -320,11 +321,10 @@ def generate_current_tag_signature(
     is_slotted = is_block and component_class.has_slots()
 
     # Separate slot values from regular kwargs
-    slot_prefix = "slot__"
     slot_kwargs = {
-        k[len(slot_prefix):]: v
+        k[len(SLOT_PARAM_PREFIX):]: v
         for k, v in kwargs.items()
-        if k.startswith(slot_prefix)
+        if k.startswith(SLOT_PARAM_PREFIX)
     }
 
     # Build positional args from kwargs (in declared order)
@@ -339,7 +339,7 @@ def generate_current_tag_signature(
         _format_param_for_tag(name, value)
         for name, value in kwargs.items()
         if name not in positional_args
-        and not name.startswith(slot_prefix)
+        and not name.startswith(SLOT_PARAM_PREFIX)
         and (not is_block or name != "content")
     ]
 
@@ -360,7 +360,9 @@ def generate_current_tag_signature(
             for name, slot in component_class.get_slots().items():
                 if slot.required:
                     placeholder = slot.default or f"Sample {name} content"
-                    slot_lines_parts.append(f'  {{% slot "{name}" %}}{placeholder}{{% endslot %}}')
+                    slot_lines_parts.append(
+                        f'  {{% slot "{name}" %}}{placeholder}{{% endslot %}}'
+                    )
         slot_content = "\n".join(slot_lines_parts) + "\n" if slot_lines_parts else ""
         raw = f"{opening}\n{slot_content}{{% end{component_name} %}}"
         formatted = raw
@@ -541,14 +543,25 @@ def generate_tag_signature(
     # ─────────────────────────────────────────────────────────────────────────
 
     canvas_name = canvas_component_name or component_name
+
+    # For slotted components, add slot values to the canvas specs so previews render content.
+    minimal_slot_params: dict[str, str] = {}
+    maximal_slot_params: dict[str, str] = {}
+    if is_slotted:
+        for slot_name, slot in component_class.get_slots().items():
+            placeholder = slot.default or f"Sample {slot_name} content"
+            if slot.required:
+                minimal_slot_params[f"{SLOT_PARAM_PREFIX}{slot_name}"] = placeholder
+            maximal_slot_params[f"{SLOT_PARAM_PREFIX}{slot_name}"] = placeholder
+
     minimal_spec = CanvasSpec(
         component_name=canvas_name,
-        params=minimal_keyword_values,
+        params={**minimal_keyword_values, **minimal_slot_params},
         positional_args=tuple(minimal_positional_values),
     )
     maximal_spec = CanvasSpec(
         component_name=canvas_name,
-        params=maximal_keyword_values,
+        params={**maximal_keyword_values, **maximal_slot_params},
         positional_args=tuple(maximal_positional_values),
     )
 

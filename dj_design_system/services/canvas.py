@@ -22,6 +22,7 @@ from dj_design_system.services.registry import (
     ComponentDoesNotExist,
     MultipleComponentsFound,
 )
+from dj_design_system.slots import SLOT_PARAM_PREFIX
 
 
 if TYPE_CHECKING:
@@ -68,9 +69,8 @@ def resolve_from_get_params(
     if issubclass(info.component_class, BlockComponent):
         if info.component_class.has_slots():
             # Slotted: collect slot__<name> params
-            slot_prefix = "slot__"
             for key, value in raw_params.items():
-                if key.startswith(slot_prefix):
+                if key.startswith(SLOT_PARAM_PREFIX):
                     params[key] = value
         elif "content" in raw_params:
             params["content"] = raw_params["content"]
@@ -108,11 +108,10 @@ def render_component(
         if issubclass(component_class, BlockComponent):
             if component_class.has_slots():
                 # Extract slot__<name> keys into a slots dict
-                slot_prefix = "slot__"
                 slots = {}
-                slot_keys = [k for k in kwargs if k.startswith(slot_prefix)]
+                slot_keys = [k for k in kwargs if k.startswith(SLOT_PARAM_PREFIX)]
                 for key in slot_keys:
-                    slot_name = key[len(slot_prefix):]
+                    slot_name = key[len(SLOT_PARAM_PREFIX):]
                     slots[slot_name] = kwargs.pop(key)
                 # Fill missing slots with placeholder content
                 for name, slot in component_class.get_slots().items():

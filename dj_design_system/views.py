@@ -215,6 +215,7 @@ def _render_component(request, context, node, app_label, path_parts):
     from types import SimpleNamespace
 
     from dj_design_system.components import BlockComponent
+    from dj_design_system.slots import SLOT_PARAM_PREFIX
 
     if issubclass(component_class, BlockComponent):
         if component_class.has_slots():
@@ -227,9 +228,8 @@ def _render_component(request, context, node, app_label, path_parts):
                     default=slot.default,
                     choices=[],
                 )
-                field_name = f"slot__{slot_name}"
-                param_rows.insert(
-                    len(param_rows),
+                field_name = f"{SLOT_PARAM_PREFIX}{slot_name}"
+                param_rows.append(
                     {"name": field_name, "spec": slot_spec, "field": form[field_name]},
                 )
         else:
@@ -251,7 +251,7 @@ def _render_component(request, context, node, app_label, path_parts):
         name: value
         for name, value in form_kwargs.items()
         if name != "content"
-        and not name.startswith("slot__")
+        and not name.startswith(SLOT_PARAM_PREFIX)
         and (params.get(name) is None or params[name].default != value)
     }
     signature_kwargs = dict(non_default_kwargs)
@@ -259,7 +259,7 @@ def _render_component(request, context, node, app_label, path_parts):
         signature_kwargs["content"] = form_kwargs["content"]
     # Include slot values in signature kwargs
     for key, value in form_kwargs.items():
-        if key.startswith("slot__"):
+        if key.startswith(SLOT_PARAM_PREFIX):
             signature_kwargs[key] = value
 
     current_signature = (

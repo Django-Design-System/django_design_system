@@ -104,15 +104,15 @@ class TestValidateSlots:
         assert result == {"body": "<p>hi</p>", "sidebar": "<aside></aside>"}
 
     def test_missing_required_raises(self):
-        with pytest.raises(TemplateSyntaxError, match="requires slot 'body'"):
+        with pytest.raises(ValueError, match="requires slot 'body'"):
             validate_slots(self.declared, {"sidebar": "x"}, "test")
 
     def test_unknown_slot_raises(self):
-        with pytest.raises(TemplateSyntaxError, match="unknown slot.*nope"):
+        with pytest.raises(ValueError, match="unknown slot.*nope"):
             validate_slots(self.declared, {"body": "x", "nope": "y"}, "test")
 
     def test_empty_provided_missing_required(self):
-        with pytest.raises(TemplateSyntaxError, match="requires slot 'body'"):
+        with pytest.raises(ValueError, match="requires slot 'body'"):
             validate_slots(self.declared, {}, "test")
 
     def test_all_optional_no_slots_provided(self):
