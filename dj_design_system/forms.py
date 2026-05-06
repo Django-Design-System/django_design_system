@@ -63,10 +63,13 @@ def _build_field(name: str, spec) -> forms.Field:
         )
 
     # ModelParam subclasses → model select, limited to 10 most-recent rows.
+    # A sliced queryset cannot be filtered, which breaks ModelChoiceField's
+    # validation. Materialise the PK list first, then pass an unsliced queryset.
     if isinstance(spec, ModelParam):
         model = spec._resolve_model()
+        pk_list = list(model.objects.order_by("-pk").values_list("pk", flat=True)[:10])
         return forms.ModelChoiceField(
-            queryset=model.objects.order_by("-pk")[:10],
+            queryset=model.objects.filter(pk__in=pk_list).order_by("-pk"),
             **common,
         )
 

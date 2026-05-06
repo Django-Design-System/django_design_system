@@ -190,12 +190,21 @@ class TestModelChoiceFieldQueryset:
         FormClass = build_component_form(UserCardComponent)
         assert FormClass.base_fields["user"].queryset is not None
 
+    @pytest.mark.django_db
     def test_model_choice_field_queryset_limited(self):
-        """Queryset should be sliced to at most 10 results."""
+        """Queryset should be limited to at most 10 results and remain filterable."""
+        from django.contrib.auth import get_user_model
+
+        User = get_user_model()
+        # Create 12 users so we can verify the cap.
+        for i in range(12):
+            User.objects.get_or_create(username=f"formtest_user_{i}")
+
         FormClass = build_component_form(UserCardComponent)
         field = FormClass.base_fields["user"]
-        # A sliced queryset has high_mark set; verify it does not exceed 10.
-        assert field.queryset.query.high_mark == 10
+        # Queryset must be unsliced (filterable) but capped at 10 rows.
+        assert field.queryset.query.high_mark is None, "Queryset must not be sliced"
+        assert field.queryset.count() <= 10
 
 
 # ---------------------------------------------------------------------------
