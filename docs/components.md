@@ -318,11 +318,11 @@ Note that `template_format_str` does **not** support Django template tags (`{% i
 
 ### Precedence summary
 
-| Source | Precedence | Notes |
-|---|---|---|
-| `template_name` class attribute | Highest | Points at any template the loader chain can find |
-| Co-located `{name}.html` file | Middle | Auto-discovered at startup |
-| `template_format_str` | Lowest / fallback | No template engine; uses `format_html` |
+| Source                          | Precedence        | Notes                                            |
+| ------------------------------- | ----------------- | ------------------------------------------------ |
+| `template_name` class attribute | Highest           | Points at any template the loader chain can find |
+| Co-located `{name}.html` file   | Middle            | Auto-discovered at startup                       |
+| `template_format_str`           | Lowest / fallback | No template engine; uses `format_html`           |
 
 Mixing `template_format_str` with an HTML-based source (`template_name` or co-located file) raises `ImproperlyConfigured` at startup.
 

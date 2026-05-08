@@ -162,13 +162,13 @@ See [Components: Templates](components.md#templates) for full details on the tem
 
 ## Summary
 
-| Pattern                         | When to use                                                           |
-| ------------------------------- | --------------------------------------------------------------------- |
-| Single `components.py`          | Small apps, prototyping, simple component sets                        |
-| Flat `components/` package      | Medium libraries, no sub-grouping needed                              |
-| Nested sub-packages             | Large libraries, logical groupings (forms, navigation, data display…) |
-| Abstract base classes           | Shared structure across related components                            |
-| Co-located `.html` template     | Full Django template language; use with `ComponentsTemplateLoader`    |
+| Pattern                         | When to use                                                              |
+| ------------------------------- | ------------------------------------------------------------------------ |
+| Single `components.py`          | Small apps, prototyping, simple component sets                           |
+| Flat `components/` package      | Medium libraries, no sub-grouping needed                                 |
+| Nested sub-packages             | Large libraries, logical groupings (forms, navigation, data display…)    |
+| Abstract base classes           | Shared structure across related components                               |
+| Co-located `.html` template     | Full Django template language; use with `ComponentsTemplateLoader`       |
 | Co-located `.css` / `.js`       | Component-scoped styles and scripts; served via `ComponentsStaticFinder` |
-| Markdown files in `components/` | Narrative docs, design guidelines, accessibility notes                |
-| Multiple apps                   | Separate teams, design system layers, versioned sub-libraries         |
+| Markdown files in `components/` | Narrative docs, design guidelines, accessibility notes                   |
+| Multiple apps                   | Separate teams, design system layers, versioned sub-libraries            |
