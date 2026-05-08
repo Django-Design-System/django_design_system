@@ -7,11 +7,10 @@ from django.apps import AppConfig
 from django.core.exceptions import ImproperlyConfigured
 from django.template import TemplateDoesNotExist
 
-from dj_design_system.components import TagComponent, BlockComponent
+from dj_design_system.components import TagComponent
 from dj_design_system.loaders import ComponentsTemplateLoader
 from dj_design_system.parameters import StrParam
 from dj_design_system.services.registry import ComponentRegistry
-from dj_design_system.services.component import derive_relative_path
 
 
 DEMO_COMPONENTS_DIR = (
