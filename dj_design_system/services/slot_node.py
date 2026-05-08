@@ -107,7 +107,9 @@ class SlottedComponentNode(template.Node):
 def _parse_tag_args(
     parser: template.base.Parser,
     bits: list[str],
-) -> tuple[list[template.base.FilterExpression], dict[str, template.base.FilterExpression]]:
+) -> tuple[
+    list[template.base.FilterExpression], dict[str, template.base.FilterExpression]
+]:
     """Parse positional and keyword arguments from template tag token bits.
 
     Leading bits without ``=`` are treated as positional args; the remainder

@@ -245,7 +245,6 @@ class TestTemplateName:
         assert info.template_name == ButtonComponent._template_name
 
 
-
 # ---------------------------------------------------------------------------
 
 

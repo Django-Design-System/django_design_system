@@ -34,7 +34,11 @@ def loader():
 
     with patch(
         "dj_design_system.loaders.apps.get_app_config",
-        side_effect=lambda label: demo_config if label == "demo_components" else (_ for _ in ()).throw(LookupError(label)),
+        side_effect=lambda label: (
+            demo_config
+            if label == "demo_components"
+            else (_ for _ in ()).throw(LookupError(label))
+        ),
     ):
         yield ComponentsTemplateLoader(engine=None)
 
@@ -46,43 +50,43 @@ def loader():
 
 class TestComponentsTemplateLoader:
     def test_yields_origin_for_html_file(self, loader):
-        sources = list(loader.get_template_sources(
-            "demo_components/components/button/button.html"
-        ))
+        sources = list(
+            loader.get_template_sources("demo_components/components/button/button.html")
+        )
         assert len(sources) == 1
         assert sources[0].name.endswith(os.path.join("button", "button.html"))
 
     def test_ignores_non_components_namespace(self, loader):
-        sources = list(loader.get_template_sources(
-            "demo_components/templates/button.html"
-        ))
+        sources = list(
+            loader.get_template_sources("demo_components/templates/button.html")
+        )
         assert sources == []
 
     def test_ignores_non_html_extension(self, loader):
-        sources = list(loader.get_template_sources(
-            "demo_components/components/button/button.css"
-        ))
+        sources = list(
+            loader.get_template_sources("demo_components/components/button/button.css")
+        )
         assert sources == []
 
     def test_ignores_unknown_app(self, loader):
-        sources = list(loader.get_template_sources(
-            "unknown_app/components/button/button.html"
-        ))
+        sources = list(
+            loader.get_template_sources("unknown_app/components/button/button.html")
+        )
         assert sources == []
 
     def test_get_contents_returns_file_contents(self, loader):
         """get_contents reads the file at origin.name."""
-        sources = list(loader.get_template_sources(
-            "demo_components/components/button/button.html"
-        ))
+        sources = list(
+            loader.get_template_sources("demo_components/components/button/button.html")
+        )
         assert sources, "expected at least one origin"
         contents = loader.get_contents(sources[0])
         assert "btn" in contents
 
     def test_get_contents_raises_for_missing_file(self, loader):
-        sources = list(loader.get_template_sources(
-            "demo_components/components/button/button.html"
-        ))
+        sources = list(
+            loader.get_template_sources("demo_components/components/button/button.html")
+        )
         assert sources
         origin = sources[0]
         # Tamper with the path to simulate a missing file
@@ -103,8 +107,6 @@ class TestComponentsTemplateLoader:
 class TestBindTemplateErrors:
     def _make_registry_and_discover(self, cls):
         """Run _bind_template via a minimal registry discover call."""
-        import pkgutil
-        from importlib import import_module
         from dj_design_system.data import ComponentInfo
 
         info = ComponentInfo(
@@ -129,8 +131,12 @@ class TestBindTemplateErrors:
 
         # Patch inspect.getfile to point at our tmp_path
         import inspect
-        with patch.object(inspect, "getfile", return_value=str(tmp_path / "my_widget.py")):
+
+        with patch.object(
+            inspect, "getfile", return_value=str(tmp_path / "my_widget.py")
+        ):
             from dj_design_system.data import ComponentInfo
+
             info = ComponentInfo(
                 component_class=MyWidgetComponent,
                 name="my_widget",
@@ -143,12 +149,14 @@ class TestBindTemplateErrors:
 
     def test_format_str_and_explicit_template_name_raises(self):
         """template_format_str + template_name defined on the same class raises."""
+
         class ConflictComponent(TagComponent):
             template_format_str = "<span>{label}</span>"
             template_name = "some/template.html"
             label = StrParam("Label")
 
         from dj_design_system.data import ComponentInfo
+
         info = ComponentInfo(
             component_class=ConflictComponent,
             name="conflict",
@@ -161,11 +169,13 @@ class TestBindTemplateErrors:
 
     def test_no_conflict_when_only_format_str(self):
         """template_format_str alone is fine — no error, no _template_name set."""
+
         class FormatOnlyComponent(TagComponent):
             template_format_str = "<span>{label}</span>"
             label = StrParam("Label")
 
         from dj_design_system.data import ComponentInfo
+
         info = ComponentInfo(
             component_class=FormatOnlyComponent,
             name="format_only",
@@ -185,11 +195,13 @@ class TestBindTemplateErrors:
 class TestBindTemplateResolution:
     def test_explicit_template_name_is_set(self):
         """Explicit template_name is copied to _template_name."""
+
         class ExplicitComponent(TagComponent):
             template_name = "myapp/components/explicit.html"
             label = StrParam("Label")
 
         from dj_design_system.data import ComponentInfo
+
         info = ComponentInfo(
             component_class=ExplicitComponent,
             name="explicit",
@@ -209,8 +221,12 @@ class TestBindTemplateResolution:
             label = StrParam("Label")
 
         import inspect
-        with patch.object(inspect, "getfile", return_value=str(tmp_path / "my_card.py")):
+
+        with patch.object(
+            inspect, "getfile", return_value=str(tmp_path / "my_card.py")
+        ):
             from dj_design_system.data import ComponentInfo
+
             info = ComponentInfo(
                 component_class=MyCardComponent,
                 name="my_card",
@@ -220,7 +236,9 @@ class TestBindTemplateResolution:
             reg = ComponentRegistry()
             reg._bind_template(info)
 
-        assert MyCardComponent._template_name == "test_app/components/cards/my_card.html"
+        assert (
+            MyCardComponent._template_name == "test_app/components/cards/my_card.html"
+        )
 
     def test_explicit_template_name_wins_over_colocated(self, tmp_path):
         """When both explicit template_name and co-located HTML exist, explicit wins."""
@@ -232,8 +250,12 @@ class TestBindTemplateResolution:
             label = StrParam("Label")
 
         import inspect
-        with patch.object(inspect, "getfile", return_value=str(tmp_path / "my_thing.py")):
+
+        with patch.object(
+            inspect, "getfile", return_value=str(tmp_path / "my_thing.py")
+        ):
             from dj_design_system.data import ComponentInfo
+
             info = ComponentInfo(
                 component_class=MyThingComponent,
                 name="my_thing",
@@ -254,7 +276,9 @@ class TestBindTemplateResolution:
 class TestHtmlTemplateRendering:
     def test_button_renders_via_html_template(self, registry_with_demo_components):
         """ButtonComponent (which has button.html) renders via the template loader."""
-        from example_project.demo_components.components.button.button import ButtonComponent
+        from example_project.demo_components.components.button.button import (
+            ButtonComponent,
+        )
 
         result = ButtonComponent(label="Click me").render()
         assert "btn" in result
@@ -264,14 +288,18 @@ class TestHtmlTemplateRendering:
 
     def test_button_template_name_was_set(self, registry_with_demo_components):
         """After discovery, ButtonComponent._template_name should be set."""
-        from example_project.demo_components.components.button.button import ButtonComponent
+        from example_project.demo_components.components.button.button import (
+            ButtonComponent,
+        )
 
         assert hasattr(ButtonComponent, "_template_name")
         assert ButtonComponent._template_name.endswith("button.html")
 
     def test_button_disabled_renders_attribute(self, registry_with_demo_components):
         """The disabled_attr context variable is rendered correctly."""
-        from example_project.demo_components.components.button.button import ButtonComponent
+        from example_project.demo_components.components.button.button import (
+            ButtonComponent,
+        )
 
         result = ButtonComponent(label="Del", disabled=True).render()
         assert "disabled" in result
