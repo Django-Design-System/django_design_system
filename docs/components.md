@@ -20,13 +20,18 @@ class IconComponent(TagComponent):
         positional_args = ["name"]
 ```
 
+```htmldjango
+{# myapp/components/icon/icon.html #}
+<svg class="icon icon-{{ name }} {{ classes }}"><use href="#{{ name }}"/></svg>
+```
+
 Template usage: `{% icon "check" %}`
 
 ### BlockComponent
 
 Subclass `BlockComponent` for components that wrap nested template content. These are registered as Django `simple_block_tag`s.
 
-The block body is automatically available as `{content}` in the template format string — you do NOT need to declare it as a parameter. `content` should NOT appear in `Meta.positional_args`.
+The block body is automatically available as `content` in the template context — you do NOT need to declare it as a parameter. `content` should NOT appear in `Meta.positional_args`.
 
 ```python
 from dj_design_system.components import BlockComponent
@@ -37,9 +42,16 @@ class CalloutComponent(BlockComponent):
     type = StrParam("Callout type.", default="info")
 ```
 
+```htmldjango
+{# myapp/components/callout.html #}
+<div class="callout callout-{{ type }} {{ classes }}">
+  {{ content }}
+</div>
+```
+
 Template usage:
 
-```html
+```htmldjango
 {% callout type="warning" %} Watch out! {% endcallout %}
 ```
 
@@ -95,17 +107,19 @@ class ProfileParam(ModelParam):
 
 #### Template Context
 
-Model attributes are flattened into the context with the parameter name as a prefix, using underscore separation. For example, a parameter named `user` with `fields = ["first_name", "email"]` produces `{user_first_name}` and `{user_email}`:
+Model attributes are flattened into the context with the parameter name as a prefix, using underscore separation. For example, a parameter named `user` with `fields = ["first_name", "email"]` produces `user_first_name` and `user_email`:
 
 ```python
 class UserCardComponent(TagComponent):
-    template_format_str = (
-        "<div class='user-card {classes}'>"
-        "<h3>{user_first_name} {user_last_name}</h3>"
-        "<p>{user_email}</p>"
-        "</div>"
-    )
     user = UserParam("The user to display.")
+```
+
+```htmldjango
+{# myapp/components/user_card.html #}
+<div class="user-card {{ classes }}">
+  <h3>{{ user_first_name }} {{ user_last_name }}</h3>
+  <p>{{ user_email }}</p>
+</div>
 ```
 
 #### CSS Classes
@@ -251,10 +265,66 @@ Override to add or modify template context variables beyond the auto-collected p
 
 ```python
 def get_context(self):
-    super().get_context()
-    self.context["icon"] = IconComponent(name=self.icon_name)
-    return self.context
+    ctx = super().get_context()
+    ctx["icon"] = IconComponent(name=self.icon_name)
+    return ctx
 ```
+
+## Templates
+
+Components can render via a co-located HTML file, an explicit `template_name` attribute, or an inline `template_format_str`. Exactly one of these should be used per component — combining `template_format_str` with any HTML-based template raises `ImproperlyConfigured` at startup.
+
+### Auto-discovery: co-located HTML file
+
+Place a `.html` file next to the component's `.py` file, named after the component (matching the auto-derived name — i.e. snake_case, `Component` suffix stripped). The file is picked up automatically at startup; no extra configuration on the class is needed:
+
+```
+myapp/components/button/
+    button.py      # defines ButtonComponent (name: "button")
+    button.html    # discovered automatically
+    button.css     # also discovered automatically (static)
+    button.js      # also discovered automatically (static)
+```
+
+The template is served through `ComponentsTemplateLoader` under the name `{app_label}/components/{path}/{name}.html`. Django's full template language is available — `{% for %}`, `{% if %}`, `{% load %}`, `{% url %}`, etc.
+
+The template context is the same dict that `get_context()` produces: all declared parameters, their CSS classes, and any extra variables you add in a `get_context()` override.
+
+> **Installation required.** The `ComponentsTemplateLoader` must be added to your `TEMPLATES` loader list. See the [quickstart](quickstart.md#template-loader-html-templates) for the exact configuration.
+
+### Explicit `template_name`
+
+Set `template_name` directly on the class to point at any template the Django loader chain can find. This is useful when a component shares a template with another, or when the template lives outside the `components/` directory:
+
+```python
+class HeroCardComponent(TagComponent):
+    template_name = "myapp/components/card/shared_card.html"
+    title = StrParam("Card title.")
+```
+
+When both `template_name` and a co-located `.html` file exist, `template_name` wins silently — the explicit declaration takes precedence.
+
+### Inline `template_format_str`
+
+For simple components that don't need the full template engine, set `template_format_str` on the class. Rendering uses Django's `format_html`, so context variables are auto-escaped and positional braces are used:
+
+```python
+class BadgeComponent(TagComponent):
+    template_format_str = "<span class='badge {classes}'>{label}</span>"
+    label = StrParam("Badge text.")
+```
+
+Note that `template_format_str` does **not** support Django template tags (`{% if %}`, `{% for %}`, etc.). If you need those, use a co-located HTML file instead.
+
+### Precedence summary
+
+| Source | Precedence | Notes |
+|---|---|---|
+| `template_name` class attribute | Highest | Points at any template the loader chain can find |
+| Co-located `{name}.html` file | Middle | Auto-discovered at startup |
+| `template_format_str` | Lowest / fallback | No template engine; uses `format_html` |
+
+Mixing `template_format_str` with an HTML-based source (`template_name` or co-located file) raises `ImproperlyConfigured` at startup.
 
 ### `get_classes_string()`
 

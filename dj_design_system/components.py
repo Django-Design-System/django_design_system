@@ -106,7 +106,19 @@ class BaseComponent:
     def render(self) -> str:
         """
         Render the component as an HTML string.
+
+        If ``_template_name`` was set on the class during registration
+        (either from an explicit ``template_name`` attribute or by
+        auto-discovering a co-located ``.html`` file), the template is
+        rendered via Django's template loader chain.  Otherwise falls back
+        to ``format_html`` with ``template_format_str``.
         """
+        template_name: str | None = getattr(type(self), "_template_name", None)
+        if template_name:
+            from django.template.loader import render_to_string
+            from django.utils.safestring import mark_safe
+
+            return mark_safe(render_to_string(template_name, self.get_context()))
         return format_html(format_string=self.template_format_str, **self.get_context())
 
     def __str__(self) -> str:

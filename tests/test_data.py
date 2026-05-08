@@ -217,7 +217,35 @@ class TestMediaClassOverride:
 
 
 # ---------------------------------------------------------------------------
-# BaseComponent.get_media() integration
+# ComponentInfo.template_name
+# ---------------------------------------------------------------------------
+
+
+class TestTemplateName:
+    def test_returns_none_when_not_set(self, registry_with_demo_components):
+        """A component without an HTML template has template_name of None."""
+        reg = registry_with_demo_components
+        from example_project.demo_components.components.alert import AlertComponent
+
+        info = reg.get_info(AlertComponent)
+        assert info.template_name is None
+
+    def test_returns_template_name_for_html_component(
+        self, registry_with_demo_components
+    ):
+        """ButtonComponent has a co-located button.html — template_name should be set."""
+        reg = registry_with_demo_components
+        info = reg.get_info(ButtonComponent)
+        assert info.template_name == "demo_components/components/button/button.html"
+
+    def test_template_name_matches_class_attribute(self, registry_with_demo_components):
+        """ComponentInfo.template_name reads from the class's _template_name attribute."""
+        reg = registry_with_demo_components
+        info = reg.get_info(ButtonComponent)
+        assert info.template_name == ButtonComponent._template_name
+
+
+
 # ---------------------------------------------------------------------------
 
 

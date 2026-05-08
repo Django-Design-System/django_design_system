@@ -130,9 +130,21 @@ This means narrative documentation lives next to the components it describes, in
 
 ---
 
-## Principle: co-locate CSS and JS with the component
+## Principle: co-locate CSS, JS, and HTML templates with the component
 
-Place `.css` and `.js` files in the same directory as the component module. They are automatically discovered and served by `ComponentsStaticFinder` under `{app_label}/components/...`.
+Place `.css`, `.js`, and `.html` files in the same directory as the component module, named after the component. They are all discovered automatically at startup:
+
+- **`.css` and `.js`** are served by `ComponentsStaticFinder` as static assets under `{app_label}/components/...`.
+- **`.html`** is registered as a Django template via `ComponentsTemplateLoader` and used when `render()` is called.
+
+```
+myapp/components/button/
+    __init__.py
+    button.py      # defines ButtonComponent
+    button.html    # template — full Django template language available
+    button.css     # styles — served as static asset
+    button.js      # scripts — served as static asset
+```
 
 For additional assets that are not co-located (e.g. a shared vendor library), declare a standard Django `Media` class:
 
@@ -144,6 +156,8 @@ class RichButtonComponent(TagComponent):
 
 Both auto-discovered and explicitly declared assets are merged — one does not suppress the other.
 
+See [Components: Templates](components.md#templates) for full details on the template discovery precedence rules and `template_name` override.
+
 ---
 
 ## Summary
@@ -154,5 +168,7 @@ Both auto-discovered and explicitly declared assets are merged — one does not 
 | Flat `components/` package      | Medium libraries, no sub-grouping needed                              |
 | Nested sub-packages             | Large libraries, logical groupings (forms, navigation, data display…) |
 | Abstract base classes           | Shared structure across related components                            |
+| Co-located `.html` template     | Full Django template language; use with `ComponentsTemplateLoader`    |
+| Co-located `.css` / `.js`       | Component-scoped styles and scripts; served via `ComponentsStaticFinder` |
 | Markdown files in `components/` | Narrative docs, design guidelines, accessibility notes                |
 | Multiple apps                   | Separate teams, design system layers, versioned sub-libraries         |
