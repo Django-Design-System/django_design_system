@@ -149,7 +149,7 @@ class ComponentRegistry:
         2. **Co-located HTML file** — a ``{name}.html`` file sitting next
            to the component's ``.py`` source file.
         3. **``template_format_str``** — the existing Python-format-string
-           fallback (current default behaviour).
+           fallback.
 
         Raises ``ImproperlyConfigured`` if both a ``template_format_str``
         (defined directly on the class, not inherited) **and** an HTML-based
