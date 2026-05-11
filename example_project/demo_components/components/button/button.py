@@ -14,6 +14,7 @@ class ButtonComponent(TagComponent):
     - ``StrCSSClassParam`` — value injected as a CSS modifier class
     - ``BoolCSSClassParam`` — adds a CSS class when truthy
     - Co-located CSS file (``button.css``) discovered automatically
+    - Co-located HTML template (``button.html``) discovered automatically
 
     Example usage::
 
@@ -21,7 +22,6 @@ class ButtonComponent(TagComponent):
         {% button "Delete" variant="danger" disabled=True %}
     """
 
-    template_format_str = "<button class='btn {classes}'>{label}</button>"
     label = StrParam("The button label.")
     variant = StrCSSClassParam(
         "Visual variant.",
@@ -34,7 +34,7 @@ class ButtonComponent(TagComponent):
     class Meta:
         positional_args = ["label"]
 
-    def get_template_context(self, **kwargs):
-        ctx = super().get_template_context(**kwargs)
+    def get_context(self):
+        ctx = super().get_context()
         ctx["disabled_attr"] = "disabled" if self.disabled else ""
         return ctx

@@ -14,7 +14,9 @@ INSTALLED_APPS = [
 ]
 ```
 
-If you want component CSS and JS files to be served through Django's static files system, also add `ComponentsStaticFinder` to `STATICFILES_FINDERS`:
+### Static files (CSS and JS)
+
+To serve co-located `.css` and `.js` files through Django's static files system, add `ComponentsStaticFinder` to `STATICFILES_FINDERS`:
 
 ```python
 STATICFILES_FINDERS = [
@@ -24,13 +26,50 @@ STATICFILES_FINDERS = [
 ]
 ```
 
-This serves `.css` and `.js` files from each installed app's `components/` directory under the URL namespace `{app_label}/components/...`. Python files and all other file types are never exposed.
+This serves `.css` and `.js` files from each installed app's `components/` directory under the URL namespace `{app_label}/components/...`. Python files, HTML templates, and all other file types are never exposed as static assets.
+
+### Template loader (HTML templates)
+
+To use co-located `.html` templates for components, add `ComponentsTemplateLoader` to your `TEMPLATES` loader list. Because Django does not support mixing `APP_DIRS: True` with a custom `loaders` list, you must switch to an explicit loader configuration:
+
+```python
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": False,  # must be False when loaders is set
+        "OPTIONS": {
+            "loaders": [
+                "django.template.loaders.filesystem.Loader",
+                "django.template.loaders.app_directories.Loader",
+                "dj_design_system.loaders.ComponentsTemplateLoader",
+            ],
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+            ],
+        },
+    },
+]
+```
 
 Component auto-discovery happens automatically when Django starts up (via `AppConfig.ready()`).
 
 ## Creating a Tag Component
 
-Tag components render a single HTML fragment. Create a file in your app's `components/` directory:
+Tag components render a single HTML fragment. Create a file in your app's `components/` directory.
+
+### Using a co-located HTML template (recommended)
+
+Place a `.html` file next to the `.py` file with the same base name. Django's full template language is available — `{% if %}`, `{% for %}`, `{% load %}`, etc.:
+
+```
+myapp/components/
+    badge.py
+    badge.html
+```
 
 ```python
 # myapp/components/badge.py
@@ -41,6 +80,23 @@ from dj_design_system.parameters import StrParam, BoolCSSClassParam
 class BadgeComponent(TagComponent):
     """A status badge."""
 
+    label = StrParam("The badge text.")
+    bold = BoolCSSClassParam(required=False, default=False)
+```
+
+```htmldjango
+{# myapp/components/badge.html #}
+<span class="badge {{ classes }}">{{ label }}</span>
+```
+
+### Using an inline format string
+
+For simple components you can skip the HTML file and use `template_format_str` directly on the class. This uses Python's `format_html` rather than the Django template engine, so template tags are not available:
+
+```python
+class BadgeComponent(TagComponent):
+    """A status badge."""
+
     template_format_str = "<span class='badge {classes}'>{label}</span>"
     label = StrParam("The badge text.")
     bold = BoolCSSClassParam(required=False, default=False)
@@ -48,9 +104,10 @@ class BadgeComponent(TagComponent):
 
 Use it in a template:
 
-```html
-{% load design_components %} {% badge label="New" %} {% badge label="Active"
-bold=True %}
+```htmldjango
+{% load design_components %}
+{% badge label="New" %}
+{% badge label="Active" bold=True %}
 ```
 
 ### Positional Arguments
@@ -79,7 +136,13 @@ Instead of:
 
 ## Creating a Block Component
 
-Block components wrap nested template content. The block body is automatically available as `{content}` in the template — you do NOT need to declare it as a parameter.
+Block components wrap nested template content. The block body is automatically available as `content` in the template context — you do NOT need to declare it as a parameter.
+
+```
+myapp/components/
+    card.py
+    card.html
+```
 
 ```python
 # myapp/components/card.py
@@ -90,18 +153,26 @@ from dj_design_system.parameters import StrParam
 class CardComponent(BlockComponent):
     """A content card."""
 
-    template_format_str = "<div class='card {classes}'><h3>{title}</h3>{content}</div>"
     title = StrParam("Card heading.")
 
     class Meta:
         positional_args = ["title"]
 ```
 
+```htmldjango
+{# myapp/components/card.html #}
+<div class="card {{ classes }}">
+  <h3>{{ title }}</h3>
+  {{ content }}
+</div>
+```
+
 Use it in a template:
 
-```html
-{% load design_components %} {% card "My Title" %}
-<p>This is the card body.</p>
+```htmldjango
+{% load design_components %}
+{% card "My Title" %}
+  <p>This is the card body.</p>
 {% endcard %}
 ```
 

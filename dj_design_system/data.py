@@ -139,6 +139,19 @@ class ComponentInfo:
         return result.merge(ComponentMedia(css=auto_css, js=auto_js))
 
     @property
+    def template_name(self) -> str | None:
+        """Return the resolved template name for this component, or ``None``.
+
+        Set during registration by the registry's ``_bind_template()`` method.
+        Returns the value of ``_template_name`` if it was placed on the class
+        (either from an explicit ``template_name`` class attribute or from
+        auto-discovering a co-located ``.html`` file), otherwise ``None``.
+
+        When ``None``, the component renders via ``template_format_str``.
+        """
+        return getattr(self.component_class, "_template_name", None)
+
+    @property
     def tag_type(self) -> TagType:
         """Return the tag registration type for this component.
 

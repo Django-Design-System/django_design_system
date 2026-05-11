@@ -1,6 +1,7 @@
 import inspect
 import pkgutil
 from importlib import import_module
+from pathlib import Path
 from typing import Type
 
 from dj_design_system.data import ComponentInfo, ComponentMedia
@@ -127,14 +128,74 @@ class ComponentRegistry:
         )
 
         for obj in concrete_components:
-            self._components.append(
-                ComponentInfo(
-                    component_class=obj,
-                    name=get_meta_name(obj) or derive_name(obj),
-                    app_label=app_label,
-                    relative_path=relative_path,
-                )
+            info = ComponentInfo(
+                component_class=obj,
+                name=get_meta_name(obj) or derive_name(obj),
+                app_label=app_label,
+                relative_path=relative_path,
             )
+            self._bind_template(info)
+            self._components.append(info)
+
+    def _bind_template(self, info: ComponentInfo) -> None:
+        """
+        Resolve and validate the template source for *info*'s component class.
+
+        Checks for three template sources (in priority order):
+
+        1. **Explicit ``template_name``** — a ``template_name`` attribute
+           defined directly on the class, pointing at any template the
+           loader chain can find.
+        2. **Co-located HTML file** — a ``{name}.html`` file sitting next
+           to the component's ``.py`` source file.
+        3. **``template_format_str``** — the existing Python-format-string
+           fallback.
+
+        Raises ``ImproperlyConfigured`` if both a ``template_format_str``
+        (defined directly on the class, not inherited) **and** an HTML-based
+        template (``template_name`` or co-located file) are present — these
+        two approaches cannot coexist on the same component class.
+
+        When an HTML template is resolved, sets ``cls._template_name`` so
+        that ``render()`` can find it without repeating filesystem I/O.
+        """
+        from django.core.exceptions import ImproperlyConfigured
+
+        from dj_design_system.services.media import build_static_url
+
+        cls = info.component_class
+        has_format_str = "template_format_str" in cls.__dict__
+        has_explicit_template = "template_name" in cls.__dict__
+
+        # Check for a co-located .html file next to the component source.
+        colocated_template_name: str | None = None
+        try:
+            source_file = inspect.getfile(cls)
+        except (TypeError, OSError):
+            pass
+        else:
+            source_dir = Path(source_file).parent
+            if (source_dir / f"{info.name}.html").is_file():
+                colocated_template_name = build_static_url(
+                    info.app_label, info.relative_path, info.name, ".html"
+                )
+
+        has_html_template = has_explicit_template or colocated_template_name is not None
+
+        if has_format_str and has_html_template:
+            if has_explicit_template:
+                conflict = "'template_name'"
+            else:
+                conflict = f"a co-located HTML template ('{info.name}.html')"
+            raise ImproperlyConfigured(
+                f"Component '{cls.__name__}' defines both 'template_format_str' "
+                f"and {conflict}. Use one or the other."
+            )
+
+        if has_explicit_template:
+            cls._template_name = cls.template_name  # type: ignore[attr-defined]
+        elif colocated_template_name is not None:
+            cls._template_name = colocated_template_name
 
     # ------------------------------------------------------------------
     # Lookup methods
