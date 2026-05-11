@@ -24,7 +24,11 @@ class SimpleSlottedComponent(BlockComponent):
         }
 
     def render(self) -> str:
-        sidebar = f"<aside>{self.slots['sidebar']}</aside>" if self.slots.get("sidebar") else ""
+        sidebar = (
+            f"<aside>{self.slots['sidebar']}</aside>"
+            if self.slots.get("sidebar")
+            else ""
+        )
         return f"<div class='slotted {self.get_classes_string()}'><main>{self.slots['body']}</main>{sidebar}</div>"
 
 
@@ -104,15 +108,15 @@ class TestValidateSlots:
         assert result == {"body": "<p>hi</p>", "sidebar": "<aside></aside>"}
 
     def test_missing_required_raises(self):
-        with pytest.raises(TemplateSyntaxError, match="requires slot 'body'"):
+        with pytest.raises(ValueError, match="requires slot 'body'"):
             validate_slots(self.declared, {"sidebar": "x"}, "test")
 
     def test_unknown_slot_raises(self):
-        with pytest.raises(TemplateSyntaxError, match="unknown slot.*nope"):
+        with pytest.raises(ValueError, match="unknown slot.*nope"):
             validate_slots(self.declared, {"body": "x", "nope": "y"}, "test")
 
     def test_empty_provided_missing_required(self):
-        with pytest.raises(TemplateSyntaxError, match="requires slot 'body'"):
+        with pytest.raises(ValueError, match="requires slot 'body'"):
             validate_slots(self.declared, {}, "test")
 
     def test_all_optional_no_slots_provided(self):
@@ -264,11 +268,7 @@ class TestSlottedTemplateRendering:
         assert "<nav>Nav</nav>" in result
 
     def test_optional_slot_omitted_uses_default(self):
-        t = Template(
-            "{% load test_slots %}"
-            "{% all_optional %}"
-            "{% endall_optional %}"
-        )
+        t = Template("{% load test_slots %}{% all_optional %}{% endall_optional %}")
         result = t.render(Context())
         assert "Default Header" in result
         assert "Default" in result
@@ -402,12 +402,14 @@ class TestGapEnforcement:
             t.render(Context())
 
     def test_other_template_tag_between_slots_raises(self):
-        with pytest.raises(TemplateSyntaxError, match="unexpected content between slots"):
+        with pytest.raises(
+            TemplateSyntaxError, match="unexpected content between slots"
+        ):
             t = Template(
                 "{% load test_slots %}"
                 "{% simple_slotted %}"
                 '{% slot "body" %}<p>Body</p>{% endslot %}'
-                "{% now \"Y\" %}"
+                '{% now "Y" %}'
                 '{% slot "sidebar" %}<nav/>{% endslot %}'
                 "{% endsimple_slotted %}"
             )
@@ -417,7 +419,7 @@ class TestGapEnforcement:
         t = Template(
             "{% load test_slots %}"
             "{% simple_slotted %}"
-            '{# This is a comment #}'
+            "{# This is a comment #}"
             '{% slot "body" %}<p>Body</p>{% endslot %}'
             "{% endsimple_slotted %}"
         )
@@ -537,3 +539,119 @@ class TestBackwardCompatibility:
         assert callable(tag_func)
         result = tag_func(SafeString("hello"))
         assert "hello" in str(result)
+
+
+# ---------------------------------------------------------------------------
+# Integration tests — SlottedCardComponent via design_components library
+# ---------------------------------------------------------------------------
+
+
+class TestSlottedCardIntegration:
+    """Tests using the real registered slotted_card tag via {% load design_components %}."""
+
+    def test_card_with_all_slots(self):
+        t = Template(
+            "{% load design_components %}"
+            '{% slotted_card title="Welcome" %}'
+            '{% slot "header" %}<img src="banner.jpg">{% endslot %}'
+            '{% slot "body" %}<p>Main content.</p>{% endslot %}'
+            '{% slot "footer" %}<button>OK</button>{% endslot %}'
+            "{% endslotted_card %}"
+        )
+        result = t.render(Context())
+        assert "slotted-card__header" in result
+        assert "<img src" in result
+        assert "<p>Main content.</p>" in result
+        assert "slotted-card__footer" in result
+        assert "<button>OK</button>" in result
+        assert "slotted-card__title" in result
+        assert "Welcome" in result
+
+    def test_card_with_only_required_slot(self):
+        t = Template(
+            "{% load design_components %}"
+            "{% slotted_card %}"
+            '{% slot "body" %}<p>Just body.</p>{% endslot %}'
+            "{% endslotted_card %}"
+        )
+        result = t.render(Context())
+        assert "<p>Just body.</p>" in result
+        assert "slotted-card__header" not in result
+        assert "slotted-card__footer" not in result
+        assert "slotted-card__title" not in result
+
+    def test_card_with_variant(self):
+        t = Template(
+            "{% load design_components %}"
+            '{% slotted_card variant="elevated" %}'
+            '{% slot "body" %}<p>Content.</p>{% endslot %}'
+            "{% endslotted_card %}"
+        )
+        result = t.render(Context())
+        assert "elevated" in result
+
+    def test_card_with_positional_title(self):
+        t = Template(
+            "{% load design_components %}"
+            '{% slotted_card "My Title" %}'
+            '{% slot "body" %}<p>Content.</p>{% endslot %}'
+            "{% endslotted_card %}"
+        )
+        result = t.render(Context())
+        assert "My Title" in result
+
+    def test_card_slot_with_template_variable(self):
+        t = Template(
+            "{% load design_components %}"
+            "{% slotted_card %}"
+            '{% slot "body" %}<p>{{ message }}</p>{% endslot %}'
+            "{% endslotted_card %}"
+        )
+        result = t.render(Context({"message": "Dynamic!"}))
+        assert "<p>Dynamic!</p>" in result
+
+    def test_card_nested_inside_another_component(self):
+        t = Template(
+            "{% load design_components %}"
+            '{% alert "info" %}'
+            '{% slotted_card title="Nested" %}'
+            '{% slot "body" %}<p>Inside alert.</p>{% endslot %}'
+            "{% endslotted_card %}"
+            "{% endalert %}"
+        )
+        result = t.render(Context())
+        assert "alert" in result
+        assert "slotted-card" in result
+        assert "<p>Inside alert.</p>" in result
+
+    def test_card_slot_containing_other_component(self):
+        t = Template(
+            "{% load design_components %}"
+            "{% slotted_card %}"
+            '{% slot "body" %}{% badge "New" %}{% endslot %}'
+            "{% endslotted_card %}"
+        )
+        result = t.render(Context())
+        assert "badge" in result
+        assert "New" in result
+
+    def test_card_missing_required_body_raises(self):
+        with pytest.raises(TemplateSyntaxError, match="requires slot 'body'"):
+            t = Template(
+                "{% load design_components %}"
+                "{% slotted_card %}"
+                '{% slot "header" %}<h1>No body</h1>{% endslot %}'
+                "{% endslotted_card %}"
+            )
+            t.render(Context())
+
+    def test_card_gap_content_raises(self):
+        with pytest.raises(TemplateSyntaxError, match="content outside slots"):
+            t = Template(
+                "{% load design_components %}"
+                "{% slotted_card %}"
+                "STRAY CONTENT"
+                '{% slot "body" %}<p>Body</p>{% endslot %}'
+                "{% endslotted_card %}"
+            )
+            t.render(Context())

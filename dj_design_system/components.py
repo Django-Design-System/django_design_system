@@ -279,7 +279,13 @@ class BlockComponent(BaseComponent):
 
     template_format_str: str = "<span class='{classes}'>{content}</span>"
 
-    def __init__(self, content: SafeString | None = None, *, slots: dict[str, SafeString] | None = None, **kwargs):
+    def __init__(
+        self,
+        content: SafeString | None = None,
+        *,
+        slots: dict[str, SafeString] | None = None,
+        **kwargs,
+    ):
         if self.has_slots():
             if slots is None:
                 slots = {}

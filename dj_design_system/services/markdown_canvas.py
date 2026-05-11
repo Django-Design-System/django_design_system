@@ -35,6 +35,7 @@ from markdown.preprocessors import Preprocessor
 from dj_design_system.data import CanvasSpec
 from dj_design_system.services.canvas import build_canvas_url
 from dj_design_system.services.tag_signature import highlight_code
+from dj_design_system.slots import SLOT_PARAM_PREFIX
 
 
 if TYPE_CHECKING:
@@ -58,6 +59,16 @@ _KWARG_RE = re.compile(r"""(\w+)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s%}]+))""")
 
 # Matches: "value" or 'value' (positional argument)
 _POS_ARG_RE = re.compile(r"""(?:"([^"]*)"|'([^']*)')""")
+_SLOT_PARAM_PREFIX = (
+    SLOT_PARAM_PREFIX  # keep module-level alias for use in regex helpers
+)
+# Matches: {% slot "name" %}content{% endslot %}
+_SLOT_RE = re.compile(
+    r"""\{%[-\s]*slot\s+(?:"([^"]+)"|'([^']+)')\s*%\}"""
+    r"""(.*?)"""
+    r"""\{%[-\s]*endslot\s*%\}""",
+    re.DOTALL,
+)
 
 
 def parse_tag_syntax(source: str) -> CanvasSpec:
@@ -100,9 +111,16 @@ def parse_tag_syntax(source: str) -> CanvasSpec:
     )
     closing_match = closing_pattern.search(after_opening)
     if closing_match:
-        content = after_opening[: closing_match.start()].strip()
-        if content:
-            kwargs["content"] = content
+        block_content = after_opening[: closing_match.start()].strip()
+        # Check for {% slot "name" %}...{% endslot %} patterns
+        slot_matches = list(_SLOT_RE.finditer(block_content))
+        if slot_matches:
+            for sm in slot_matches:
+                slot_name = sm.group(1) or sm.group(2)
+                slot_content = sm.group(3).strip()
+                kwargs[f"{_SLOT_PARAM_PREFIX}{slot_name}"] = slot_content
+        elif block_content:
+            kwargs["content"] = block_content
 
     return CanvasSpec(
         component_name=tag_name,

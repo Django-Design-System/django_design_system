@@ -68,35 +68,20 @@ class SlottedComponentNode(template.Node):
                 resolved_kwargs[key] = value
         kwargs = resolved_kwargs
 
-        # Walk children: extract slots, validate gaps
+        # Walk children: extract slot content (gap/duplicate checks already done at parse time)
         provided_slots: dict[str, str] = {}
         for node in self.nodelist:
             if isinstance(node, SlotNode):
-                if node.name in provided_slots:
-                    raise TemplateSyntaxError(
-                        f"'{self.tag_name}' received duplicate slot '{node.name}'."
-                    )
                 provided_slots[node.name] = node.render(context)
-            elif isinstance(node, TextNode):
-                if node.s.strip():
-                    snippet = node.s.strip()[:80]
-                    raise TemplateSyntaxError(
-                        f"'{self.tag_name}' component requires all content inside "
-                        f"{{% slot %}}...{{% endslot %}} tags. "
-                        f'Found content outside slots: "{snippet}"'
-                    )
-                # Whitespace-only TextNodes are fine — skip them
-            else:
-                # Any other node type (other template tags, variable nodes, etc.)
-                raise TemplateSyntaxError(
-                    f"'{self.tag_name}' component requires all content inside "
-                    f"{{% slot %}}...{{% endslot %}} tags. "
-                    f"Found unexpected content between slots."
-                )
+            # TextNode (whitespace) and any other nodes are silently skipped here;
+            # they were already validated at parse time.
 
         # Validate against declared slots and fill defaults
         declared_slots = self.component_class.get_slots()
-        slots = validate_slots(declared_slots, provided_slots, self.tag_name)
+        try:
+            slots = validate_slots(declared_slots, provided_slots, self.tag_name)
+        except ValueError as exc:
+            raise TemplateSyntaxError(str(exc)) from exc
 
         # Mark each slot value as safe (content was rendered from template nodes)
         safe_slots = {name: mark_safe(value) for name, value in slots.items()}
@@ -107,7 +92,9 @@ class SlottedComponentNode(template.Node):
 def _parse_tag_args(
     parser: template.base.Parser,
     bits: list[str],
-) -> tuple[list[template.base.FilterExpression], dict[str, template.base.FilterExpression]]:
+) -> tuple[
+    list[template.base.FilterExpression], dict[str, template.base.FilterExpression]
+]:
     """Parse positional and keyword arguments from template tag token bits.
 
     Leading bits without ``=`` are treated as positional args; the remainder
@@ -148,6 +135,33 @@ def make_slotted_block_tag(
         end_tag = f"end{tag_name}"
         nodelist = parser.parse((end_tag,))
         parser.delete_first_token()
+
+        # ── Parse-time validation ──────────────────────────────────────────
+        # Check for gap violations and duplicate slots now, while we still
+        # have the parser context and can raise TemplateSyntaxError cleanly.
+        seen_slot_names: set[str] = set()
+        for node in nodelist:
+            if isinstance(node, SlotNode):
+                if node.name in seen_slot_names:
+                    raise TemplateSyntaxError(
+                        f"'{tag_name}' received duplicate slot '{node.name}'."
+                    )
+                seen_slot_names.add(node.name)
+            elif isinstance(node, TextNode):
+                if node.s.strip():
+                    snippet = node.s.strip()[:80]
+                    raise TemplateSyntaxError(
+                        f"'{tag_name}' component requires all content inside "
+                        f"{{% slot %}}...{{% endslot %}} tags. "
+                        f'Found content outside slots: "{snippet}"'
+                    )
+            else:
+                raise TemplateSyntaxError(
+                    f"'{tag_name}' component requires all content inside "
+                    f"{{% slot %}}...{{% endslot %}} tags. "
+                    f"Found unexpected content between slots."
+                )
+        # ─────────────────────────────────────────────────────────────────
 
         return SlottedComponentNode(
             nodelist=nodelist,

@@ -6,7 +6,10 @@ A slot defines a named content area that template authors fill using
 
 from __future__ import annotations
 
-from django.template import TemplateSyntaxError
+
+#: Prefix used when encoding slot values as form fields or URL params.
+#: ``slot__body`` maps to the slot named ``"body"``.
+SLOT_PARAM_PREFIX = "slot__"
 
 
 class Slot:
@@ -48,15 +51,15 @@ def validate_slots(
     missing optional slots).
 
     Raises:
-        TemplateSyntaxError: If a required slot is missing, an unknown
-            slot name is used, or a slot name appears more than once.
+        ValueError: If a required slot is missing, an unknown slot name
+            is used, or a slot name appears more than once.
     """
     # Check for unknown slot names
     unknown = set(provided_slots) - set(declared_slots)
     if unknown:
         names = ", ".join(sorted(unknown))
         valid = ", ".join(sorted(declared_slots))
-        raise TemplateSyntaxError(
+        raise ValueError(
             f"'{component_name}' received unknown slot(s): {names}. "
             f"Valid slots are: {valid}."
         )
@@ -68,7 +71,7 @@ def validate_slots(
             result[name] = provided_slots[name]
         elif slot.required:
             valid = ", ".join(sorted(declared_slots))
-            raise TemplateSyntaxError(
+            raise ValueError(
                 f"'{component_name}' requires slot '{name}' but it was not provided. "
                 f"Declared slots: {valid}."
             )

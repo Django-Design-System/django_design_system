@@ -12,7 +12,7 @@ Features:
 - Syntax highlighting using Pygments (graceful fallback to plain text if unavailable)
 """
 
-from typing import Any, NamedTuple
+from typing import Any, NamedTuple, cast
 
 from dj_design_system.components import BaseComponent, BlockComponent
 from dj_design_system.data import BLOCK_CONTENT_PLACEHOLDER, CanvasSpec
@@ -23,6 +23,7 @@ from dj_design_system.parameters import (
     StrParam,
 )
 from dj_design_system.services.component import derive_name
+from dj_design_system.slots import SLOT_PARAM_PREFIX
 
 
 # Try to import Pygments for syntax highlighting
@@ -272,6 +273,28 @@ def highlight_code(code: str) -> str:
         return ""
 
 
+def _build_slot_lines(
+    component_class: type[BlockComponent], required_only: bool
+) -> str:
+    """Build {% slot "name" %}...{% endslot %} lines for a slotted component.
+
+    Args:
+        component_class: A BlockComponent subclass with Meta.slots.
+        required_only: If True, only include required slots.
+
+    Returns:
+        Multi-line string with slot blocks, each indented.
+    """
+    slots = component_class.get_slots()
+    lines = []
+    for name, slot in slots.items():
+        if required_only and not slot.required:
+            continue
+        placeholder = slot.default or f"Sample {name} content"
+        lines.append(f'  {{% slot "{name}" %}}{placeholder}{{% endslot %}}')
+    return "\n".join(lines) + "\n" if lines else ""
+
+
 def generate_current_tag_signature(
     component_class: type[BaseComponent],
     kwargs: dict[str, Any],
@@ -297,6 +320,13 @@ def generate_current_tag_signature(
     component_name = derive_name(component_class)
     positional_args = component_class.get_positional_args()
     is_block = issubclass(component_class, BlockComponent)
+    is_slotted = is_block and cast(type[BlockComponent], component_class).has_slots()
+    block_class = cast(type[BlockComponent], component_class) if is_block else None
+    slot_kwargs = {
+        k[len(SLOT_PARAM_PREFIX) :]: v
+        for k, v in kwargs.items()
+        if k.startswith(SLOT_PARAM_PREFIX)
+    }
 
     # Build positional args from kwargs (in declared order)
     positional = [
@@ -309,27 +339,50 @@ def generate_current_tag_signature(
     keyword = [
         _format_param_for_tag(name, value)
         for name, value in kwargs.items()
-        if name not in positional_args and (not is_block or name != "content")
+        if name not in positional_args
+        and not name.startswith(SLOT_PARAM_PREFIX)
+        and (not is_block or name != "content")
     ]
 
     all_args = positional + keyword
     args_str = " ".join(all_args)
 
-    if is_block:
+    if is_slotted:
+        opening = f"{{% {component_name}"
+        if args_str:
+            opening += f" {args_str}"
+        opening += " %}"
+        # Build slot lines from current kwargs
+        slot_lines_parts = []
+        for name, value in slot_kwargs.items():
+            slot_lines_parts.append(f'  {{% slot "{name}" %}}{value}{{% endslot %}}')
+        # If no slot kwargs provided, show required slots with placeholders
+        if not slot_lines_parts:
+            assert block_class is not None
+            for name, slot in block_class.get_slots().items():
+                if slot.required:
+                    placeholder = slot.default or f"Sample {name} content"
+                    slot_lines_parts.append(
+                        f'  {{% slot "{name}" %}}{placeholder}{{% endslot %}}'
+                    )
+        slot_content = "\n".join(slot_lines_parts) + "\n" if slot_lines_parts else ""
+        raw = f"{opening}\n{slot_content}{{% end{component_name} %}}"
+        formatted = raw
+    elif is_block:
         opening = f"{{% {component_name}"
         if args_str:
             opening += f" {args_str}"
         opening += " %}"
         content = kwargs.get("content") or BLOCK_CONTENT_PLACEHOLDER
         raw = f"{opening}{content}{{% end{component_name} %}}"
+        formatted = _format_multiline_example(raw, is_block, component_name)
     else:
         opening = f"{{% {component_name}"
         if args_str:
             opening += f" {args_str}"
         opening += " %}"
         raw = opening
-
-    formatted = _format_multiline_example(raw, is_block, component_name)
+        formatted = _format_multiline_example(raw, is_block, component_name)
     highlighted = highlight_code(formatted)
 
     # Build a CanvasSpec so the current signature can drive the sandbox iframe.
@@ -378,6 +431,8 @@ def generate_tag_signature(
     positional_args = component_class.get_positional_args()
 
     is_block = issubclass(component_class, BlockComponent)
+    is_slotted = is_block and cast(type[BlockComponent], component_class).has_slots()
+    block_class = cast(type[BlockComponent], component_class) if is_block else None
 
     # ─────────────────────────────────────────────────────────────────────────
     # Build minimal usage (required params only, using positional args)
@@ -397,17 +452,25 @@ def generate_tag_signature(
                 minimal_positional.append(_format_positional_arg(value))
                 minimal_positional_values.append(value)
 
-    if is_block:
+    if is_slotted:
+        # Slotted: show {% slot %}...{% endslot %} for required slots
+        assert block_class is not None
+        opening = f"{{% {component_name} {' '.join(minimal_positional)}".strip()
+        opening += " %}"
+        slot_lines = _build_slot_lines(block_class, required_only=True)
+        minimal_raw = f"{opening}\n{slot_lines}{{% end{component_name} %}}"
+        minimal = minimal_raw
+    elif is_block:
         opening = f"{{% {component_name} {' '.join(minimal_positional)}".strip()
         opening += " %}"
         minimal_raw = f"{opening}{BLOCK_CONTENT_PLACEHOLDER}{{% end{component_name} %}}"
+        minimal = _format_multiline_example(minimal_raw, is_block, component_name)
     else:
         # Tag: {% component_name positional_args %}
         opening = f"{{% {component_name} {' '.join(minimal_positional)}".strip()
         opening += " %}"
         minimal_raw = opening
-
-    minimal = _format_multiline_example(minimal_raw, is_block, component_name)
+        minimal = _format_multiline_example(minimal_raw, is_block, component_name)
 
     # ─────────────────────────────────────────────────────────────────────────
     # Build maximal usage (all params that work, using positional args where possible)
@@ -448,12 +511,22 @@ def generate_tag_signature(
     all_args = maximal_positional + maximal_keyword
     args_str = " ".join(all_args)
 
-    if is_block:
+    if is_slotted:
+        assert block_class is not None
+        opening = f"{{% {component_name}"
+        if args_str:
+            opening += f" {args_str}"
+        opening += " %}"
+        slot_lines = _build_slot_lines(block_class, required_only=False)
+        maximal_raw = f"{opening}\n{slot_lines}{{% end{component_name} %}}"
+        maximal = maximal_raw
+    elif is_block:
         opening = f"{{% {component_name}"
         if args_str:
             opening += f" {args_str}"
         opening += " %}"
         maximal_raw = f"{opening}{BLOCK_CONTENT_PLACEHOLDER}{{% end{component_name} %}}"
+        maximal = _format_multiline_example(maximal_raw, is_block, component_name)
     else:
         # Tag: {% component_name args %}
         opening = f"{{% {component_name}"
@@ -461,8 +534,7 @@ def generate_tag_signature(
             opening += f" {args_str}"
         opening += " %}"
         maximal_raw = opening
-
-    maximal = _format_multiline_example(maximal_raw, is_block, component_name)
+        maximal = _format_multiline_example(maximal_raw, is_block, component_name)
 
     # ─────────────────────────────────────────────────────────────────────────
     # Generate HTML versions with syntax highlighting
@@ -476,14 +548,26 @@ def generate_tag_signature(
     # ─────────────────────────────────────────────────────────────────────────
 
     canvas_name = canvas_component_name or component_name
+
+    # For slotted components, add slot values to the canvas specs so previews render content.
+    minimal_slot_params: dict[str, str] = {}
+    maximal_slot_params: dict[str, str] = {}
+    if is_slotted:
+        assert block_class is not None
+        for slot_name, slot in block_class.get_slots().items():
+            placeholder = slot.default or f"Sample {slot_name} content"
+            if slot.required:
+                minimal_slot_params[f"{SLOT_PARAM_PREFIX}{slot_name}"] = placeholder
+            maximal_slot_params[f"{SLOT_PARAM_PREFIX}{slot_name}"] = placeholder
+
     minimal_spec = CanvasSpec(
         component_name=canvas_name,
-        params=minimal_keyword_values,
+        params={**minimal_keyword_values, **minimal_slot_params},
         positional_args=tuple(minimal_positional_values),
     )
     maximal_spec = CanvasSpec(
         component_name=canvas_name,
-        params=maximal_keyword_values,
+        params={**maximal_keyword_values, **maximal_slot_params},
         positional_args=tuple(maximal_positional_values),
     )
 

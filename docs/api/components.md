@@ -13,3 +13,17 @@ show_symbol_type_toc: true
 docstring_style: google
 merge_init_into_class: true
 group_by_category: true
+
+---
+
+## Slots API
+
+::: dj_design_system.slots
+options:
+members: true
+show_root_heading: false
+show_source: true
+show_symbol_type_heading: true
+show_symbol_type_toc: true
+docstring_style: google
+merge_init_into_class: true
