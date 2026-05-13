@@ -46,9 +46,7 @@ from pathlib import Path
 
 # Matches:  src="/_canvas/?component=…"
 #       or  src="http://localhost:8000/_canvas/?component=…"
-CANVAS_SRC_RE = re.compile(
-    r'src="((?:http://[^/]+)?/_canvas/\?([^"]+))"'
-)
+CANVAS_SRC_RE = re.compile(r'src="((?:http://[^/]+)?/_canvas/\?([^"]+))"')
 
 # Matches any href/src pointing to /static/ (absolute)
 STATIC_REF_RE = re.compile(r'(?:href|src)="(/static/[^"]+)"')
