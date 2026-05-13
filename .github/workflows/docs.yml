@@ -71,6 +71,9 @@ jobs:
 
       - name: Snapshot gallery with wget
         run: |
+          # --exclude-directories=_canvas keeps the canvas iframe src attrs as
+          # absolute URLs (/_canvas/?component=…) so the Python step below can
+          # fetch, clean-name, and patch them properly.
           wget \
             --mirror \
             --convert-links \
@@ -78,6 +81,7 @@ jobs:
             --no-parent \
             --page-requisites \
             --reject "*.py,*.pyc" \
+            --exclude-directories=_canvas \
             --directory-prefix=gallery-snapshot \
             http://localhost:8000/ || wget_exit=$?
           # Exit code 8 = server errors on individual pages (expected for broken demo
@@ -86,19 +90,13 @@ jobs:
             exit "$wget_exit"
           fi
 
-      - name: Sanitise query-string filenames for artifact upload
+      - name: Save canvas iframe pages as clean static files
         run: |
-          # wget saves /_canvas/?component=… as files whose names contain '?'.
-          # Artifact upload rejects '?' (NTFS-unsafe). Rename every such file by
-          # replacing '?' with '__' and update all HTML references to match.
-          # Use [?] in find so it matches a literal '?' (not any-char glob).
-          find gallery-snapshot -type f -name '*[?]*' | while IFS= read -r src; do
-            dst="${src//\?/__}"
-            mv -f "$src" "$dst"
-          done
-          # Patch HTML files so iframe src / href attributes point to the new names.
-          find gallery-snapshot -name '*.html' -exec \
-            sed -i 's|?|__|g' {} +
+          python3 .github/scripts/save_canvas_pages.py \
+            gallery-snapshot/localhost:8000 \
+            http://localhost:8000
+        env:
+          DJANGO_SETTINGS_MODULE: example_project.settings
 
       - name: Upload gallery artifact
         uses: actions/upload-artifact@v4
