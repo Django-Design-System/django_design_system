@@ -42,9 +42,9 @@ variant="danger" disabled=True %}
 
 The gallery generates the templatetag syntax automatically and shows a live preview:
 
-![Gallery preview showing the button component with its live iframe preview and generated tag signature](https://github.com/Django-Design-System/django_design_system/raw/main/docs/assets/gallery-preview.png)
+![Gallery preview showing the button component with its live iframe preview and generated tag signature](https://github.com/fukalite/dj-design-system/raw/main/docs/assets/gallery-preview.png)
 
-**[Browse the demo gallery →](https://django-design-system.github.io/django_design_system/demo/)**
+**[Browse the demo gallery →](https://fukalite.github.io/dj-design-system/demo/)**
 
 ---
 
@@ -72,7 +72,7 @@ The gallery generates the templatetag syntax automatically and shows a live prev
 
 | I want to…                                       | Go to                                                                                                  |
 | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
-| See components in action                         | [Demo gallery](https://django-design-system.github.io/django_design_system/gallery/)                   |
+| See components in action                         | [Demo gallery](https://fukalite.github.io/dj-design-system/gallery/)                   |
 | Install and create my first component            | [Quickstart](quickstart.md)                                                                            |
 | Learn all parameter types                        | [Components & parameters](components.md)                                                               |
 | Understand how discovery works                   | [Registry](registry.md)                                                                                |
@@ -80,4 +80,4 @@ The gallery generates the templatetag syntax automatically and shows a live prev
 | Use components in templates                      | [Templatetags](templatetags.md)                                                                        |
 | Understand how to structure my component library | [Organising components](organisation.md)                                                               |
 | Browse the full API reference                    | [Parameters](api/parameters.md) · [Components](api/components.md)                                      |
-| Contribute to the project                        | [Contributing](https://github.com/Django-Design-System/django_design_system/blob/main/CONTRIBUTING.md) |
+| Contribute to the project                        | [Contributing](https://github.com/fukalite/dj-design-system/blob/main/CONTRIBUTING.md) |

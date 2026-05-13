@@ -24,8 +24,8 @@ best-practice front-end engineering. Specifically:
 
 Contributions that improve the gallery front-end are very welcome — whether that is
 a focused accessibility fix, a CSS refactor, a JS improvement, or a full template review.
-See the [contributing guide](https://github.com/Django-Design-System/django_design_system/blob/main/CONTRIBUTING.md) for how to get started.
+See the [contributing guide](https://github.com/fukalite/dj-design-system/blob/main/CONTRIBUTING.md) for how to get started.
 
 We have been intentionally transparent about this rather than pretending the code is
 something it is not. If you spot something that concerns you, please
-[open an issue](https://github.com/Django-Design-System/django_design_system/issues).
+[open an issue](https://github.com/fukalite/dj-design-system/issues).

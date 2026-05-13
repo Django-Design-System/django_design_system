@@ -13,7 +13,7 @@ Security fixes are applied to the latest released version only.
 
 **Please do not open a public GitHub issue for security vulnerabilities.**
 
-Report vulnerabilities privately using [GitHub's private security advisory feature](https://github.com/Django-Design-System/django_design_system/security/advisories/new).
+Report vulnerabilities privately using [GitHub's private security advisory feature](https://github.com/fukalite/dj-design-system/security/advisories/new).
 
 Include as much detail as you can:
 

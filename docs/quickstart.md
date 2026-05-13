@@ -1,6 +1,6 @@
 # Quickstart
 
-Full documentation lives at [django-design-system.github.io/django_design_system/](https://django-design-system.github.io/django_design_system/).
+Full documentation lives at [fukalite.github.io/dj-design-system/](https://fukalite.github.io/dj-design-system/).
 
 ## Installation
 
