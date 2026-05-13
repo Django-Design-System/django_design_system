@@ -86,6 +86,19 @@ jobs:
             exit "$wget_exit"
           fi
 
+      - name: Sanitise query-string filenames for artifact upload
+        run: |
+          # wget saves /_canvas/?component=… as files whose names contain '?'.
+          # Artifact upload rejects '?' (NTFS-unsafe). Rename every such file by
+          # replacing '?' with '__' and update all HTML references to match.
+          find gallery-snapshot -name '*?*' | while IFS= read -r src; do
+            dst="${src//?/__}"
+            mv -f "$src" "$dst"
+          done
+          # Patch HTML files so iframe src / href attributes point to the new names.
+          find gallery-snapshot -name '*.html' -exec \
+            sed -i 's|?|__|g' {} +
+
       - name: Upload gallery artifact
         uses: actions/upload-artifact@v4
         with:
