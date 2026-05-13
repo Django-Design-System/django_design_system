@@ -3,6 +3,7 @@ name: Deploy Docs & Gallery
 on:
   release:
     types: [published]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -77,8 +78,14 @@ jobs:
             --no-parent \
             --page-requisites \
             --reject "*.py,*.pyc" \
+            --ignore-errors \
             --directory-prefix=gallery-snapshot \
-            http://localhost:8000/
+            http://localhost:8000/ || wget_exit=$?
+          # Exit code 8 = server errors on individual pages (expected for broken demo
+          # components); treat it as success so the snapshot still gets published.
+          if [ "${wget_exit:-0}" -ne 0 ] && [ "${wget_exit:-0}" -ne 8 ]; then
+            exit "$wget_exit"
+          fi
 
       - name: Upload gallery artifact
         uses: actions/upload-artifact@v4
