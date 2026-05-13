@@ -81,7 +81,7 @@ jobs:
             --no-parent \
             --page-requisites \
             --reject "*.py,*.pyc" \
-            --exclude-directories=_canvas \
+            --exclude-directories=/_canvas \
             --directory-prefix=gallery-snapshot \
             http://localhost:8000/ || wget_exit=$?
           # Exit code 8 = server errors on individual pages (expected for broken demo
@@ -95,6 +95,9 @@ jobs:
           python3 .github/scripts/save_canvas_pages.py \
             gallery-snapshot/localhost:8000 \
             http://localhost:8000
+          # Jekyll (which GitHub Pages may invoke) silently ignores directories
+          # starting with '_' (including _canvas). .nojekyll disables that.
+          touch gallery-snapshot/localhost:8000/.nojekyll
         env:
           DJANGO_SETTINGS_MODULE: example_project.settings
 

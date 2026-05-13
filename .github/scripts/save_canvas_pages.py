@@ -60,7 +60,9 @@ def fix_static_paths(html_content: str) -> str:
     Canvas files live one level deep inside ``_canvas/``, so ``../static/``
     is the correct relative path back to the snapshot's ``static/`` directory.
     """
-    return re.sub(r'(?<=(?:src|href)=")(/static/)', r"../\1", html_content)
+    # Simple string replace avoids the backreference double-slash trap
+    # (r"../\1" with \1=/static/ would produce ..//static/).
+    return html_content.replace('="/static/', '="../static/')
 
 
 def collect_canvas_urls(snapshot: Path, canvas_out: Path) -> dict[str, str]:
