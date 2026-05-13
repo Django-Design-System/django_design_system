@@ -78,7 +78,6 @@ jobs:
             --no-parent \
             --page-requisites \
             --reject "*.py,*.pyc" \
-            --ignore-errors \
             --directory-prefix=gallery-snapshot \
             http://localhost:8000/ || wget_exit=$?
           # Exit code 8 = server errors on individual pages (expected for broken demo
