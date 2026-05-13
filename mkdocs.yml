@@ -47,6 +47,7 @@ nav:
   - Quick Start: quickstart.md
   - Components: components.md
   - Gallery: gallery.md
+  - "Demo →": https://fukalite.github.io/dj-design-system/demo/
   - Registry: registry.md
   - Template Tags: templatetags.md
   - Organisation: organisation.md
