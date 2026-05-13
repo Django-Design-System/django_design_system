@@ -36,11 +36,11 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://django-design-system.github.io/django_design_system/"
-Repository = "https://github.com/Django-Design-System/django_design_system"
-Documentation = "https://django-design-system.github.io/django_design_system/"
-"Bug Tracker" = "https://github.com/Django-Design-System/django_design_system/issues"
-Changelog = "https://github.com/Django-Design-System/django_design_system/blob/main/CHANGELOG.md"
+Homepage = "https://fukalite.github.io/dj-design-system/"
+Repository = "https://github.com/fukalite/dj-design-system"
+Documentation = "https://fukalite.github.io/dj-design-system/"
+"Bug Tracker" = "https://github.com/fukalite/dj-design-system/issues"
+Changelog = "https://github.com/fukalite/dj-design-system/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 testing = [

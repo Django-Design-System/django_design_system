@@ -1,6 +1,6 @@
 # dj-design-system
 
-[![CI](https://github.com/Django-Design-System/django_design_system/actions/workflows/ci.yml/badge.svg)](https://github.com/Django-Design-System/django_design_system/actions/workflows/ci.yml)
+[![CI](https://github.com/fukalite/dj-design-system/actions/workflows/ci.yml/badge.svg)](https://github.com/fukalite/dj-design-system/actions/workflows/ci.yml)
 [![PyPI version](https://img.shields.io/pypi/v/dj-design-system?label=PyPI)](https://pypi.org/project/dj-design-system/)
 [![Python versions](https://img.shields.io/badge/python-3.13%20%7C%203.14-blue)](https://pypi.org/project/dj-design-system/)
 [![Django](https://img.shields.io/badge/django-5.2%20%7C%206.0%20%7C%20latest-green)](https://www.djangoproject.com/)
@@ -10,9 +10,9 @@ DjDS is a Django-native approach to writing front end components that are expose
 
 Components are recognisably Django elements; they look and work like Models or Forms. The gallery auto-discovers them, renders live previews in sandboxed iframes, generates templatetag usage examples, and builds a searchable navigation tree — all from your existing code and docstrings.
 
-**[Browse the demo →](https://django-design-system.github.io/django_design_system/demo/)**
+**[Browse the demo →](https://fukalite.github.io/dj-design-system/demo/)**
 
-**[Read the docs →](https://django-design-system.github.io/django_design_system/)**.
+**[Read the docs →](https://fukalite.github.io/dj-design-system/)**.
 
 ## Quick start
 
@@ -20,7 +20,7 @@ Components are recognisably Django elements; they look and work like Models or F
 pip install dj-design-system
 ```
 
-Then follow the [quickstart guide](https://django-design-system.github.io/django_design_system/quickstart/) to register your first component.
+Then follow the [quickstart guide](https://fukalite.github.io/dj-design-system/quickstart/) to register your first component.
 
 ## Supported versions
 
@@ -32,7 +32,7 @@ Then follow the [quickstart guide](https://django-design-system.github.io/django
 
 ## Documentation
 
-Full documentation is available at **[django-design-system.github.io/django_design_system/](https://django-design-system.github.io/django_design_system/)**.
+Full documentation is available at **[fukalite.github.io/dj-design-system/](https://fukalite.github.io/dj-design-system/)**.
 
 To browse locally:
 
@@ -49,7 +49,7 @@ just docs-serve
 | [Template tags](docs/templatetags.md) | Using components in templates             |
 | [API reference](docs/api/)            | Auto-generated class and parameter docs   |
 
-A static snapshot of the component gallery is browseable at **[django-design-system.github.io/django_design_system/demo/](https://django-design-system.github.io/django_design_system/demo/)** (HTMX interactions disabled; run `just demo` for the full live experience).
+A static snapshot of the component gallery is browseable at **[fukalite.github.io/dj-design-system/demo/](https://fukalite.github.io/dj-design-system/demo/)** (HTMX interactions disabled; run `just demo` for the full live experience).
 
 ## Contributing
 
@@ -61,7 +61,7 @@ This project follows the [Contributor Covenant](https://www.contributor-covenant
 
 ## Issues and feature requests
 
-Please open an issue on [GitHub](https://github.com/Django-Design-System/django_design_system/issues). Use the bug report template for defects and the feature request template for new ideas.
+Please open an issue on [GitHub](https://github.com/fukalite/dj-design-system/issues). Use the bug report template for defects and the feature request template for new ideas.
 
 ## Security
 

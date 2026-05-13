@@ -15,7 +15,7 @@ myapp/
     components.py   ← all your components live here
 ```
 
-The [`demo_single`](https://github.com/Django-Design-System/django_design_system/tree/main/example_project/demo_single) app in the example project uses this pattern. Both `PillComponent` and `ChipComponent` live in one `components.py`:
+The [`demo_single`](https://github.com/fukalite/dj-design-system/tree/main/example_project/demo_single) app in the example project uses this pattern. Both `PillComponent` and `ChipComponent` live in one `components.py`:
 
 ```python
 # demo_single/components.py
@@ -53,7 +53,7 @@ myapp/
             hero_card.py  → gallery: myapp / Card / Hero card
 ```
 
-The [`demo_components`](https://github.com/Django-Design-System/django_design_system/tree/main/example_project/demo_components) app demonstrates this. `ButtonComponent` and `AlertComponent` sit at the top level; `InfoCardComponent` and `HeroCardComponent` live inside `components/card/`.
+The [`demo_components`](https://github.com/fukalite/dj-design-system/tree/main/example_project/demo_components) app demonstrates this. `ButtonComponent` and `AlertComponent` sit at the top level; `InfoCardComponent` and `HeroCardComponent` live inside `components/card/`.
 
 There is no required depth — use as many or as few levels as makes sense for your library.
 
@@ -74,7 +74,7 @@ components/
 
 The gallery shows _Icon_ under the app root, not _Icon → Icon_. This lets you co-locate a component's file alongside its CSS and JS without polluting the navigation.
 
-The [`demo_nav`](https://github.com/Django-Design-System/django_design_system/tree/main/example_project/demo_nav) app uses this pattern for its `elements/icon/` component.
+The [`demo_nav`](https://github.com/fukalite/dj-design-system/tree/main/example_project/demo_nav) app uses this pattern for its `elements/icon/` component.
 
 ---
 
@@ -99,7 +99,7 @@ Concrete subclasses inherit from it and appear in the gallery normally. The abst
 
 There is no "main" app. Every installed Django app is treated equally. The gallery groups components by app label, and the navigation tree has one root node per app.
 
-The [`demo_extra`](https://github.com/Django-Design-System/django_design_system/tree/main/example_project/demo_extra) app demonstrates what happens when two apps define a component with the same name (`button`). Both appear in the gallery under their respective apps. In templates, you disambiguate with the app-qualified syntax:
+The [`demo_extra`](https://github.com/fukalite/dj-design-system/tree/main/example_project/demo_extra) app demonstrates what happens when two apps define a component with the same name (`button`). Both appear in the gallery under their respective apps. In templates, you disambiguate with the app-qualified syntax:
 
 ```html
 {% demo_components:button "Primary action" %} {% demo_extra:button "Secondary
@@ -115,7 +115,7 @@ Place `.md` files anywhere inside your `components/` directory. They are discove
 - `index.md` — attaches to the parent folder or component as its documentation page.
 - Any other `.md` file — appears as a standalone document node.
 
-The [`demo_nav`](https://github.com/Django-Design-System/django_design_system/tree/main/example_project/demo_nav) app uses both patterns:
+The [`demo_nav`](https://github.com/fukalite/dj-design-system/tree/main/example_project/demo_nav) app uses both patterns:
 
 ```
 demo_nav/components/

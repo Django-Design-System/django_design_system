@@ -1,8 +1,8 @@
 site_name: dj-design-system
 site_description: A Django-native approach to building, documenting, and shipping UI component libraries.
-site_url: https://django-design-system.github.io/django_design_system/
-repo_url: https://github.com/Django-Design-System/django_design_system
-repo_name: Django-Design-System/django_design_system
+site_url: https://fukalite.github.io/dj-design-system/
+repo_url: https://github.com/fukalite/dj-design-system
+repo_name: fukalite/dj-design-system
 edit_uri: edit/main/docs/
 
 theme:
@@ -47,6 +47,7 @@ nav:
   - Quick Start: quickstart.md
   - Components: components.md
   - Gallery: gallery.md
+  - "Demo →": https://fukalite.github.io/dj-design-system/demo/
   - Registry: registry.md
   - Template Tags: templatetags.md
   - Organisation: organisation.md

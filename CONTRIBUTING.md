@@ -7,8 +7,8 @@ Thank you for taking the time to contribute!
 **Prerequisites:** [uv](https://docs.astral.sh/uv/) and [just](https://just.systems/) must be installed.
 
 ```bash
-git clone https://github.com/Django-Design-System/django_design_system.git
-cd django_design_system
+git clone https://github.com/fukalite/dj-design-system.git
+cd dj-design-system
 just install
 just install-hooks   # installs the pre-commit git hook
 just install-playwright  # installs Playwright browsers (needed for e2e tests)
@@ -46,4 +46,4 @@ The pre-commit hook installed by `just install-hooks` runs `just fix` automatica
 4. Open a PR against `main`. All CI checks must be green before merging.
 5. A maintainer will review and merge.
 
-For bug reports or feature requests, please [open an issue](https://github.com/Django-Design-System/django_design_system/issues) first.
+For bug reports or feature requests, please [open an issue](https://github.com/fukalite/dj-design-system/issues) first.

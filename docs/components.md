@@ -1,6 +1,6 @@
 # Components
 
-> **See it live:** Browse real component examples in the [demo gallery](https://django-design-system.github.io/django_design_system/gallery/).
+> **See it live:** Browse real component examples in the [demo gallery](https://fukalite.github.io/dj-design-system/gallery/).
 
 ## Component Types
 
