@@ -5,11 +5,17 @@ on:
     types: [published]
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 jobs:
-  docs:
-    name: Deploy MkDocs site
+  build-docs:
+    name: Build MkDocs site
     runs-on: ubuntu-latest
 
     steps:
@@ -24,13 +30,18 @@ jobs:
       - name: Install docs dependencies
         run: uv sync --extra docs
 
-      - name: Deploy to GitHub Pages
-        run: uv run mkdocs gh-deploy --force
+      - name: Build docs
+        run: uv run mkdocs build --strict
 
-  gallery:
-    name: Deploy gallery snapshot
+      - name: Upload docs artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs-site
+          path: site/
+
+  build-gallery:
+    name: Build gallery snapshot
     runs-on: ubuntu-latest
-    needs: docs
 
     steps:
       - uses: actions/checkout@v4
@@ -50,7 +61,6 @@ jobs:
       - name: Start dev server
         run: |
           uv run python example_project/manage.py runserver 8000 &
-          # Wait for the server to be ready
           for i in $(seq 1 30); do
             curl -s http://localhost:8000/ > /dev/null && break
             sleep 1
@@ -70,27 +80,41 @@ jobs:
             --directory-prefix=gallery-snapshot \
             http://localhost:8000/
 
-      - name: Checkout gh-pages branch
-        uses: actions/checkout@v4
+      - name: Upload gallery artifact
+        uses: actions/upload-artifact@v4
         with:
-          ref: gh-pages
-          path: gh-pages-out
-          fetch-depth: 0
+          name: gallery-snapshot
+          path: gallery-snapshot/localhost:8000/
 
-      - name: Copy gallery snapshot into gh-pages
-        run: |
-          rm -rf gh-pages-out/demo
-          mkdir -p gh-pages-out/demo
-          # wget mirrors to localhost:8000/ subdirectory
-          if [ -d "gallery-snapshot/localhost:8000" ]; then
-            cp -r gallery-snapshot/localhost:8000/. gh-pages-out/demo/
-          fi
+  deploy:
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: [build-docs, build-gallery]
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
-      - name: Commit and push gallery
-        run: |
-          cd gh-pages-out
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add gallery/
-          git diff --cached --quiet || git commit -m "chore: update gallery snapshot [skip ci]"
-          git push
+    steps:
+      - name: Download docs
+        uses: actions/download-artifact@v4
+        with:
+          name: docs-site
+          path: site/
+
+      - name: Download gallery
+        uses: actions/download-artifact@v4
+        with:
+          name: gallery-snapshot
+          path: site/demo/
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
