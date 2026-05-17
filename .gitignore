@@ -16,6 +16,7 @@ env/
 .pytest_cache/
 .ruff_cache/
 .tox/
+uv.lock
 
 # Build outputs
 dist/
